@@ -1,0 +1,3 @@
+tileAssets = {};
+
+tileNames = []
