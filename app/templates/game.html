@@ -2,7 +2,9 @@
 {% block title %}Stardew Valley{% endblock %}
 
 {% block content %}
-<canvas id="main-canvas"></canvas>
+<div id="game-holder">
+  <canvas id="main-canvas"></canvas>
+</div>
 <script type="module" src="/static/js/tile.js"></script>
 <script type="module" src="/static/js/script.js"></script>
 {% endblock %}

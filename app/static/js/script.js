@@ -14,8 +14,8 @@ class Camera {
 
   //map image is 1280x1040
   clampEdges() {
-    this.x = Math.max(0, Math.min(this.x, 1280 - TILE_SIZE * X_RES));
-    this.y = Math.max(0, Math.min(this.y, 1040 - TILE_SIZE * Y_RES));
+    this.x = Math.max(0, Math.min(this.x, 1280 - TILE_SIZE / 2 * X_RES));
+    this.y = Math.max(0, Math.min(this.y, 1040 - TILE_SIZE / 2 * Y_RES));
   }
 
   //keys pressed stored in keys object
@@ -67,7 +67,9 @@ class StardewValley {
     //clearRect clears the canvas
     //drawImage takes image, then where in the image to start reading from, how large to read, where on the canvas to draw it, and stretching
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.drawImage(this.map, this.camera.x, this.camera.y, this.canvas.width, this.canvas.height, 0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.drawImage(this.map, this.camera.x, this.camera.y,
+      this.canvas.width / 2, this.canvas.height / 2, 0, 0,
+      this.canvas.width, this.canvas.height);
   }
 
   loop() {
