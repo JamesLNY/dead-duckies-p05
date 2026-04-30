@@ -1,2 +1,5 @@
 kiranS -- 2026-04-28 20:20
 - Created tileset.py to process tileset pngs, splitting them up into 16x16 sprites
+
+sarahZ -- 2026-04-29 22:40
+- added classes and functions to script.js to handle canvas and farm map scrolling with arrow keys
