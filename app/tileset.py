@@ -9,8 +9,9 @@ def split_tileset(sheetname, foldername):
     # os.makedirs(folder_path, exist_ok=True)
     split_image(sheet_path, height // 16, width // 16, False, False, output_dir=folder_path)
     for img in os.listdir(folder_path):
-        if os.path.getsize(folder_path + "/" + img) == 76:
+        if os.path.getsize(folder_path + "/" + img) <= 76:
             os.remove(folder_path + "/" + img)
 
 # split_tileset("paths.png", "paths")
 # split_tileset("furniture.png", "furniture")
+# split_tileset("springobjects.png", "items")
