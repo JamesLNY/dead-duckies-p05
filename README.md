@@ -17,8 +17,8 @@ Prerequisites
 
 Click the green button on the repo, and choose the SSH clone option. Copy the link and open a terminal session. 
 ```
-$ git clone 
-$ cd 
+$ git clone git@github.com:emaanas1f/dead-duckies-p05.git
+$ cd dead-duckies-p05
 $ python -m venv venv
 ```
 For Linux and Mac users:
