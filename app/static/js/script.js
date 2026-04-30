@@ -9,17 +9,17 @@ class Camera {
   constructor(x, y, speed) {
     this.x = x;
     this.y = y;
-    this.speed = speed; 
+    this.speed = speed;
   }
 
-  //map image is 1280x1040 
+  //map image is 1280x1040
   clampEdges() {
     this.x = Math.max(0, Math.min(this.x, 1280 - TILE_SIZE * X_RES));
     this.y = Math.max(0, Math.min(this.y, 1040 - TILE_SIZE * Y_RES));
   }
 
   //keys pressed stored in keys object
-  //makes scrolling smoother 
+  //makes scrolling smoother
   //also i didn't add a control so faster computers will scroll faster
   //not sure if that's a big issue but i can fix it if it's noticeable
   //James:
@@ -50,16 +50,15 @@ class InputHandler {
 }
 
 //doesn't need to be a class, but doing it for organization
-class StarDewValley { 
+class StardewValley {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.map = new Image();
-    this.map.onload = () => this.render(); 
-    this.map.src = '/static/images/farm.png';
+    this.map.onload = () => this.render();
+    this.map.src = '/static/images/Farm.png';
     this.camera = new Camera(0, 0, 5); //speed 5 px/frame for now, can adjust later
     this.input = new InputHandler();
-    
     this.loop();
   }
 
@@ -68,18 +67,19 @@ class StarDewValley {
     //clearRect clears the canvas
     //drawImage takes image, then where in the image to start reading from, how large to read, where on the canvas to draw it, and stretching
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.drawImage(this.map, this.camera.x, this.camera.y, this.canvas.width, this.canvas.height, 0, 0, this.canvas.width, this.canvas.height); 
+    this.ctx.drawImage(this.map, this.camera.x, this.camera.y, this.canvas.width, this.canvas.height, 0, 0, this.canvas.width, this.canvas.height);
   }
 
   loop() {
     this.camera.move(this.input.keys);
     this.render();
-    requestAnimationFrame(() => this.loop());  }
+    requestAnimationFrame(() => this.loop());
+  }
 }
 
 window.addEventListener('load', function() {
   const canvas = document.getElementById('main-canvas');
   canvas.width = TILE_SIZE * X_RES;
   canvas.height = TILE_SIZE * Y_RES;
-  new StarDewValley(canvas);
+  new StardewValley(canvas);
 })
