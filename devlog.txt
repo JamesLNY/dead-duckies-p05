@@ -3,3 +3,6 @@ kiranS -- 2026-04-28 20:20
 
 sarahZ -- 2026-04-29 22:40
 - added classes and functions to script.js to handle canvas and farm map scrolling with arrow keys
+
+emaanA --2026-04-29 23:40
+- droplet up with user accounts for all devos; pushing this from droplet to confirm access to repo
