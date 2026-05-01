@@ -17,7 +17,7 @@ function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(map, 0, 0, 1280, 1040, 0, 0, 1280, 1040);
 
-  ctx.fillStyle = 'rgba(255, 0 0, 0.35)';
+  ctx.fillStyle = 'rgba(255, 0, 0, 0.35)';
   for (const tile of impassable) {
     let parsed = tile.split(',');
     ctx.fillRect(parsed[X] * TILE_SIZE, parsed[Y] * TILE_SIZE, 16, 16);
@@ -44,16 +44,27 @@ window.addEventListener('load', function() {
 window.addEventListener('keydown', e => {
   if (e.key === 'p') {
     console.log(JSON.stringify([...impassable]));
+  } else if (e.key === 's') {
+    let a = document.createElement("a");
+    let json = JSON.stringify([...impassable], null, 2);
+    let file = new Blob([json], {type: 'application/json'});
+    a.href = URL.createObjectURL(file);
+    a.download = "thing.json";
+    a.click();
   } else if (e.key === 't') {
-    add = !add;
+    paint = !paint;
   }
 })
 
 canvas.addEventListener('mousedown', e => {
+  held = true;
   draw(e);
 });
 
 canvas.addEventListener('mousemove', e => {
-  console.log("HERE");
-  draw(e);
+  if (held) draw(e);
+});
+
+canvas.addEventListener('mouseup', e => {
+  held = false;
 });
