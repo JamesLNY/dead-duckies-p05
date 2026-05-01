@@ -9,3 +9,8 @@ emaanA -- 2026-04-29 23:40
 
 kiranS -- 2026-04-30 19:00
 - Searched through SDV game files to find relevant json files and tileset pngs, and added to repo
+
+emaanA --2026-05-01 1:40
+- created items.js (static data for inventory)
+- working on inventory.js 
+- uploaded design doc v00
