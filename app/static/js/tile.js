@@ -2,8 +2,13 @@ export default class Tile {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+
+    this.entities = [];
   }
-  draw(ctx) {
-    ctx.drawImage(this.image, this.x, this.y);
+
+  render(ctx, hasPlayer) {
+
   }
+
+
 }
