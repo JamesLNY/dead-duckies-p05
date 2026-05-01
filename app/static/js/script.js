@@ -56,6 +56,12 @@ class StardewValley {
 
     this.player = new Player();
 
+    //tile check stuff
+    //using a set for O(1) lookup later
+    this.impassable = new Set();
+    this.selectTiles();
+
+    //end 
     this.loop();
   }
 
@@ -77,6 +83,36 @@ class StardewValley {
     this.player.render(this.ctx, this.camera);
     
     requestAnimationFrame(() => this.loop());
+  }
+
+  //funcs im using to click on tiles, send to dev console, and add to JSON file
+  tileChecks() {
+    window.addEventListener('keydown', e => {
+      if (e.key === 'p') {
+        //... is spread operator
+        console.log(JSON.stringify([...this.impassable]));
+      }
+    });
+
+    this.canvas.addEventListener('click', e => {
+      const tileCol = Math.floor((e.offsetX + this.camera.x) / TILE_SIZE);
+      const tileRow = Math.floor((e.offsetY + this.camera.y) / TILE_SIZE);
+      if (this.impassable.has(`${tileCol}, ${tileRow}`)) {
+        this.impassable.delete(`${tileCol}, ${tileRow}`); 
+      } 
+      else {
+        this.impassable.add(`${tileCol}, ${tileRow}`);
+      }
+    });
+  }
+
+  colorImpassable() {
+    this.ctx.fillStyle = 'rgba(255, 0 0, 0.35';
+    for (const tile of this.impassable) {
+      const screenX = col * TILE_SIZE - this.camera.x;
+      const screenY = row * TILE_SIZE - this.camera.y;
+
+    }
   }
 }
 
