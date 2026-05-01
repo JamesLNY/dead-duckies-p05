@@ -51,10 +51,10 @@ export class Player {
     }
   }
 
-  render(ctx, camera) {
-    ctx.drawImage(this.sprite, 
+  render(ctx, map) {
+    ctx.drawImage(this.sprite,
       Math.trunc(this.frame / FRAME_RATE) * TILE_SIZE, this.facing * TILE_SIZE * 2,
-      TILE_SIZE, TILE_SIZE * 2, this.x - camera.x, this.y - camera.y,
+      TILE_SIZE, TILE_SIZE * 2, this.x - map.x, this.y - map.y,
       TILE_SIZE * SCALE_FACTOR, TILE_SIZE * 2 * SCALE_FACTOR
     )
   }
