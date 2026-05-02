@@ -1,8 +1,7 @@
-import Tile from './tile.js'
-import Map from './map.js'
+import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT } from './constants.js'
 
-import { MOVEMENT_SPEED, Player } from './player.js';
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from './constants.js'
+import Map from './map.js'
+import Player from './player.js';
 
 class InputHandler {
   constructor() {
@@ -34,7 +33,7 @@ class StardewValley {
   }
 
   loop() {
-    this.player.move(this.input.keys);
+    this.player.move(this.input.keys, this.map);
     this.map.follow(this.player);
 
     this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);

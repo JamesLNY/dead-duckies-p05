@@ -1,4 +1,4 @@
-import { ITEMS } from './items.js';
+import { ITEMS } from "./constants.js";
 
 export class Inventory {
   constructor(size = 24) {

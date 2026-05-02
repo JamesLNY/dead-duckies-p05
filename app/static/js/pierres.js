@@ -1,4 +1,4 @@
-import { ITEMS } from './items.js';
+import { ITEMS } from './constants.js';
 
 export class shop {
   constructor (player, inventory) {
@@ -12,6 +12,5 @@ export class shop {
       return false;
     }
     let cost = item.buyPrice * amount;
-    if ()
   }
 }
