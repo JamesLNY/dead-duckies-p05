@@ -12,6 +12,6 @@ def split_tileset(sheetname, foldername):
         if os.path.getsize(folder_path + "/" + img) <= 76:
             os.remove(folder_path + "/" + img)
 
-# split_tileset("paths.png", "paths")
+# split_tileset("paths.png", "test")
 # split_tileset("furniture.png", "furniture")
-# split_tileset("springobjects.png", "items")
+split_tileset("Cursors.png", "UI")
