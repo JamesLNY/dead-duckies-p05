@@ -1,5 +1,7 @@
 export async function getJson(file_name) {
-  let raw = await fetch(`/static/json/${file_name}`)
+  let raw = await fetch(`/static/json/${file_name}`, {
+    cache: 'no-store'
+  })
   let parsed = await raw.json()
   return parsed;
 }
