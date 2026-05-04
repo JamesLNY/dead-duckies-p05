@@ -40,6 +40,6 @@ export default class Tile {
         (this.x - map.x) * SCALE_FACTOR, (this.y - map.y) * SCALE_FACTOR,
         TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR
       )
-    );
+    });
   }
 }

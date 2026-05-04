@@ -46,10 +46,10 @@ export default class Map {
     let rightBound = Math.ceil((this.x + CANVAS_WIDTH) / TILE_SIZE);
     let topBound = Math.ceil(this.y / TILE_SIZE);
     let bottomBound = Math.trunc((this.y + CANVAS_HEIGHT) / TILE_SIZE);
-    for (let x = leftBound; x < rightBound; x++) {
-      for (let y = topBound; y < bottomBound; y++) {
-        this.tiles[x][y].render();
-      }
-    }
+    // for (let x = leftBound; x < rightBound; x++) {
+    //   for (let y = topBound; y < bottomBound; y++) {
+    //     this.tiles[x][y].render();
+    //   }
+    // }
   }
 }

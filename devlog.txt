@@ -7,8 +7,14 @@ sarahZ -- 2026-04-29 22:40
 emaanA -- 2026-04-29 23:40
 - droplet up with user accounts for all devos; pushing this from droplet to confirm access to repo
 
+<<<<<<< Updated upstream
+=======
+kiranS -- 2026-04-30 19:00
+- searched through SDV game files to find relevant json files and tileset pngs, and added to repo
+
+>>>>>>> Stashed changes
 jamesL --2026-04-30 11:00
-- added css;enlarged and centered
+- added css; enlarged and centered
 
 kiranS -- 2026-04-30 19:00
 - Searched through SDV game files to find relevant json files and tileset pngs, and added to repo
@@ -35,7 +41,7 @@ K55: TLD
 - working on pierres.js, added buy/sell prices for items in items.js
 
 jamesL --2026-05-01 11:00
-- 
+- worked on editing maps
 
 sarahZ --2026-05-01 11:00
 -
