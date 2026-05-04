@@ -42,5 +42,14 @@ export default class Map {
     ctx.drawImage(this.image, this.x, this.y,
       X_RES * TILE_SIZE, Y_RES * TILE_SIZE, 0, 0,
       CANVAS_WIDTH, CANVAS_HEIGHT);
+    let leftBound = Math.trunc(this.x / TILE_SIZE);
+    let rightBound = Math.ceil((this.x + CANVAS_WIDTH) / TILE_SIZE);
+    let topBound = Math.ceil(this.y / TILE_SIZE);
+    let bottomBound = Math.trunc((this.y + CANVAS_HEIGHT) / TILE_SIZE);
+    for (let x = leftBound; x < rightBound; x++) {
+      for (let y = topBound; y < bottomBound; y++) {
+        this.tiles[x][y].render();
+      }
+    }
   }
 }
