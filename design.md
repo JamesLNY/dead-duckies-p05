@@ -113,7 +113,7 @@ NPC	\- Creates NPCs for the player to interact with
 
 **Component Map**
 
-**![](http://marge.stuy.edu/~jlei60/Screenshot%20from%202026-05-05%2010-30-29.png\)**
+**![](http://marge.stuy.edu/~jlei60/Screenshot%20from%202026-05-05%2010-30-29.png)**
 
 **Database Organization**
 
