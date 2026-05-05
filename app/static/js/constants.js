@@ -16,6 +16,7 @@ export const CANVAS_HEIGHT = TILE_SIZE * SCALE_FACTOR * Y_RES;
 
 export const MOVEMENT_SPEED = 1;
 export const FRAME_RATE = 16;
+export const TIME_CONVERSION = 240; // HIGHER = Slower Time
 
 export const ITEMS = await getJson("items.json");
 

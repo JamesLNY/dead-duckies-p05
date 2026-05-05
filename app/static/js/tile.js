@@ -36,9 +36,11 @@ export default class Tile {
 
   highlight(ctx, map) {
     ctx.fillStyle = 'rgba(255, 0, 0, 0.35)';
-    ctx.fillRect((this.x * TILE_SIZE - map.x) * SCALE_FACTOR,
+    ctx.beginPath();
+    ctx.rect((this.x * TILE_SIZE - map.x) * SCALE_FACTOR,
       (this.y * TILE_SIZE - map.y) * SCALE_FACTOR,
       TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR);
+    ctx.stroke();
   }
 
   render(ctx, map) {
