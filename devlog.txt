@@ -7,12 +7,9 @@ sarahZ -- 2026-04-29 22:40
 emaanA -- 2026-04-29 23:40
 - droplet up with user accounts for all devos; pushing this from droplet to confirm access to repo
 
-<<<<<<< Updated upstream
-=======
 kiranS -- 2026-04-30 19:00
 - searched through SDV game files to find relevant json files and tileset pngs, and added to repo
 
->>>>>>> Stashed changes
 jamesL --2026-04-30 11:00
 - added css; enlarged and centered
 
@@ -49,3 +46,7 @@ sarahZ --2026-05-01 11:00
 kiranS -- 2026-05-02 23:15
 - started on time.js
 - found UI tilesets in game files and added to repo
+
+jamesL -- 2026-05-04 20:10
+- spawn and display twigs, stones, and weeds on the farm
+- cleaned player hitbox
