@@ -1,5 +1,5 @@
 import { TILE_SIZE, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, X_RES, Y_RES} from "./constants.js";
-
+const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 export default class Time {
   // currData, numTicks, currTime
   constructor() {
@@ -16,12 +16,12 @@ export default class Time {
   }
 
   nextDay() {
-    currDay++
-    if (currDay == 29) {
-      currYear++
-      currDay = 1
+    this.currDay++
+    if (this.currDay == 29) {
+      this.currYear++
+      this.currDay = 1
     }
-  } 
+  }
   // Overlay on top of upper right of canvas (Only update when time changes)
   render(ctx) {
     let hour = Math.floor(this.currTime / 60 + 6) % 12
@@ -36,19 +36,26 @@ export default class Time {
     else {
       time += " pm"
     }
+    let date = days.at(this.currDay % 7 - 1) + ". " + String(this.currDay)
     ctx.drawImage(this.display,
       .8 * CANVAS_WIDTH, .01 * CANVAS_HEIGHT,
       .19 * CANVAS_WIDTH, .19 * CANVAS_WIDTH / 1.8
     )
     ctx.font = "25px thin";
     ctx.fillText(time, (.8 + .19 * .42) * CANVAS_WIDTH, (.01 + .19 * .89) * CANVAS_HEIGHT)
+    ctx.fillText(date, (.8 + .19 * .42) * CANVAS_WIDTH, (.01 + .19 * .31) * CANVAS_HEIGHT)
   }
 
   // called upon each frame load
   update() {
     this.numTicks++
-    if (this.numTicks % 10 == 0) {
+    if (this.numTicks % 1 == 0) {
       this.currTime += 10
+    }
+    // this block is just for testing -- remove when fainting mechanic added
+    if (this.currTime >= 1080) {
+      this.currTime = 0
+      this.nextDay()
     }
   }
 }

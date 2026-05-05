@@ -41,7 +41,7 @@ jamesL --2026-05-01 11:00
 - worked on editing maps
 
 sarahZ --2026-05-01 11:00
-- worked on editing maps with james 
+- worked on editing maps with james
 
 kiranS -- 2026-05-02 23:15
 - started on time.js
@@ -54,3 +54,7 @@ jamesL -- 2026-05-04 20:10
 kiranS -- 2026-05-04 20:30
 - rendered time display
 - added thin sdv font for UI text
+
+kiranS -- 2026-05-05 10:40
+- Add weekday + date display to clock
+- Day and month both tick over when appropriate
