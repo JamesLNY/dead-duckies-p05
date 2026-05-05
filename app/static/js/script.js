@@ -2,7 +2,7 @@ import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE } f
 
 import Map from './map.js'
 import Player from './player.js';
-
+import Time from './time.js';
 class InputHandler {
   constructor() {
     this.keys = {};
@@ -27,6 +27,7 @@ class StardewValley {
     this.map = new Map('farm');
     this.input = new InputHandler();
     this.player = new Player();
+    this.time = new Time();
 
     this.map.loadTiles('farm').then(() => {
       this.initializeFarm();
@@ -72,6 +73,8 @@ class StardewValley {
     this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     this.map.render(this.ctx);
     this.player.render(this.ctx, this.map);
+    this.time.update();
+    this.time.render(this.ctx);
 
     requestAnimationFrame(() => this.loop());
   }

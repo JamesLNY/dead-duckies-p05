@@ -50,3 +50,7 @@ kiranS -- 2026-05-02 23:15
 jamesL -- 2026-05-04 20:10
 - spawn and display twigs, stones, and weeds on the farm
 - cleaned player hitbox
+
+kiranS -- 2026-05-04 20:30
+- rendered time display
+- added thin sdv font for UI text
