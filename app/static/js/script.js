@@ -1,4 +1,4 @@
-import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT } from './constants.js'
+import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE } from './constants.js'
 
 import Map from './map.js'
 import Player from './player.js';
@@ -26,10 +26,43 @@ class StardewValley {
 
     this.map = new Map('farm');
     this.input = new InputHandler();
-
     this.player = new Player();
 
-    this.loop();
+    this.map.loadTiles('farm').then(() => {
+      this.initializeFarm();
+      this.loop();
+    })
+
+    // this.initializeFarm();
+    // this.loop();
+  }
+
+  // static async create(canvas) {
+  //   let game = new StardewValley(canvas);
+  //   await game.map.loadTiles();
+  //   game.initializeFarm();
+  //   game.loop();
+  // }
+
+  initializeFarm() {
+    for (let x = 0; x < this.map.tiles.length; x++) {
+      for (let y = 0; y < this.map.tiles[x].length; y++) {
+        if (!this.map.tiles[x][y].passable) continue;
+        const randomNum = Math.floor(Math.random() * 20);
+        switch (randomNum) {
+          case 0:
+            this.map.tiles[x][y].add("stone", "middle");
+            break;
+          case 1:
+            this.map.tiles[x][y].add("twig", "middle");
+            break;
+          case 2:
+            this.map.tiles[x][y].add("weed", "middle");
+            break;
+        }
+      }
+    }
+    this.map.getTile(this.player.x, this.player.y + 23).remove("middle");
   }
 
   loop() {
@@ -48,5 +81,6 @@ window.addEventListener('load', function() {
   const canvas = document.getElementById('main-canvas');
   canvas.width = CANVAS_WIDTH;
   canvas.height = CANVAS_HEIGHT;
+  // StardewValley.create(canvas);
   new StardewValley(canvas);
 })
