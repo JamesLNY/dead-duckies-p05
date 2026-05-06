@@ -1,4 +1,4 @@
-export async function getJson(file_name) {
+async function getJson(file_name) {
   let raw = await fetch(`/static/json/${file_name}`, {
     cache: 'no-store'
   })

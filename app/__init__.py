@@ -17,5 +17,12 @@ def game_get():
 def editor_get():
   return render_template("editor.html")
 
+@app.after_request
+def remove_cache(response):
+  response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+  response.headers['Pragma'] = 'no-cache'
+  response.headers['Expires'] = '0'
+  return response
+
 if __name__ == "__main__":
   app.run(debug=True)

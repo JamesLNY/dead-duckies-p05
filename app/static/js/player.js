@@ -64,6 +64,25 @@ export default class Player {
     // }
   }
 
+  getTile(map) {
+    let tile;
+    switch (this.facing) {
+      case LEFT:
+        tile = map.getTile(this.x - TILE_SIZE * 0.5, this.y + TILE_SIZE * 1.25);
+        break;
+      case RIGHT:
+        tile = map.getTile(this.x + TILE_SIZE * 0.5, this.y + TILE_SIZE * 1.25);
+        break;
+      case UP:
+        tile = map.getTile(this.x, this.y);
+        break;
+      case DOWN:
+        tile = map.getTile(this.x, this.y + TILE_SIZE * 1.5);
+        break;
+    }
+    return tile;
+  }
+
   render(ctx, map) {
     ctx.drawImage(this.sprite,
       Math.trunc(this.frame / FRAME_RATE) * TILE_SIZE, this.facing * TILE_SIZE * 2, // Original Image
@@ -71,21 +90,7 @@ export default class Player {
       (this.x - map.x) * SCALE_FACTOR, (this.y - map.y) * SCALE_FACTOR,
       TILE_SIZE * SCALE_FACTOR, TILE_SIZE * 2 * SCALE_FACTOR
     )
-    let tile;
-    switch (this.facing) {
-      case LEFT:
-        tile = map.getTile(this.x - TILE_SIZE * 0.5, this.y + TILE_SIZE);
-        break;
-      case RIGHT:
-        tile = map.getTile(this.x + TILE_SIZE * 0.5, this.y + TILE_SIZE);
-        break;
-      case UP:
-        tile = map.getTile(this.x, this.y);
-        break;
-      case DOWN:
-        tile = map.getTile(this.x, this.y + TILE_SIZE);
-        break;
-    }
+    let tile = this.getTile(map);
     tile.highlight(ctx, map);
   }
 }

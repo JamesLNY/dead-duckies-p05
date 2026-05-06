@@ -58,3 +58,7 @@ kiranS -- 2026-05-04 20:30
 kiranS -- 2026-05-05 10:40
 - Add weekday + date display to clock
 - Day and month both tick over when appropriate
+
+jamesL -- 2026-05-05 20:40
+- added highlights for player's interacting tile
+- removed cache from Flask
