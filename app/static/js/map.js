@@ -5,8 +5,6 @@ export default class Map {
   constructor(name) {
     this.image = new Image();
     this.image.src = `/static/images/maps/${name}.png`
-
-    this.loadTiles(name);
   }
 
   async loadTiles(name) {
@@ -42,5 +40,14 @@ export default class Map {
     ctx.drawImage(this.image, this.x, this.y,
       X_RES * TILE_SIZE, Y_RES * TILE_SIZE, 0, 0,
       CANVAS_WIDTH, CANVAS_HEIGHT);
+    let leftBound = Math.trunc(this.x / TILE_SIZE);
+    let rightBound = Math.ceil((this.x + CANVAS_WIDTH / SCALE_FACTOR) / TILE_SIZE);
+    let topBound = Math.trunc(this.y / TILE_SIZE);
+    let bottomBound = Math.ceil((this.y + CANVAS_HEIGHT / SCALE_FACTOR) / TILE_SIZE);
+    for (let x = leftBound; x < rightBound; x++) {
+      for (let y = topBound; y < bottomBound; y++) {
+        this.tiles[x][y].render(ctx, this);
+      }
+    }
   }
 }

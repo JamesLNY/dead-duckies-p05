@@ -1,4 +1,4 @@
-export async function getJson(file_name) {
+async function getJson(file_name) {
   let raw = await fetch(`/static/json/${file_name}`, {
     cache: 'no-store'
   })
@@ -10,8 +10,15 @@ export async function getJson(file_name) {
 const TILE_SIZE = 16;
 const MAP_WIDTH = 1280;
 const MAP_HEIGHT = 1040;
-const MODIFYING_ATTRIBUTE = "passable";
-const DEFAULT_VALUE = true;
+// const MODIFYING_ATTRIBUTE = "passable";
+// const DEFAULT_VALUE = true;
+const PROPERTIES = {
+  passable: {defaultValue: true, modifiedValue: false, color: 'rgba(255, 0, 0, 0.35)'},
+  tillable: {defaultValue: true, modifiedValue: false, color: 'rgba(0, , 255, 0.35)'},
+  teleporter: {defaultValue: false, modifiedValue: true, color: 'rgba(255, 165. 0. 0.35)'}
+};
+
+let currentProperty = 'passable';
 
 const map = new Image();
 map.src = '/static/images/maps/farm.png';
@@ -33,6 +40,8 @@ ctx.imageSmoothingEnabled = false;
 //   }
 // }
 
+const propertySelect = document.getElementById('property-select');
+
 let tiles = await getJson("maps/farm.json");
 
 let paint = true;
@@ -42,14 +51,15 @@ function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(map, 0, 0, MAP_WIDTH, MAP_HEIGHT, 0, 0, MAP_WIDTH, MAP_HEIGHT);
 
-  ctx.fillStyle = 'rgba(255, 0, 0, 0.35)';
-  for (let x = 0; x < MAP_WIDTH / TILE_SIZE; x++) {
-    for (let y = 0; y < MAP_HEIGHT / TILE_SIZE; y++) {
-      if (tiles[x][y][MODIFYING_ATTRIBUTE] != DEFAULT_VALUE) {
-        ctx.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-      }
-    }
-  }
+  //NEED TO EDIT THIS
+  // ctx.fillStyle = 'rgba(255, 0, 0, 0.35)';
+  // for (let x = 0; x < MAP_WIDTH / TILE_SIZE; x++) {
+  //   for (let y = 0; y < MAP_HEIGHT / TILE_SIZE; y++) {
+  //     if (tiles[x][y][MODIFYING_ATTRIBUTE] != DEFAULT_VALUE) {
+  //       ctx.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+  //     }
+  //   }
+  // }
 }
 
 function draw(e) {

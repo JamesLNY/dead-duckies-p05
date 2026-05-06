@@ -16,5 +16,23 @@ export const CANVAS_HEIGHT = TILE_SIZE * SCALE_FACTOR * Y_RES;
 
 export const MOVEMENT_SPEED = 1;
 export const FRAME_RATE = 16;
+export const TIME_CONVERSION = 240; // HIGHER = Slower Time
 
 export const ITEMS = await getJson("items.json");
+
+const MIDDLE_LAYER_ENTITIES = [
+  "stone",
+  "twig",
+  "weed"
+];
+
+export const TILE_IMAGES = {
+  "back": {},
+  "middle": {},
+  "front": {}
+};
+
+MIDDLE_LAYER_ENTITIES.forEach((entity) => {
+  TILE_IMAGES["middle"][entity] = new Image();
+  TILE_IMAGES["middle"][entity].src = `/static/images/middle-layer/${entity}.png`;
+})

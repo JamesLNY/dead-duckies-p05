@@ -7,8 +7,11 @@ sarahZ -- 2026-04-29 22:40
 emaanA -- 2026-04-29 23:40
 - droplet up with user accounts for all devos; pushing this from droplet to confirm access to repo
 
+kiranS -- 2026-04-30 19:00
+- searched through SDV game files to find relevant json files and tileset pngs, and added to repo
+
 jamesL --2026-04-30 11:00
-- added css;enlarged and centered
+- added css; enlarged and centered
 
 kiranS -- 2026-04-30 19:00
 - Searched through SDV game files to find relevant json files and tileset pngs, and added to repo
@@ -35,11 +38,27 @@ K55: TLD
 - working on pierres.js, added buy/sell prices for items in items.js
 
 jamesL --2026-05-01 11:00
--
+- worked on editing maps
 
 sarahZ --2026-05-01 11:00
--
+- worked on editing maps with james
 
 kiranS -- 2026-05-02 23:15
 - started on time.js
 - found UI tilesets in game files and added to repo
+
+jamesL -- 2026-05-04 20:10
+- spawn and display twigs, stones, and weeds on the farm
+- cleaned player hitbox
+
+kiranS -- 2026-05-04 20:30
+- rendered time display
+- added thin sdv font for UI text
+
+kiranS -- 2026-05-05 10:40
+- Add weekday + date display to clock
+- Day and month both tick over when appropriate
+
+jamesL -- 2026-05-05 20:40
+- added highlights for player's interacting tile
+- removed cache from Flask
