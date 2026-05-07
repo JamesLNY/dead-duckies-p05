@@ -13,9 +13,9 @@ const MAP_HEIGHT = 1040;
 // const MODIFYING_ATTRIBUTE = "passable";
 // const DEFAULT_VALUE = true;
 const PROPERTIES = {
-  passable: {defaultValue: true, modifiedValue: false, color: 'rgba(255, 0, 0, 0.35)'},
-  tillable: {defaultValue: true, modifiedValue: false, color: 'rgba(0, , 255, 0.35)'},
-  teleporter: {defaultValue: false, modifiedValue: true, color: 'rgba(255, 165. 0. 0.35)'}
+  passable: {defaultValue: true, color: 'rgba(255, 0, 0, 0.35)'},
+  tillable: {defaultValue: true, color: 'rgba(0, 255, 0, 0.35)'},
+  teleporter: {defaultValue: false, color: 'rgba(0, 0, 255, 0.35)'}
 };
 
 let currentProperty = 'passable';
@@ -51,7 +51,15 @@ function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(map, 0, 0, MAP_WIDTH, MAP_HEIGHT, 0, 0, MAP_WIDTH, MAP_HEIGHT);
 
-  //NEED TO EDIT THIS
+  for (const [key, def] of Object.entries(PROPERTIES)) {
+    ctx.fillStyle = def.color;
+    for (let x = 0; x < MAP_WIDTH / TILE_SIZE; x++) {
+      for (let y = 0; y < MAP_HEIGHT / TILE_SIZE; y++) {
+        if (tiles[x][y][key] != def.defaultValue) {
+          ctx.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+        }
+      }
+    }
   // ctx.fillStyle = 'rgba(255, 0, 0, 0.35)';
   // for (let x = 0; x < MAP_WIDTH / TILE_SIZE; x++) {
   //   for (let y = 0; y < MAP_HEIGHT / TILE_SIZE; y++) {
@@ -60,6 +68,7 @@ function render() {
   //     }
   //   }
   // }
+  }
 }
 
 function draw(e) {
@@ -67,9 +76,9 @@ function draw(e) {
   const x = Math.floor((e.offsetX) / TILE_SIZE);
   const y = Math.floor((e.offsetY) / TILE_SIZE);
   if (paint) {
-    tiles[x][y][MODIFYING_ATTRIBUTE] = !DEFAULT_VALUE;
+    tiles[x][y][currentProperty] = !PROPERTIES[currentProperty].defaultValue;
   } else {
-    tiles[x][y][MODIFYING_ATTRIBUTE] = DEFAULT_VALUE;
+    tiles[x][y][currentProperty] = PROPERTIES[currentProperty].defaultValue;
   }
 }
 
@@ -93,6 +102,10 @@ window.addEventListener('keydown', e => {
     paint = !paint;
   }
 })
+
+propertySelect.addEventListener('change', () => {
+  currentProperty = propertySelect.value;
+});
 
 canvas.addEventListener('mousedown', e => {
   held = true;

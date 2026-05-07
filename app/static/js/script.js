@@ -7,9 +7,11 @@ class InputHandler {
   constructor() {
     this.keys = {};
     window.addEventListener('keydown', e => {
-      //i didn't add a preventDefault
-      //lmk if it's an issue though and i'll fix
+      //this prevents the overall screen from scrolling, i added it bc i thought it was annoying
       this.keys[e.key] = true;
+      if (['ArrowUp,' 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+        e.preventDefault();
+      }
     });
     window.addEventListener('keyup', e => {
       this.keys[e.key] = false;

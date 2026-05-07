@@ -62,3 +62,7 @@ kiranS -- 2026-05-05 10:40
 jamesL -- 2026-05-05 20:40
 - added highlights for player's interacting tile
 - removed cache from Flask
+
+sarahZ -- 2026-05-5 23:20
+- backup app serving securely on droplet, deadduckiesvalley.me 
+- finished farm map editor functions for passable, tillable, and teleporter
