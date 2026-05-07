@@ -81,10 +81,10 @@ Each member must own meaningful deliverables.
 
 | Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+| James | Map, Farming | NPCs | |
+| Kiran | Time, NPCs, Fishing | | Display Timer|
+| Sarah | Stamina | Map | |
+| Emaan | Inventory, Crafting, Shop | | |
 
 ---
 
@@ -101,10 +101,11 @@ Landing Page
    ↓
 Login / Register
    ↓
-Dashboard
-   ├── Feature A
-   ├── Feature B
-   └── Profile
+Lobby
+   ├── Join Game
+   ├── Load Save Game
+   ↓
+Game
 ```
 
 ## Key User Stories
