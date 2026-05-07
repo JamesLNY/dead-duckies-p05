@@ -129,8 +129,27 @@ As a __________, I want to __________ so that...
 
 # Timeline
 ## Week 1 Goals:
+- Farm Map (scrolling, software for json for impassable, untillable, teleporter tiles)
+- Player Movement
+- Entities (anything that goes on top of a tile, debris, worms, etc,)
+- Time System
+- Inventory
 ## Week 2 Goals:
+- Town Map
+- Pierre's
+- Teleport/Travel
+- Static NPCs (Willy, Pierre for fish and seed shops)
+- Relationships
+- Stamina System
 ## Week 3 Goals:
+- Forest Map/Foraging
+- Trees
+- Fishing
+- Crafting
+## CHOPPING BLOCK:
+- Static NPCs (Gus, Clint for saloon and blacksmith)
+- Tool Upgrades
+- House
 ## Internal Deadlines:
 {List milestones your team has identified, in the order they must be completed. Set a target completion date for each.}
 
