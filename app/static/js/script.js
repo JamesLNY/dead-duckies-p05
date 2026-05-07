@@ -9,7 +9,7 @@ class InputHandler {
     window.addEventListener('keydown', e => {
       //this prevents the overall screen from scrolling, i added it bc i thought it was annoying
       this.keys[e.key] = true;
-      if (['ArrowUp,' 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
         e.preventDefault();
       }
     });
