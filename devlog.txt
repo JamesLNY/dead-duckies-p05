@@ -71,3 +71,6 @@ sarahZ -- 2026-05-07 11:00
 
 kiranS -- 2026-05-07 21:50
 - Add db tables and testing plan to design doc md
+
+kiranS -- 2026-05-08 10:50
+- isolate sprites for energy bar and npc portrait from ui tileset
