@@ -11,16 +11,15 @@
 
 | Name | Email | Primary Role | Secondary Role |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+|Emaan Asif | emaana3@nycstudents.net| Project Manager| |
+|James Lei |jamesl291@nycstudents.net | Devo1 | |
+|Sarah Zou |sarahz40@nycstudents.net | Devo2| |
+|Kiran Soemarjdo |kirans14@nycstudents.net | Devo3 | |
 
 ---
 
-
 # Summary
-{Keep it tight. Concise. 1 sentence. Really need more? 3 max.}
+We are creating a Stardew Valley emulator with our initial phase focused on the standard farm map. Games can be joined by players through the lobby in a pregenerated map. Players will have inventories, be able to sell and buy goods, fish, mine, craft, and establish relationships.
 
 ## Problem Being Solved
 
@@ -109,16 +108,12 @@ Game
 ```
 
 ## Key User Stories
-### eg0
-As a __________, I want to __________ so that...
 
-### eg1
-As a __________, I want to __________ so that...
+### Solo Player
+As a player, I want to experience the core features of Stardew Valley and save games so that I can pick them up later.
 
-### eg2
-As a __________, I want to __________ so that...
-
-
+### Social Player
+As a social player, I want to be able to host games and join lobbies with other people so that I can play with friends.
 
 # Database Design
 

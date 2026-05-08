@@ -68,8 +68,22 @@ sarahZ -- 2026-05-06 23:20
 - finished farm map editor functions for passable, tillable, and teleporter
 
 sarahZ -- 2026-05-07 11:00
-- updated farm.json to include untillable and teleporter tiles
-- worked on design doc
+- working on design doc; timeline
+- farm.json done
 
 kiranS -- 2026-05-07 21:50
 - Add db tables and testing plan to design doc md
+
+emaanA -- 2026-05-08 11:00
+- pierres commit from tuesday
+- working on hotbar
+
+sarahZ -- 2026-05-08 11:00
+- working on design doc
+
+jamesL --2026-05-08 11:00
+- added user stories
+- working on design doc
+
+kiranS -- 2026-05-08 11:00
+- isolate sprites for energy bar and npc portrait from ui tileset
