@@ -108,16 +108,12 @@ Game
 ```
 
 ## Key User Stories
-### eg0
-As a __________, I want to __________ so that...
 
-### eg1
-As a __________, I want to __________ so that...
+### Solo Player
+As a player, I want to experience the core features of Stardew Valley and save games so that I can pick them up later.
 
-### eg2
-As a __________, I want to __________ so that...
-
-
+### Social Player
+As a social player, I want to be able to host games and join lobbies with other people so that I can play with friends.
 
 # Database Design
 

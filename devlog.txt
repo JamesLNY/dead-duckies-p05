@@ -78,12 +78,13 @@ emaanA -- 2026-05-08 11:00
 - pierres commit from tuesday
 - working on hotbar
 
-kiranS -- 2026-05-08 11:00
-- getting assets / added ui sprites
-
 sarahZ -- 2026-05-08 11:00
 - working on design doc
 
 jamesL --2026-05-08 11:00
 - added user stories
 - working on design doc
+
+kiranS -- 2026-05-08 11:00
+- isolate sprites for energy bar and npc portrait from ui tileset
+
