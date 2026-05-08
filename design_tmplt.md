@@ -122,11 +122,95 @@ As a __________, I want to __________ so that...
 
 # Database Design
 
-{Insert your table/document organizational structure here}
+| Players |  |  |
+| ----- | :---- | :---- |
+| TEXT | name | UNIQUE |
+| TEXT | password |  |
+
+| Games |  |  |
+| ----- | :---- | :---- |
+| INTEGER | id | PK AUTOINCREMENT |
+| TEXT | player1 | FK REF players(name) |
+| TEXT | player2 | FK REF players(name) |
+| TEXT | player3 | FK REF players(name) |
+| TEXT | player4 | FK REF players(name) |
+| INTEGER | day | DEFAULT 0 |
+| INTEGER | money | DEFAULT 500 |
+
+| Tiles |  |  |
+| ----- | :---- | :---- |
+| INTEGER | game\_id | FK REF games(id) |
+| TEXT | map |  |
+| INTEGER | x\_pos |  |
+| INTEGER | y\_pos |  |
+| TEXT | furniture | DEFAULT “\[\]” |
+| BOOLEAN | tilled |  |
+
+| Inventory |  |  |
+| ----- | :---- | :---- |
+| INTEGER | game | FK REF games(id) |
+| TEXT | player | FK REF player(username) |
+| TEXT | contents |  |
+| INTEGER | upgrades | DEFAULT 0 |
+
+| Plants |  |  |
+| ----- | :---- | :---- |
+| INTEGER | game\_id | FK REF games(id) |
+| TEXT | map |  |
+| INTEGER | x\_pos |  |
+| INTEGER | y\_pos |  |
+| TEXT | type |  |
+| INTEGER | age | DEFAULT 0 |
+
+| Placeables |  |  |
+| ----- | :---- | :---- |
+| INTEGER | game\_id | FK REF games(id) |
+| TEXT | map |  |
+| INTEGER | x\_pos |  |
+| INTEGER | y\_pos |  |
+| TEXT | type |  |
+| INTEGER | item |  |
+| INTEGER | progress |  |
+
+| Relationships |  |  |
+| ----- | :---- | :---- |
+| INTEGER | game | FK REF games(id) |
+| TEXT | npc\_name |  |
+| TEXT | player | FK REF player(username) |
+| INTEGER | points |  |
+| INTEGER | giftcount | DEFAULT 0 |
+| TEXT | status |  |
 
 
 # Testing Plan
-{Delineate here your plan for testing each component}
+- Lobby
+   - Make sure that no more than 4 ppl can join a lobby, that the same player can't join twice, etc
+   - Prevent duplicate results when multiple people perform the same action at the same time
+- Map
+   - Make sure all impassable tiles are indeed impassable
+   - Make sure layers render correctly (eg, player is rendered behind objects he walks behind, and the objects fade properly)
+- Authentication
+   - Check that sqlite injection isn't possible
+   - Ensure that there are no URLs that allow authentication to be bypassed
+   - Make sure empty strings can't be used as username/password
+- NPC
+   - Ensure that dialogue triggers are correct
+   - Make sure relationship system functions as intended
+- Game
+   - Ensure that saving works correctly
+   - Check that no data is saved if the game is closed before the end of the day
+- Farming
+   - Make sure crop growth times are correct and that proper growth stages are correctly displayed
+   - Ensure crops only grow when watered and can only be planted on tilled soil
+   - Check that only tillable tiles can be hoed
+- Shop
+   - Ensure items are priced correctly
+   - Players cannot go below 0 gold
+- Fishing
+   - Ensure fishing AI works as intended
+- Inventory
+   - Make sure items properly carry over between days
+   - Make sure items can only be picked up if inventory has space
 
 # Timeline
 ## Week 1 Goals:
