@@ -1,12 +1,12 @@
 # System Blueprint (_a.k.a._ "Design Doc")
 
 ## TNPG: DeadDuckies
-## project: Stardew Valley
+## Project: Stardew Valley
 ## Target ship date: {2026-06-08}
 
 ---
 
-#### roster:
+#### Roster:
 
 
 | Name | Email | Primary Role | Secondary Role |
@@ -88,11 +88,11 @@ Each member must own meaningful deliverables.
 
 ---
 
-# Component map
+# Component Map
 
 ![](http://marge.stuy.edu/~jlei60/Screenshot%20from%202026-05-05%2010-30-29.png)
 
-# Site map
+# Site Map
 
 ![](http://marge.stuy.edu/~jlei60/Screenshot%20from%202026-05-05%2010-29-43.png)
 
@@ -228,28 +228,38 @@ As a __________, I want to __________ so that...
 - Stamina System
 ## Week 3 Goals:
 - Forest Map/Foraging
+- Mining
 - Trees
 - Fishing
 - Crafting
-## CHOPPING BLOCK:
+- Eating
+## Week 4 Goals:
 - Static NPCs (Gus, Clint for saloon and blacksmith)
+- Static NPCs (Sebastian, Sam, Penny, Haley)
 - Tool Upgrades
-- House
+- Houses
+## CHOPPING BLOCK:
+- Community Center
+- Cooking/Recipes
+- Skill Levels
+- Sound Effects/Music
 ## Internal Deadlines:
-{List milestones your team has identified, in the order they must be completed. Set a target completion date for each.}
+1. Farm map and player movement (5/6/2026)
+2. Entities, main game UI and time/inventory system (5/11/2026)
+3. Town map and Pierre's (5/13/2026)
+
 
 
 # Completion Criteria (_a.k.a._ "Definition of 'Done'")
 Project is considered complete when all of the following are true:
-1.
-1.
-1.
+1. Players are able to move and interact with the map  to obtain resources
+1. Players are able to farm and fish
+1. Players are able to buy and sell items
 
 # Open Questions
-{Delineate anything undecided here}
+- Implement community center/skill levels?
+- Multiplayer?
 
 # Appendix
-{Any relevant info that is useful but would have interrupted narrative flow above, or cluttered the information portrayed}
-
-# Other
-{Put here anything that did not sensibly fit under above headings. This section will inform evolution of SoftDev.}
+Assets:
+- https://lybell-art.github.io/xnb-js/ (used to extract files from Stardew Valley)
