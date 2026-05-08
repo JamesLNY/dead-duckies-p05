@@ -2,25 +2,24 @@
 
 ## TNPG: DeadDuckies
 ## project: Stardew Valley
-## Target ship date: {2026-06-08}
+## Target ship date: 2026-06-08
 
 ---
 
-#### roster:
+#### roster: 
 
 
 | Name | Email | Primary Role | Secondary Role |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+|Emaan Asif | emaana3@nycstudents.net| Project Manager| |
+|James Lei |jamesl291@nycstudents.net | Devo1 | |
+|Sarah Zou |sarahz40@nycstudents.net | Devo2| |
+|Kiran Soemarjdo |kirans14@nycstudents.net | Devo3 | |
 
 ---
 
-
 # Summary
-{Keep it tight. Concise. 1 sentence. Really need more? 3 max.}
+We are creating a Stardew Valley emulator with our initial phase focused on the standard farm map. Games can be joined by players through the lobby in a pregenerated map. Players will have inventories, be able to sell and buy goods, fish, mine, craft, and establish relationships. 
 
 ## Problem Being Solved
 
