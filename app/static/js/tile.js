@@ -1,4 +1,5 @@
 import { TILE_SIZE, SCALE_FACTOR, TILE_IMAGES } from "./constants.js";
+import BigEntity from "./big-entity.js"
 
 const IMPASSABLE_ENTITIES = new Set([
   "twig",
@@ -20,31 +21,47 @@ export default class Tile {
     this.layers = {
       "back": null,
       "middle": null,
-      "front": null
+      "front": null // True if overlayed, BigEntity if centered
     };
   }
 
   add(entity, layer) {
     this.layers[layer] = entity;
+    if (layer == "front" && entity instanceof BigEntity) {
+      this.passable = false;
+    }
     if (layer == "middle" && IMPASSABLE_ENTITIES.has(entity)) this.passable = false;
   }
 
   remove(layer) {
     this.layers[layer] = null;
-    if (layer == "middle") this.passable = this.basePassable;
+    this.passable = this.basePassable;
+    if (this.layers["front"] instanceof BigEntity ||
+        IMPASSABLE_ENTITIES.has(this.layers["middle"])) {
+      this.passable = false;
+    }
   }
 
-  highlight(ctx, map) {
-    ctx.strokeStyle = 'rgba(255, 0, 0, 0.35)';
-    ctx.strokeRect((this.x * TILE_SIZE - map.x) * SCALE_FACTOR,
-      (this.y * TILE_SIZE - map.y) * SCALE_FACTOR,
-      TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR);
+  highlight(ctx, map, fill=false, color='rgba(255, 0, 0, 0.35)') {
+    if (!fill) {
+      ctx.strokeStyle = color;
+      ctx.strokeRect((this.x * TILE_SIZE - map.x) * SCALE_FACTOR,
+        (this.y * TILE_SIZE - map.y) * SCALE_FACTOR,
+        TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR);
+    } else {
+      ctx.fillStyle = color;
+      ctx.fillRect((this.x * TILE_SIZE - map.x) * SCALE_FACTOR,
+        (this.y * TILE_SIZE - map.y) * SCALE_FACTOR,
+        TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR);
+    }
+    ctx.strokeStyle = '#000000'
+    ctx.fillStyle = '#000000'
   }
 
   render(ctx, map) {
-    // if (!this.passable) this.highlight(ctx, map);
+    // if (this.layers["front"] != null) this.highlight(ctx, map, true);
     for (const [key, value] of Object.entries(this.layers)) {
-      if (value == null) continue;
+      if (value == null || key == "front") continue;
       ctx.drawImage(TILE_IMAGES[key][value], 0, 0, TILE_SIZE, TILE_SIZE,
         (this.x * TILE_SIZE - map.x) * SCALE_FACTOR,
         (this.y * TILE_SIZE - map.y) * SCALE_FACTOR,

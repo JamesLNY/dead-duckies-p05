@@ -1,3 +1,4 @@
+import BigEntity from './big-entity.js';
 import { TILE_SIZE, CANVAS_WIDTH, CANVAS_HEIGHT, X_RES, Y_RES, SCALE_FACTOR, getJson } from './constants.js'
 import Tile from './tile.js';
 
@@ -5,6 +6,7 @@ export default class Map {
   constructor(name) {
     this.image = new Image();
     this.image.src = `/static/images/maps/${name}.png`
+    this.bigEntities = [];
   }
 
   async loadTiles(name) {
@@ -15,6 +17,7 @@ export default class Map {
       for (let y = 0; y < data[x].length; y++) {
         this.tiles.at(-1).push(new Tile(x, y, data[x][y]));
       }
+      console.log(this.tiles[x].length);
     }
   }
 
@@ -23,6 +26,25 @@ export default class Map {
     x = Math.round(x / TILE_SIZE);
     y = Math.round(y / TILE_SIZE);
     return this.tiles[x][y];
+  }
+
+  // Indices
+  addBigEntity(x, y, type) {
+    if (this.tiles[x][y].layers["front"] instanceof BigEntity) {
+      throw new Error(`Tile ${x}, ${y} already has a big entity!`);
+    }
+    let bigEnt = new BigEntity(x, y, type, this);
+    this.bigEntities.push(bigEnt);
+    this.bigEntities.sort((a, b) => a.y - b.y); // For rendering
+  }
+
+  removeBigEntity(x, y) {
+    if (this.tiles[x][y].layers["front"] instanceof BigEntity) {
+      this.tiles[x][y].layers["front"].destroy();
+      this.bigEntities = this.bigEntities.filter((ent) => {
+        return ent.x != x && ent.y != y;
+      })
+    }
   }
 
   clampEdges() {
@@ -36,7 +58,7 @@ export default class Map {
     this.clampEdges();
   }
 
-  render(ctx) {
+  render(ctx, player) {
     ctx.drawImage(this.image, this.x, this.y,
       X_RES * TILE_SIZE, Y_RES * TILE_SIZE, 0, 0,
       CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -49,5 +71,13 @@ export default class Map {
         this.tiles[x][y].render(ctx, this);
       }
     }
+
+    this.bigEntities.forEach((ent) => {
+      if (ent.x > leftBound - 5 && ent.x < rightBound + 5
+        && ent.y > topBound - 5 && ent.y < bottomBound + 5
+      ) {
+        ent.render(ctx, this, player);
+      }
+    })
   }
 }

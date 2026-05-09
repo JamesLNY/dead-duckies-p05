@@ -26,6 +26,10 @@ const MIDDLE_LAYER_ENTITIES = [
   "weed"
 ];
 
+const FRONT_LAYER_ENTITIES = [
+  "tree",
+];
+
 export const TILE_IMAGES = {
   "back": {},
   "middle": {},
@@ -36,3 +40,16 @@ MIDDLE_LAYER_ENTITIES.forEach((entity) => {
   TILE_IMAGES["middle"][entity] = new Image();
   TILE_IMAGES["middle"][entity].src = `/static/images/middle-layer/${entity}.png`;
 })
+
+FRONT_LAYER_ENTITIES.forEach((entity) => {
+  TILE_IMAGES["front"][entity] = new Image();
+  TILE_IMAGES["front"][entity].src = `/static/images/front-layer/${entity}.png`;
+})
+
+// Base Tile in Image File
+export const OBJECT_PLACEMENT = {
+  "tree": {
+    "x": 1,
+    "y": 4
+  }
+}

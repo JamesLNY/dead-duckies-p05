@@ -50,22 +50,23 @@ class StardewValley {
   initializeFarm() {
     for (let x = 0; x < this.map.tiles.length; x++) {
       for (let y = 0; y < this.map.tiles[x].length; y++) {
+        console.log(`${x}, ${y}`);
         if (!this.map.tiles[x][y].passable) continue;
-        const randomNum = Math.floor(Math.random() * 20);
-        switch (randomNum) {
-          case 0:
-            this.map.tiles[x][y].add("stone", "middle");
-            break;
-          case 1:
-            this.map.tiles[x][y].add("twig", "middle");
-            break;
-          case 2:
-            this.map.tiles[x][y].add("weed", "middle");
-            break;
+        const randomNum = Math.floor(Math.random() * 100);
+        if (randomNum < 2) {
+          this.map.addBigEntity(x, y, "tree");
+        } else if (randomNum < 7) {
+          this.map.tiles[x][y].add("stone", "middle");
+        } else if (randomNum < 12) {
+          this.map.tiles[x][y].add("twig", "middle");
+        } else if (randomNum < 17) {
+          this.map.tiles[x][y].add("weed", "middle");
         }
       }
     }
-    this.map.getTile(this.player.x, this.player.y + 23).remove("middle");
+    let playerTile = this.map.getTile(this.player.x, this.player.y + 23);
+    playerTile.remove("middle");
+    this.map.removeBigEntity(playerTile.x, playerTile.y);
   }
 
   loop() {
@@ -73,7 +74,7 @@ class StardewValley {
     this.map.follow(this.player);
 
     this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    this.map.render(this.ctx);
+    this.map.render(this.ctx, this.player);
     this.player.render(this.ctx, this.map);
     this.time.update();
     this.time.render(this.ctx);
