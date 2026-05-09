@@ -2,7 +2,7 @@
 
 ## TNPG: DeadDuckies
 ## Project: Stardew Valley
-## Target ship date: {2026-06-08}
+## Target ship date: 2026-06-01 
 
 ---
 
@@ -11,10 +11,10 @@
 
 | Name | Email | Primary Role | Secondary Role |
 |---|---|---|---|
-|Emaan Asif | emaana3@nycstudents.net| Project Manager| |
-|James Lei |jamesl291@nycstudents.net | Devo1 | |
-|Sarah Zou |sarahz40@nycstudents.net | Devo2| |
-|Kiran Soemarjdo |kirans14@nycstudents.net | Devo3 | |
+|Emaan Asif | emaana3@nycstudents.net| Project Manager| Inventory/Pierre's |
+|James Lei |jamesl291@nycstudents.net | Devo1 | Entities/Player|
+|Sarah Zou |sarahz40@nycstudents.net | Devo2| Farm/Town Map|
+|Kiran Soemarjdo |kirans14@nycstudents.net | Devo3 | Time/NPC's |
 
 ---
 
@@ -22,18 +22,15 @@
 We are creating a Stardew Valley emulator with our initial phase focused on the standard farm map. Games can be joined by players through the lobby in a pregenerated map. Players will have inventories, be able to sell and buy goods, fish, mine, craft, and establish relationships.
 
 ## Problem Being Solved
-
+- Simplifying gameplay
 
 ## Target Users
 
-Who will use this system?
-
-- ____________________________________
-- ____________________________________
+- People who enjoy farming games (like Stardew Valley)
 
 
 ## Why This Project Matters
-
+- Deepens understanding of gameplay logic
 
 ---
 
@@ -41,20 +38,22 @@ Who will use this system?
 
 ## Core Features (Required for Final Submission)
 Features that **must** be completed:
-1.
-1.
-1.
+
+1. Map
+2. Entities 
+3. Time
 
 ## Stretch Features (Only if MVP is Complete)
-1.
-1.
-1.
+
+1. More NPC's
+2. Community center
+3. Skill levels
 
 ## Explicit Non-Goals
 
 Features intentionally excluded:
--
--
+- NPC Schedules in Stardew
+- Festivals, animals, marriage, weather, and story events in stardew
 
 ---
 
