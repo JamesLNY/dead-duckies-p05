@@ -81,9 +81,12 @@ emaanA -- 2026-05-08 11:00
 sarahZ -- 2026-05-08 11:00
 - working on design doc
 
-jamesL --2026-05-08 11:00
+jamesL -- 2026-05-08 11:00
 - added user stories
 - working on design doc
 
 kiranS -- 2026-05-08 11:00
 - isolate sprites for energy bar and npc portrait from ui tileset
+
+jamesL -- 2026-05-09 15:00
+- added trees

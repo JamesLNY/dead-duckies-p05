@@ -109,11 +109,14 @@ Game
 
 ## Key User Stories
 
-### Solo Player
-As a player, I want to experience the core features of Stardew Valley and save games so that I can pick them up later.
+### Farmer
+As a farmer, I want to be tame the land in my farm, hoe tiles, and plant crops to make a nice big farm.
 
-### Social Player
-As a social player, I want to be able to host games and join lobbies with other people so that I can play with friends.
+### Monopolist
+As a monopolist, I want to profit from the crops which I grow to obtain as much money as possible.
+
+### Hoarder
+As a hoarder, I want to increase the amount of items I can store in my inventory to collect all the items in the game.
 
 # Database Design
 
