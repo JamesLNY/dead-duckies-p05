@@ -90,3 +90,7 @@ kiranS -- 2026-05-08 11:00
 
 jamesL -- 2026-05-09 15:00
 - added trees
+
+emaanA -- 2026-05-09 16:45
+- hotbar in inventory.js
+- updated design blueprint
