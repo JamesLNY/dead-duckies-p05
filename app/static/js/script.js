@@ -51,7 +51,7 @@ class StardewValley {
     for (let x = 0; x < this.map.tiles.length; x++) {
       for (let y = 0; y < this.map.tiles[x].length; y++) {
         console.log(`${x}, ${y}`);
-        if (!this.map.tiles[x][y].passable) continue;
+        if (!this.map.tiles[x][y].tillable) continue;
         const randomNum = Math.floor(Math.random() * 100);
         if (randomNum < 2) {
           this.map.addBigEntity(x, y, "tree");
