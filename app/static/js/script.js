@@ -149,7 +149,7 @@ loop() {
   };
 }
 
-window.addEventListener('load', function() {
+// window.addEventListener('load', function() {
   const canvas = document.getElementById('main-canvas');
   canvas.width = CANVAS_WIDTH;
   canvas.height = CANVAS_HEIGHT;
@@ -160,4 +160,4 @@ window.addEventListener('load', function() {
   uiCanvas.height = 100;
 
   new StardewValley(canvas, uiCanvas);
-});
+// });

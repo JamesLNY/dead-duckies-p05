@@ -1,18 +1,18 @@
 body {
   background-image: url("/static/images/background.jpg");
+  background-attachment: fixed;
   background-size: cover;
   height: 100vh;
   margin: 0;
 }
 
 #game-holder {
-  height: 100%;
-  align-items: flex-start;
-  overflow-y: scroll;
+  align-items: center;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 50px 0;
   box-sizing: border-box;
+  flex-direction: column;
 }
 
 @font-face {
