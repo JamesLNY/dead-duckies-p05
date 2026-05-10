@@ -20,8 +20,8 @@ export const TIME_CONVERSION = 240; // HIGHER = Slower Time
 
 export const ITEMS = await getJson("items.json");
 
-export const PIERRE = await getJson("/npcs/Pierre.json")
-export const WILLY = await getJson("/npcs/Willy.json")
+export const PIERRE = await getJson("npcs/Pierre.json")
+export const WILLY = await getJson("npcs/Willy.json")
 
 const MIDDLE_LAYER_ENTITIES = [
   "stone",

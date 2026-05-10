@@ -49,7 +49,6 @@ class StardewValley {
   initializeFarm() {
     for (let x = 0; x < this.map.tiles.length; x++) {
       for (let y = 0; y < this.map.tiles[x].length; y++) {
-        console.log(`${x}, ${y}`);
         if (!this.map.tiles[x][y].tillable) continue;
         const randomNum = Math.floor(Math.random() * 100);
         if (randomNum < 2) {
@@ -69,37 +68,37 @@ class StardewValley {
   }
 
   renderHotbar() {
-  const SLOT_SIZE = 64;
-  const SPACING = 4;
+    const SLOT_SIZE = 64;
+    const SPACING = 4;
 
-  const inventory = this.player.inventory;
+    const inventory = this.player.inventory;
 
-  for (let i = 0; i < 9; i += 1) {
-    let slot = inventory.getSlot(i);
+    for (let i = 0; i < 9; i += 1) {
+      let slot = inventory.getSlot(i);
 
-    let x = 20 + i * (SLOT_SIZE + SPACING);
-    let y = CANVAS_HEIGHT - SLOT_SIZE - 20;
+      let x = 20 + i * (SLOT_SIZE + SPACING);
+      let y = CANVAS_HEIGHT - SLOT_SIZE - 20;
 
-    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    this.ctx.fillRect(x, y, SLOT_SIZE, SLOT_SIZE);
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+      this.ctx.fillRect(x, y, SLOT_SIZE, SLOT_SIZE);
 
-    if (i === inventory.selectedSlot) {
-      this.ctx.strokeStyle = 'yellow';
-      this.ctx.lineWidth = 4;
-      this.ctx.strokeRect(x, y, SLOT_SIZE, SLOT_SIZE);
+      if (i === inventory.selectedSlot) {
+        this.ctx.strokeStyle = 'yellow';
+        this.ctx.lineWidth = 4;
+        this.ctx.strokeRect(x, y, SLOT_SIZE, SLOT_SIZE);
+      }
+
+      if (slot.itemID === null) {
+        continue;
+      }
+
+      this.ctx.fillStyle = 'white';
+      this.ctx.font = '14px Arial';
+
+      this.ctx.fillText(slot.itemID, x + 8, y + 22);
+      this.ctx.fillText(slot.count, x + 8, y + 44);
     }
-
-    if (slot.itemID === null) {
-      continue;
-    }
-
-    this.ctx.fillStyle = 'white';
-    this.ctx.font = '14px Arial';
-
-    this.ctx.fillText(slot.itemID, x + 8, y + 22);
-    this.ctx.fillText(slot.count, x + 8, y + 44);
   }
-}
 
   loop() {
     for (let i = 1; i <= 9; i += 1) {
@@ -122,10 +121,8 @@ class StardewValley {
   }
 }
 
-window.addEventListener('load', function() {
-  const canvas = document.getElementById('main-canvas');
-  canvas.width = CANVAS_WIDTH;
-  canvas.height = CANVAS_HEIGHT;
-  // StardewValley.create(canvas);
-  new StardewValley(canvas);
-})
+const canvas = document.getElementById('main-canvas');
+canvas.width = CANVAS_WIDTH;
+canvas.height = CANVAS_HEIGHT;
+// StardewValley.create(canvas);
+new StardewValley(canvas);

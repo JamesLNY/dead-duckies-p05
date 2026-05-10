@@ -17,7 +17,6 @@ export default class Map {
       for (let y = 0; y < data[x].length; y++) {
         this.tiles.at(-1).push(new Tile(x, y, data[x][y]));
       }
-      console.log(this.tiles[x].length);
     }
   }
 
