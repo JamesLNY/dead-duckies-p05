@@ -53,6 +53,6 @@ FRONT_LAYER_ENTITIES.forEach((entity) => {
 export const OBJECT_PLACEMENT = {
   "tree": {
     "x": 1,
-    "y": 4
+    "y": 5
   }
 }
