@@ -24,5 +24,9 @@ def remove_cache(response):
   response.headers['Expires'] = '0'
   return response
 
+@app.get('/dialogue')
+def dialogue_get():
+  return render_template("dialogue.html")
+
 if __name__ == "__main__":
   app.run(debug=True)

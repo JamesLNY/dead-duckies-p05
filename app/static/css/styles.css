@@ -19,3 +19,8 @@ body {
   font-family: "thin";
   src: url("/static/fonts/thin.woff2/stardew-valley.otf.woff2");
 }
+
+@font-face {
+  font-family: "bold";
+  src: url("/static/fonts/bold.woff2/svbold.otf.woff2");
+}

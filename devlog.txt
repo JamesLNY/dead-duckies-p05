@@ -94,3 +94,10 @@ jamesL -- 2026-05-09 15:00
 emaanA -- 2026-05-09 16:45
 - hotbar in inventory.js
 - updated design blueprint
+
+kiranS -- 2026-05-09 23:50
+- talk, gift, and addplayer methods in npc.js
+- rendered name, dialogue line, and protrait to placeholder page
+- cleaned up Pierre and Willy dialogue data for suitable lines
+- added portraits of Pierre and Willy
+- added sdv bold font
