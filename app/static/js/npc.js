@@ -1,26 +1,7 @@
-// import { PIERRE, WILLY } from "./constants"
+import { DIALOGUES } from "./constants.js"
 const giftPoints = [-40, -20, 20, 45, 80]
-const dialogue1 = [
-        "Hey, it's @, the new farmer! I'm Pierre, owner of the local general store. If you're looking for seeds, my shop is the place to go. I'll also buy produce from you for a good price! A little agriculture could really inject new life into the local economy!",
-        "Welcome! If you're looking for seeds, you've come to the right place!",
-        "Hi, @. Need any seeds?",
-        "Sometimes I get new items in stock, so make sure to stop by every so often. It's a lot of work to run a shop.",
-        "You know, I used to be a pretty good boxer back in the day... my right hook was the stuff of legend!",
-        "It's my  day off today. Hmmm... what to do...",
-        "If you find any wild produce, I'll take it off your hands for a reasonable price.",
-        "*sigh*... No matter how well the business does, it's never enough to satisfy my desire for success. What's wrong with me? Maybe I'm just bored with domestic life. When I was younger I always had something interesting to do... now I find myself just wasting time whenever I'm not at work.",
-        "I'm happy to buy any produce off you. I'll give you a fair price, of course!",
-        "I really do appreciate your business, @. I've been having a harder and harder time turning a decent profit.",
-        "Don't tell my wife, but I hate to cook dinner.",
-        "Hi there. Is your farm doing well? Maybe a few of my seeds will spruce things up.",
-        "If you find any wild produce, I'll take it off your hands for a reasonable price.",
-        "I'll tell you a secret. Sometimes, when the store is empty, I'll practice my opera singing behind the counter. Don't tell anyone.",
-        "*sigh*... I've got those behind-the-counter blues... I wish I could go for a walk, but I can't leave the store unattended. I've heard the flowers are in bloom and the air smells great...",
-        "Some day I'm going to open a new shop in the city and make a killing. Unfortunately, business is so slow I can hardly save any money...",
-        "Hey, @. You're my number one customer!"
-    ]
 
-class NPC {
+export default class NPC {
   constructor(name) {
     this.name = name
 
@@ -30,7 +11,8 @@ class NPC {
     this.status = {"Kiran": 0}
     
     this.likes = {} // 0-4 for hate-love
-    this.normal_dialogue = dialogue1
+    this.normal_dialogue = DIALOGUES[this.name]["normal_dialogue"]
+    console.log(this.normal_dialogue)
   }
 
   // possibly implement birthdays
@@ -55,7 +37,7 @@ class NPC {
       this.renderDialogue(player, this.normal_dialogue[0]) //default introduction dialogue
     }
     else if (this.talked[player] == false) {
-      console.log("asd")
+      console.log("b")
       this.points[player] += 20
       this.renderDialogue(player, this.normal_dialogue[Math.ceil(Math.random() * (this.normal_dialogue.length - 1))]) //random dialogue option (excluding intro dialogue stored at index 0 of array)
     }
@@ -78,5 +60,5 @@ class NPC {
 
 }
 
-Pierre = new NPC("Pierre")
+let Pierre = new NPC("Pierre")
 Pierre.talk("Kiran")

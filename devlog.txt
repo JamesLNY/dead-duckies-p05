@@ -107,3 +107,9 @@ emaanA -- 2026-05-09 23:50
 
 emaanA -- 2026-05-10 15:00
 - hotbar rendering 
+
+kiranS -- 2026-05-10 16:30
+- changed npc.js to pull dialogue options from json files
+- created sprites for dialogue box + portrait, hotbar, and inventory w/ mspaint from components in game files
+- finished rendering dialoguebox properly in dialogue.html
+- altered time and movement speed constants to make more accurate to game
