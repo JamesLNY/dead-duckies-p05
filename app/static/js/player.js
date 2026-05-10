@@ -1,4 +1,5 @@
 import { TILE_SIZE, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, MOVEMENT_SPEED } from "./constants.js";
+import { Inventory } from './inventory.js';
 
 // Correspond with rows in player.png
 const DOWN = 0;
@@ -14,6 +15,8 @@ export default class Player {
     this.facing = DOWN;
     this.moving = false;
     this.frame = 0;
+    
+    this.inventory = new Inventory();
 
     this.sprite = new Image();
     this.sprite.src = '/static/images/player.png';

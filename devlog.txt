@@ -101,3 +101,7 @@ kiranS -- 2026-05-09 23:50
 - cleaned up Pierre and Willy dialogue data for suitable lines
 - added portraits of Pierre and Willy
 - added sdv bold font
+
+emaanA -- 2026-05-09 23:50
+- working on hotbar rendering 
+>>>>>>> f5fc8b6 (hotbar rendering)
