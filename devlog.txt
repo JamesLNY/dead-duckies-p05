@@ -103,10 +103,10 @@ kiranS -- 2026-05-09 23:50
 - added sdv bold font
 
 emaanA -- 2026-05-09 23:50
-- working on hotbar rendering 
+- working on hotbar rendering
 
 emaanA -- 2026-05-10 15:00
-- hotbar rendering 
+- hotbar rendering
 
 kiranS -- 2026-05-10 16:30
 - changed npc.js to pull dialogue options from json files
@@ -115,5 +115,8 @@ kiranS -- 2026-05-10 16:30
 - altered time and movement speed constants to make more accurate to game
 
 sarahZ -- 2026-05-10 23:59
-- finished and fixed up design doc 
-- generated output.pdf, pdflatex was having some problems with the fonts so used xelatex 
+- finished and fixed up design doc
+- generated output.pdf, pdflatex was having some problems with the fonts so used xelatex
+
+kiranS -- 2026-05-11 10:50
+- Made pine tree sprite 
