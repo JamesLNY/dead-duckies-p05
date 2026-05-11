@@ -113,3 +113,7 @@ kiranS -- 2026-05-10 16:30
 - created sprites for dialogue box + portrait, hotbar, and inventory w/ mspaint from components in game files
 - finished rendering dialoguebox properly in dialogue.html
 - altered time and movement speed constants to make more accurate to game
+
+sarahZ -- 2026-05-10 23:59
+- finished and fixed up design doc 
+- generated output.pdf, pdflatex was having some problems with the fonts so used xelatex 
