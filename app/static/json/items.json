@@ -3,17 +3,20 @@
     "name": "Wood",
     "maxStack": 99,
     "buyPrice": 10,
-    "sellPrice": 5
+    "sellPrice": 5,
+    "reaction": "dislike"
   },
   "stone": {
     "name": "Stone",
     "maxStack": 99,
     "buyPrice": 8,
-    "sellPrice": 4
+    "sellPrice": 4,
+    "reaction": "dislike"
   },
   "fish": {
     "name": "Fish",
-    "maxStack": 10
+    "maxStack": 10,
+    "reaction": "neutral"
   },
   "axe": {
     "name": "Axe",
@@ -23,6 +26,7 @@
     "name": "Seed",
     "maxStack": 99,
     "buyPrice": 20,
-    "sellPrice": 10
+    "sellPrice": 10,
+    "reaction": "dislike"
   }
 }

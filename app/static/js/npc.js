@@ -1,18 +1,33 @@
-import { DIALOGUES } from "./constants.js"
-const giftPoints = [-40, -20, 20, 45, 80]
+import { NPC_INFO, ITEMS } from "./constants.js"
+const giftPoints = {"hate": -40, "dislike": -20, "neutral": 20, "like": 45, "love": 80}
 
 export default class NPC {
   constructor(name) {
     this.name = name
 
     this.points = {"Kiran": 0}
-    this.giftnumber = {"Kiran": 0}
+    this.giftNumber = {"Kiran": 0}
     this.talked = {"Kiran": false}
     this.status = {"Kiran": 0}
     
-    this.likes = {} // 0-4 for hate-love
-    this.normal_dialogue = DIALOGUES[this.name]["normal_dialogue"]
-    console.log(this.normal_dialogue)
+    this.reactions = {}
+    Object.keys(NPC_INFO[this.name]["reactions"]).forEach(reaction => {
+      NPC_INFO[this.name]["reactions"][reaction].forEach(item => {
+        this.reactions[item] = reaction
+      })
+    })
+    this.normalDialogue = NPC_INFO[this.name]["normal_dialogue"]
+    this.giftDialogue = NPC_INFO[this.name]["gift_dialogue"]
+    // console.log(this.reactions)
+    // console.log(this.normalDialogue)
+  }
+
+  getGiftNumber() {
+    return this.giftNumber
+  }
+
+  getTalked() {
+    return this.talked
   }
 
   // possibly implement birthdays
@@ -20,13 +35,20 @@ export default class NPC {
     if (!(player in this.points)) {
       this.addPlayer(player)
     }
-    if (this.giftnumber[player] == 2) {
+    if (this.giftNumber[player] == 2) {
       // possibly display msg
       return
     }
-
-    this.points[player] += giftPoints[this.likes[item]]
-    this.giftnumber[player] += 1
+    let reaction
+    if (item in this.reactions) { // checks npc-specific reactions
+      reaction = this.reactions[item]
+    }
+    else { // defaults to universal reaction
+      reaction = ITEMS[item]["reaction"]
+    }
+    this.points[player] += giftPoints[reaction]
+    this.giftNumber[player] += 1
+    this.renderDialogue(player, this.giftDialogue[reaction])
   }
 
   talk(player) {
@@ -34,12 +56,12 @@ export default class NPC {
       this.addPlayer(player)
       this.points[player] += 20
       console.log("a")
-      this.renderDialogue(player, this.normal_dialogue[0]) //default introduction dialogue
+      this.renderDialogue(player, this.normalDialogue[0]) //default introduction dialogue
     }
     else if (this.talked[player] == false) {
       console.log("b")
       this.points[player] += 20
-      this.renderDialogue(player, this.normal_dialogue[Math.ceil(Math.random() * (this.normal_dialogue.length - 1))]) //random dialogue option (excluding intro dialogue stored at index 0 of array)
+      this.renderDialogue(player, this.normalDialogue[Math.ceil(Math.random() * (this.normalDialogue.length - 1))]) //random dialogue option (excluding intro dialogue stored at index 0 of array)
     }
     this.talked = true
   }
@@ -53,12 +75,13 @@ export default class NPC {
 
   addPlayer(player){
     this.points[player] = 0
-    this.giftnumber[player] = 0
+    this.giftNumber[player] = 0
     this.talked[player] = false
     this.status[player] = 0
   }
 
 }
 
-let Pierre = new NPC("Pierre")
-Pierre.talk("Kiran")
+let Willy = new NPC("Willy")
+Willy.gift("Kiran", "fish")
+console.log(Willy.points)

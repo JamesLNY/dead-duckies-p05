@@ -18,5 +18,18 @@
         "Some day I'm going to open a new shop in the city and make a killing. Unfortunately, business is so slow I can hardly save any money...",
         "Hey, @. You're my number one customer!"
     ],
-    "gift_dialogue": []
+    "gift_dialogue": {
+        "love": "This is my all-time favorite! Thank you!",
+        "like": "That's very kind of you. I like this.",
+        "neutral": "A present? Thanks!",
+        "dislike": "This isn't exactly my favorite...",
+        "hate": "Please, never bring this to me again."
+    },
+    "reactions": {
+        "love": [],
+        "like": ["seeds"],
+        "neutral": [],
+        "dislike": [],
+        "hate": []
+    }
 }

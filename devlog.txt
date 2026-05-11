@@ -119,4 +119,10 @@ sarahZ -- 2026-05-10 23:59
 - generated output.pdf, pdflatex was having some problems with the fonts so used xelatex
 
 kiranS -- 2026-05-11 10:50
-- Made pine tree sprite 
+- made pine tree sprite 
+
+kiranS -- 2026-05-11 19:50
+- finished logic for gifting system
+- updated items in items.json to include value for universal reactions (love/hate/etc)
+- updated npc json files to include npc-specific reactions (overriding universal reaction for that item if the specific one is present)
+- added gift dialogue to npc files

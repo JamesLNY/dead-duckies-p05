@@ -22,7 +22,7 @@ export const ITEMS = await getJson("items.json");
 
 const PIERRE = await getJson("npcs/Pierre.json")
 const WILLY = await getJson("npcs/Willy.json")
-export const DIALOGUES = {"Pierre": PIERRE, "Willy": WILLY}
+export const NPC_INFO = {"Pierre": PIERRE, "Willy": WILLY}
 
 const MIDDLE_LAYER_ENTITIES = [
   "stone",
