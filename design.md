@@ -262,7 +262,7 @@ As a hoarder, I want to increase the amount of items I can store in my inventory
 15. Static NPCs (Gus, Clint) (5/27/2026)
 16. Houses (5/30/2026)
 17. Tool Upgrades (5/30/2026)
-18. Static NPCs (Sebastian, Sam, Penny, Haley) (6/1/2026)
+18. Static NPCs (Sebastian, Sam, Penny, Haley) (5/30/2026)
 
 # Completion Criteria (_a.k.a._ "Definition of 'Done'")
 Project is considered complete when all of the following are true:
