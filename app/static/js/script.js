@@ -3,6 +3,9 @@ import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE } f
 import Map from './map.js'
 import Player from './player.js';
 import Time from './time.js';
+import NPC from './npc.js';
+import Shop from './shop.js';
+
 class InputHandler {
   constructor() {
     this.keys = {};
@@ -26,13 +29,13 @@ class StardewValley {
     this.ctx = canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = false;
 
-    //ui canvas to stop redrawing 
+    //ui canvas to stop redrawing
     this.uiCanvas = uiCanvas;
     this.uiCtx = this.uiCanvas.getContext('2d');
     this.uiCtx.imageSmoothingEnabled = false;
 
     this.maps = {
-      farm: new Map('farm'), 
+      farm: new Map('farm'),
       town: new Map('town'),
     };
     this.currentMap = 'farm';
@@ -43,7 +46,13 @@ class StardewValley {
     this.input = new InputHandler();
     this.player = new Player();
     this.time = new Time();
-    
+
+    //npcs and shops
+    this.pierre = new NPC("Pierre");
+    this.willy = new NPC("Willy");
+
+    this.pierreShop = new Shop({"seed": 25})
+
     //test
     this.player.inventory.addItem("wood", 50);
     this.player.inventory.addItem("stone", 25);
@@ -161,7 +170,7 @@ loop() {
   this.updateHotbarInput();
   this.player.move(this.input.keys, this.map);
   this.checkTeleport();
-  
+
   this.map.follow(this.player);
 
   this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
