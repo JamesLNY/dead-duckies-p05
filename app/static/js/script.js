@@ -3,6 +3,8 @@ import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE } f
 import Map from './map.js'
 import Player from './player.js';
 import Time from './time.js';
+import NPC from './npc.js';
+import Shop from './shop.js';
 
 class InputHandler {
   constructor(game) {
@@ -38,6 +40,7 @@ class StardewValley {
 
     this.maps = {
       farm: new Map('farm'),
+      town: new Map('town'),
       // town: new Map('town'),
     };
     this.currentMap = 'farm';
@@ -48,6 +51,12 @@ class StardewValley {
     this.input = new InputHandler(this);
     this.player = new Player();
     this.time = new Time();
+
+    //npcs and shops
+    this.pierre = new NPC("Pierre");
+    this.willy = new NPC("Willy");
+
+    this.pierreShop = new Shop({"seed": 25})
 
     //test
     this.player.inventory.addItem("wood", 50);
