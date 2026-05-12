@@ -1,7 +1,8 @@
 import { ITEMS } from "./constants.js";
 
 const HOTBAR_SIZE = 9;
-const SLOT_SIZE = 64;
+const SLOT_WIDTH = 50;
+const SLOT_HEIGHT = 60;
 const SPACING = 4;
 const HOTBAR_WIDTH = 640;
 const HOTBAR_HEIGHT = 80;
@@ -93,13 +94,13 @@ export class Inventory {
       let col = i % columns;
       let row = Math.floor(i / columns);
 
-      let x = startX + col * (SLOT_SIZE + SPACING);
-      let y = startY + row * (SLOT_SIZE + SPACING);
+      let x = startX + col * (SLOT_WIDTH + SPACING);
+      let y = startY + row * (SLOT_HEIGHT + SPACING);
 
       if (selected && i === this.selectedSlot) {
         uiCtx.strokeStyle = 'yellow';
         uiCtx.lineWidth = 4;
-        uiCtx.strokeRect( x, y, SLOT_SIZE, SLOT_SIZE);
+        uiCtx.strokeRect(x, y, SLOT_WIDTH, SLOT_HEIGHT);
       }
       if (slot.itemID === null) {
         continue;
@@ -107,7 +108,7 @@ export class Inventory {
 
       uiCtx.fillStyle = 'white';
       uiCtx.font = '14px Arial';
-      uiCtx.fillText( slot.itemID, x + 8, y + 22);
+      uiCtx.fillText(slot.itemID, x + 8, y + 22);
       uiCtx.fillText(slot.count, x + 8, y + 44);
     }
   }
@@ -118,6 +119,6 @@ export class Inventory {
     const hotbarY = 10; 
     uiCtx.clearRect( 0, 0, uiCanvas.width, uiCanvas.height);
     uiCtx.drawImage(this.hotbar, hotbarX, hotbarY, HOTBAR_WIDTH, HOTBAR_HEIGHT);
-    this.render( uiCtx, hotbarX + 16, hotbarY + 8,  HOTBAR_SIZE, 1);
+    this.render( uiCtx, hotbarX + 9, hotbarY + 10,  HOTBAR_SIZE, 1);
   }
 }

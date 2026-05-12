@@ -133,6 +133,9 @@ loop() {
 
   this.time.update();
   this.time.render(this.ctx);
+  
+  //redraw since it won't show up otherwise 
+  this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
 
   requestAnimationFrame(() => this.loop());
   };
