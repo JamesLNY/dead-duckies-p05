@@ -129,3 +129,17 @@ kiranS -- 2026-05-11 19:50
 
 jamesL -- 2026-05-11 20:40
 - changed design doc in response to feedback
+
+sarahZ -- 2026-05-11 21:05
+INITIAL DD REVIEW:
+  - broken formatting/margins of design doc from markdown to pdf conversion
+  - missing specific deliverables section in team ownership plan
+  - stamina should not be a stretch feature 
+  - fair distribution of tasks 
+  - detailed and well-organized database design
+  - detailed and specific deliverables and timeline
+DESIGN REVISIONS THUS FAR:
+------------------------------------
+  * fixed margins formatting of design doc when converted to pdf
+  * modified team ownership plan with general primary/secondary ownerships and added specific deliverables
+  * changed stamina to a core feature 
