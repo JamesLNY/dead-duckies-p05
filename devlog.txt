@@ -143,3 +143,8 @@ DESIGN REVISIONS THUS FAR:
   * fixed margins formatting of design doc when converted to pdf
   * modified team ownership plan with general primary/secondary ownerships and added specific deliverables
   * changed stamina to a core feature 
+
+sarahZ -- 2026-05-11 23:11
+- got town map from game files and tiled (buildings are on the same layer as map features, so not sure how to isolate. maybe manually erase from tile sheets? discuss with team tmr)
+- added ability to set map destination and tile destination x y coords for teleporter tiles in editor.js and drop-down menu in editor.html
+- added ability to warp with teleporter checker in script.js

@@ -1,3 +1,8 @@
+// key bindings 
+// t - add tile/remove tile mode 
+// s - download JSON
+// p - print tile to console
+
 async function getJson(file_name) {
   let raw = await fetch(`/static/json/${file_name}`, {
     cache: 'no-store'
@@ -72,15 +77,33 @@ function render() {
 }
 
 function draw(e) {
-  render();
   const x = Math.floor((e.offsetX) / TILE_SIZE);
   const y = Math.floor((e.offsetY) / TILE_SIZE);
+  console.log(tiles[x][y]);
+  if (currentProperty === 'setwarp') {
+    if (!tiles[x][y].teleporter) {
+      alert('dis not a teleporter tile doofus');
+      return;
+    }
+    const destination = prompt('destination map?');
+    if (!destination) return;
+    const destX = parseInt(prompt('destination x?'));
+    if (isNaN(destX)) return;
+    const destY = parseInt(prompt("destination y?"));
+    if (isNaN(destY)) return;
+    tiles[x][y].destination = { map: destination, x: destX, y: destY};
+    console.log('yay dis worked');
+    render();
+    return;
+  }
   if (paint) {
     tiles[x][y][currentProperty] = !PROPERTIES[currentProperty].defaultValue;
   } else {
     tiles[x][y][currentProperty] = PROPERTIES[currentProperty].defaultValue;
   }
+  render();
 }
+
 
 window.addEventListener('load', function() {
   canvas.width = MAP_WIDTH;

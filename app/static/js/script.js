@@ -31,11 +31,19 @@ class StardewValley {
     this.uiCtx = this.uiCanvas.getContext('2d');
     this.uiCtx.imageSmoothingEnabled = false;
 
-    this.map = new Map('farm');
+    this.maps = {
+      farm: new Map('farm'), 
+      town: new Map('town'),
+    };
+    this.currentMap = 'farm';
+    this.map = this.maps['farm'];
+    //so player isnt js teleported back and forth on a warp tile
+    this.justTeleported = false;
+
     this.input = new InputHandler();
     this.player = new Player();
     this.time = new Time();
-
+    
     //test
     this.player.inventory.addItem("wood", 50);
     this.player.inventory.addItem("stone", 25);
@@ -43,13 +51,14 @@ class StardewValley {
 
     this.renderHotbar();
 
-    this.map.loadTiles('farm').then(() => {
+    //i think this loads both maps at the same time before game starts
+    Promise.all([
+      this.maps.['farm'].loadTiles('farm'),
+      this.maps['town'].loadTiles('town'),
+    ]).then(() => {
       this.initializeFarm();
       this.loop();
-    })
-
-    // this.initializeFarm();
-    // this.loop();
+    });
   }
 
   // static async create(canvas) {
@@ -132,9 +141,27 @@ updateHotbarInput() {
   }
 }
 
+checkTeleport() {
+  const tile = this.map.getTile(this.player.x, this.player.y + 23);
+  if (tile && tile.teleporter && tile.destination) {
+    if (!this.justTeleported) {
+      this.justTeleported = true;
+      this.currentMap = tile.destination.map;
+      this.map = this.maps[tile.destination.map];
+      this.player.x = tile.destination.x * TILE_SIZE;
+      this.player.y = tile.destination.y * TILE_SIZE;
+    }
+    else {
+      this.justTeleported = false;
+    }
+  }
+}
+
 loop() {
   this.updateHotbarInput();
   this.player.move(this.input.keys, this.map);
+  this.checkTeleport();
+  
   this.map.follow(this.player);
 
   this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
