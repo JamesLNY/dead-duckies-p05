@@ -1,6 +1,6 @@
 import { ITEMS } from './constants.js';
 
-export class Shop {
+export default class Shop {
     constructor (shopInventory) {
       // this.player = player;
       this.shopInventory = shopInventory; // {String item: INT cost}

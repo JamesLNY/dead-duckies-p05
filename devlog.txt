@@ -151,3 +151,7 @@ sarahZ -- 2026-05-11 23:11
 
 sarahZ -- 2026-05-12 11:00
 - added map selector and town map to editor.js
+
+jamesL -- 2026-05-12 11:40
+- added key bind for player to interact with map
+- added option to chop wood

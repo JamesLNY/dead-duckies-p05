@@ -1,26 +1,34 @@
 {
   "twig": {
-    "breakable_by": [
+    "tools": [
       "axe"
-    ]
+    ],
     "drop": {
       "wood": 1
     }
-  }
-  "twig": {
-    "breakable_by": [
-      "axe"
-    ]
+  },
+  "stone": {
+    "tools": [
+      "pickaxe"
+    ],
     "drop": {
-      "wood": 1
+      "stone": 1
     }
-  }
-  "twig": {
-    "breakable_by": [
-      "axe"
-    ]
+  },
+  "weed": {
+    "tools": [
+      "scythe"
+    ],
     "drop": {
-      "wood": 1
+      "mixed seeds": 1
+    }
+  },
+  "tree": {
+    "tools": [
+      "axe"
+    ],
+    "drop": {
+      "wood": 10
     }
   }
 }

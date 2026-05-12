@@ -11,17 +11,35 @@
     "sellPrice": 4,
     "reaction": "dislike"
   },
+  "mixed seeds": {
+    "maxStack": 99,
+    "sellPrice": 5,
+    "reaction": "neutral"
+  },
   "fish": {
     "maxStack": 10,
     "reaction": "neutral"
-  },
-  "axe": {
-    "maxStack": 1
   },
   "seed": {
     "maxStack": 99,
     "buyPrice": 20,
     "sellPrice": 10,
     "reaction": "dislike"
+  },
+
+  "axe": {
+    "maxStack": 1
+  },
+  "pickaxe": {
+    "maxStack": 1
+  },
+  "hoe": {
+    "maxStack": 1
+  },
+  "scythe": {
+    "maxStack": 1
+  },
+  "watering can": {
+    "maxStack": 1
   }
 }

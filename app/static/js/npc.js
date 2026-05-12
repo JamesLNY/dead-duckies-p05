@@ -9,7 +9,7 @@ export default class NPC {
     this.giftNumber = {"Kiran": 0}
     this.talked = {"Kiran": false}
     this.status = {"Kiran": 0}
-    
+
     this.reactions = {}
     Object.keys(NPC_INFO[this.name]["reactions"]).forEach(reaction => {
       NPC_INFO[this.name]["reactions"][reaction].forEach(item => {
@@ -68,9 +68,9 @@ export default class NPC {
 
   renderDialogue(player, dialogue) {
     console.log(dialogue)
-    document.getElementById("npc").innerHTML = this.name
-    document.getElementById("dialogue").innerHTML = dialogue.replaceAll("@", player)
-    document.getElementById("portrait").src = `/static/images/portraits/${this.name}.png`
+    // document.getElementById("npc").innerHTML = this.name
+    // document.getElementById("dialogue").innerHTML = dialogue.replaceAll("@", player)
+    // document.getElementById("portrait").src = `/static/images/portraits/${this.name}.png`
   }
 
   addPlayer(player){

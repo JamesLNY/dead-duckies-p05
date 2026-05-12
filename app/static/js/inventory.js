@@ -99,8 +99,6 @@ export class Inventory {
     let totalWidth = HOTBAR_SIZE * SLOT_SIZE + (HOTBAR_SIZE - 1) * SPACING;
     let startX = (uiCanvas.width - totalWidth) / 2;
 
-    console.log("HERE");
-
     for (let i = 0; i < HOTBAR_SIZE; i += 1) {
       let slot = this.getSlot(i);
       let x = startX + i * (SLOT_SIZE + SPACING);
@@ -110,9 +108,7 @@ export class Inventory {
 
       uiCtx.fillRect(x, y, SLOT_SIZE, SLOT_SIZE);
 
-      console.log(this.selectedSlot);
       if (i === this.selectedSlot) {
-        console.log("HERE2")
         uiCtx.strokeStyle = 'yellow';
         uiCtx.lineWidth = 4;
         uiCtx.strokeRect( x, y, SLOT_SIZE, SLOT_SIZE);

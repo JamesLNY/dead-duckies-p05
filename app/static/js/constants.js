@@ -19,6 +19,7 @@ export const FRAME_RATE = 16;
 export const TIME_CONVERSION = 450; // HIGHER = Slower Time
 
 export const ITEMS = await getJson("items.json");
+export const ENTITIES = await getJson("entities.json")
 
 const PIERRE = await getJson("npcs/Pierre.json")
 const WILLY = await getJson("npcs/Willy.json")

@@ -1,4 +1,4 @@
-import { TILE_SIZE, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, MOVEMENT_SPEED } from "./constants.js";
+import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, MOVEMENT_SPEED } from "./constants.js";
 import { Inventory } from './inventory.js';
 
 // Correspond with rows in player.png
@@ -68,15 +68,13 @@ export default class Player {
   }
 
   interact(map) {
-    let item = this.inventory.get(getSelectedItemID);
-    let tile = getTile(map);
-    if (item == 'axe') {
-      const AXE_CHOPPABLE_ENTITIES = ["twig"]
-      if (AXE_CHOPPABLE_ENTITIES.includes(tile.layers["middle"])) {
-        
+    let item = this.inventory.getSelectedItemID();
+    let tile = this.getTile(map);
+    let entity = tile.layers["middle"];
+    if (entity != null) {
+      if (ENTITIES[entity]["tools"].includes(item)) {
+        tile.remove("middle");
       }
-
-      if (tile.layers["front"])
     }
   }
 
