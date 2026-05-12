@@ -126,3 +126,6 @@ kiranS -- 2026-05-11 19:50
 - updated items in items.json to include value for universal reactions (love/hate/etc)
 - updated npc json files to include npc-specific reactions (overriding universal reaction for that item if the specific one is present)
 - added gift dialogue to npc files
+
+jamesL -- 2026-05-11 20:40
+- changed design doc in response to feedback

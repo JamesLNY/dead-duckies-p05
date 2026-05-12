@@ -25,7 +25,7 @@ We are creating a Stardew Valley emulator with our initial phase focused on the 
 To offer a free, simplified, and web-version of Stardew Valley. Provides a trial of the game before users commit to buying the actual game. 
 
 ## Target Users
-Users who enjoy Stardew Valley and other farming games
+Users who enjoy Stardew Valley and farming games like it, or users who simply want to try out this genre of games.
 
 ## Why This Project Matters
 For us as developers, it builds off our work and lessons/skills learned from our previous P02 Civilization 6 emulator project while challenging us and helping us learn more about the gameplay logic and programming behind it. There are also many people we know who want to try Stardew Valley but are unable to or unsure about purchasing the actual game or do not have the storage for it.
@@ -44,21 +44,21 @@ Features that **must** be completed:
 5. Inventory
 6. Farming 
 7. Time
+8. Stamina
 
 ## Stretch Features (Only if MVP is Complete)
 
-1. Stamina
-2. NPCs/Relationships
-3. Mining/Fishing/Foraging
-4. Crafting/Cooking/Construction/Tool Upgrades
-6. Community Center
-7. Skill Levels
+1. NPCs/Relationships
+2. Mining/Fishing/Foraging
+3. Crafting/Cooking/Construction/Tool Upgrades
+4. Community Center
+5. Skill Levels
 
 ## Explicit Non-Goals
 
 Features intentionally excluded:
-- NPC Schedules and Pathways in Stardew Valey
-- Festivals, animals, marriage, seasons and weather, and story events in Stardew Valley
+- NPC schedules and pathways
+- Festivals, animals, marriage, seasons and weather, and story events
 
 ---
 
@@ -84,10 +84,10 @@ Each member must own meaningful deliverables.
 
 | Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
 |---|---|---|---|
-| James | Player, Entitities, Trees | Forest/Foraging, Mining, Houses | | 
-| Kiran | Assets, Time, Static NPCs (Willy, Pierre), Relationships, Fishing | Static NPCs (Sebastian, Sam, Penny, Haley), Community Center | |
-| Sarah | Maps, Pierre's, Travel, Stamina | Static NPCs (Gus, Clint), Eating | |
-| Emaan | PM Tasks, Inventory | Crafting, Tool Upgrades, Cooking | |
+| James | Player, Entitities, Forest/Foraging, Mining | Houses, Static NPCs (Sebastian, Sam, Penny, Haley) | - Create movable player <br> - Display multi-tile entities <br> - Randomly spawn entities <br> - Break entities to obtain items | 
+| Kiran | Time, Static NPCs (Willy, Pierre), Relationships, Fishing | Static NPCs (Sebastian, Sam, Penny, Haley), Community Center | - Create clock interface <br> - Create NPC dialog <br> - Track player relationships with NPCs <br> - Option to gift NPC an item <br> - Fishing minigame |
+| Sarah | Maps, Pierre's, Travel, Stamina | Static NPCs (Gus, Clint) | - Mark passsable and tillable tiles for Farm, Town, Quarry, and Forest <br> - Player teleport between maps when walking on specific tiles <br> - Create stamina bar <br> - Render pierre's shop menu |
+| Emaan | Inventory, Crafting, Cooking | | - Display the hotbar, with hotkeys to switch slots <br> - Open inventory menu, with the option to click and drag options <br> - Crafting menu with recipe unlocks|
 
 ---
 
@@ -209,7 +209,7 @@ As a hoarder, I want to increase the amount of items I can store in my inventory
    - Ensure items are priced correctly
    - Players cannot go below 0 gold
 - Fishing
-   - Ensure fishing AI works as intended
+   - Ensure fishing UI works as intended
 - Inventory
    - Make sure items properly carry over between days
    - Make sure items can only be picked up if inventory has space
