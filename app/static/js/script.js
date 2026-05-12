@@ -3,14 +3,18 @@ import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE } f
 import Map from './map.js'
 import Player from './player.js';
 import Time from './time.js';
+
 class InputHandler {
-  constructor() {
+  constructor(game) {
     this.keys = {};
     window.addEventListener('keydown', e => {
-      //this prevents the overall screen from scrolling, i added it bc i thought it was annoying
-      this.keys[e.key] = true;
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+        this.keys[e.key] = true;
         e.preventDefault();
+      }
+      if (Number.isInteger(parseInt(e.key))) {
+        game.player.inventory.selectSlot(e.key - 1);
+        game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
       }
     });
     window.addEventListener('keyup', e => {
@@ -26,35 +30,35 @@ class StardewValley {
     this.ctx = canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = false;
 
-    //ui canvas to stop redrawing 
+    //ui canvas to stop redrawing
     this.uiCanvas = uiCanvas;
     this.uiCtx = this.uiCanvas.getContext('2d');
     this.uiCtx.imageSmoothingEnabled = false;
 
     this.maps = {
-      farm: new Map('farm'), 
-      town: new Map('town'),
+      farm: new Map('farm'),
+      // town: new Map('town'),
     };
     this.currentMap = 'farm';
     this.map = this.maps['farm'];
     //so player isnt js teleported back and forth on a warp tile
     this.justTeleported = false;
 
-    this.input = new InputHandler();
+    this.input = new InputHandler(this);
     this.player = new Player();
     this.time = new Time();
-    
+
     //test
     this.player.inventory.addItem("wood", 50);
     this.player.inventory.addItem("stone", 25);
     this.player.inventory.addItem("axe", 1);
 
-    this.renderHotbar();
+    this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
 
     //i think this loads both maps at the same time before game starts
     Promise.all([
-      this.maps.['farm'].loadTiles('farm'),
-      this.maps['town'].loadTiles('town'),
+      this.maps['farm'].loadTiles('farm'),
+      // this.maps['town'].loadTiles('town'),
     ]).then(() => {
       this.initializeFarm();
       this.loop();
@@ -90,57 +94,6 @@ class StardewValley {
     this.map.removeBigEntity(playerTile.x, playerTile.y);
   }
 
-  renderHotbar() {
-    const SLOT_SIZE = 64;
-    const SPACING = 4;
-
-    const inventory = this.player.inventory;
-
-    this.uiCtx.clearRect(0, 0, this.uiCanvas.width, this.uiCanvas.height);
-
-    let totalWidth = 9 * SLOT_SIZE + 8 * SPACING;
-    let startX =
-      (this.uiCanvas.width - totalWidth) / 2;
-
-    for (let i = 0; i < 9; i += 1) {
-      let slot = inventory.getSlot(i);
-      let x = startX + i * (SLOT_SIZE + SPACING);
-      let y = 18;
-
-      this.uiCtx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-
-      this.uiCtx.fillRect(x, y, SLOT_SIZE, SLOT_SIZE);
-
-      if (i === inventory.selectedSlot) {
-        this.uiCtx.strokeStyle = 'yellow';
-        this.uiCtx.lineWidth = 4;
-        this.uiCtx.strokeRect( x, y, SLOT_SIZE, SLOT_SIZE);
-      }
-
-      if (slot.itemID === null) {
-        continue;
-      }
-
-      this.uiCtx.fillStyle = 'white';
-      this.uiCtx.font = '14px Arial';
-
-      this.uiCtx.fillText(slot.itemID, x + 8, y + 22);
-
-      this.uiCtx.fillText(slot.count, x + 8, y + 44);
-    }
-  }
-
-updateHotbarInput() {
-  for (let i = 1; i <= 9; i += 1) {
-    if (this.input.keys[i]) {
-      this.player.inventory.selectSlot(i - 1);
-      this.renderHotbar();
-
-      this.input.keys[i] = false;
-    }
-  }
-}
-
 checkTeleport() {
   const tile = this.map.getTile(this.player.x, this.player.y + 23);
   if (tile && tile.teleporter && tile.destination) {
@@ -158,10 +111,10 @@ checkTeleport() {
 }
 
 loop() {
-  this.updateHotbarInput();
+  // this.updateHotbarInput();
   this.player.move(this.input.keys, this.map);
   this.checkTeleport();
-  
+
   this.map.follow(this.player);
 
   this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);

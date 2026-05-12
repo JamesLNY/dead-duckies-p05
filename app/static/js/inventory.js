@@ -1,6 +1,13 @@
 import { ITEMS } from "./constants.js";
 
 const HOTBAR_SIZE = 9;
+const SLOT_SIZE = 64;
+const SPACING = 4;
+
+export class Hotbar {
+  render(inventory) {
+  }
+}
 
 export class Inventory {
   constructor(size = 24) {
@@ -14,7 +21,7 @@ export class Inventory {
 
   selectSlot(index) {
     if (index >= 0 && index < HOTBAR_SIZE) {
-      this.selectedSlot = index;
+      this.selectedSlot = parseInt(index);
     }
   }
 
@@ -75,9 +82,52 @@ export class Inventory {
     }
     return remaining === 0;
   }
-  
+
 //debug
   getSlot(index) {
     return this.slots[index];
+  }
+
+  // Renders inventory
+  render() {
+
+  }
+
+  renderHotbar(uiCtx, uiCanvas) {
+    uiCtx.clearRect(0, 0, uiCanvas.width, uiCanvas.height);
+
+    let totalWidth = HOTBAR_SIZE * SLOT_SIZE + (HOTBAR_SIZE - 1) * SPACING;
+    let startX = (uiCanvas.width - totalWidth) / 2;
+
+    console.log("HERE");
+
+    for (let i = 0; i < HOTBAR_SIZE; i += 1) {
+      let slot = this.getSlot(i);
+      let x = startX + i * (SLOT_SIZE + SPACING);
+      let y = 18;
+
+      uiCtx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+
+      uiCtx.fillRect(x, y, SLOT_SIZE, SLOT_SIZE);
+
+      console.log(this.selectedSlot);
+      if (i === this.selectedSlot) {
+        console.log("HERE2")
+        uiCtx.strokeStyle = 'yellow';
+        uiCtx.lineWidth = 4;
+        uiCtx.strokeRect( x, y, SLOT_SIZE, SLOT_SIZE);
+      }
+
+      if (slot.itemID === null) {
+        continue;
+      }
+
+      uiCtx.fillStyle = 'white';
+      uiCtx.font = '14px Arial';
+
+      uiCtx.fillText(slot.itemID, x + 8, y + 22);
+
+      uiCtx.fillText(slot.count, x + 8, y + 44);
+    }
   }
 }
