@@ -11,10 +11,11 @@ class InputHandler {
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
         this.keys[e.key] = true;
         e.preventDefault();
-      }
-      if (Number.isInteger(parseInt(e.key))) {
+      } else if (Number.isInteger(parseInt(e.key))) {
         game.player.inventory.selectSlot(e.key - 1);
         game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
+      } else if (e.key == "c") {
+        game.player.interact(game.map);
       }
     });
     window.addEventListener('keyup', e => {

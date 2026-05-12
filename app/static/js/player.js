@@ -15,7 +15,7 @@ export default class Player {
     this.facing = DOWN;
     this.moving = false;
     this.frame = 0;
-    
+
     this.inventory = new Inventory();
 
     this.sprite = new Image();
@@ -65,6 +65,19 @@ export default class Player {
       this.x = x;
       this.y = y;
     // }
+  }
+
+  interact(map) {
+    let item = this.inventory.get(getSelectedItemID);
+    let tile = getTile(map);
+    if (item == 'axe') {
+      const AXE_CHOPPABLE_ENTITIES = ["twig"]
+      if (AXE_CHOPPABLE_ENTITIES.includes(tile.layers["middle"])) {
+        
+      }
+
+      if (tile.layers["front"])
+    }
   }
 
   getTile(map) {
