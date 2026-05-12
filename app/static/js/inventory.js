@@ -3,19 +3,18 @@ import { ITEMS } from "./constants.js";
 const HOTBAR_SIZE = 9;
 const SLOT_SIZE = 64;
 const SPACING = 4;
-
-export class Hotbar {
-  render(inventory) {
-  }
-}
+const HOTBAR_WIDTH = 640;
+const HOTBAR_HEIGHT = 80;
 
 export class Inventory {
   constructor(size = 24) {
     this.slots = [];
     this.selectedSlot = 0;
+    this.hotbar = new Image();
+    this.hotbar.src = '/static/images/hotbar.png';
 
     for (let i = 0; i < size; i += 1) {
-      this.slots[i] = { itemID: null, count: 0 };
+      this.slots[i] = {itemID: null, count: 0};
     }
   }
 
@@ -31,6 +30,10 @@ export class Inventory {
 
   getSelectedItemID() {
     return this.slots[this.selectedSlot].itemID;
+  }
+
+  getSlot(index) {
+    return this.slots[index];
   }
 
   addItem(itemID, amount) {
@@ -69,7 +72,7 @@ export class Inventory {
     for (let i = 0; i < this.slots.length; i += 1) {
       let slot = this.slots[i];
       if (slot.itemID === itemID) {
-        let remove = Math.min(slot.count, remaining);
+        let remove = Math.min(slot.count,remaining);
         slot.count -= remove;
         remaining -= remove;
         if (slot.count === 0) {
@@ -83,47 +86,38 @@ export class Inventory {
     return remaining === 0;
   }
 
-//debug
-  getSlot(index) {
-    return this.slots[index];
-  }
-
-  // Renders inventory
-  render() {
-
-  }
-
-  renderHotbar(uiCtx, uiCanvas) {
-    uiCtx.clearRect(0, 0, uiCanvas.width, uiCanvas.height);
-
-    let totalWidth = HOTBAR_SIZE * SLOT_SIZE + (HOTBAR_SIZE - 1) * SPACING;
-    let startX = (uiCanvas.width - totalWidth) / 2;
-
-    for (let i = 0; i < HOTBAR_SIZE; i += 1) {
+  //this takes coordinates of upper left corner
+  render(uiCtx, startX, startY, columns, rows, selected = true) {
+    for (let i = 0; i < columns * rows; i += 1) {
       let slot = this.getSlot(i);
-      let x = startX + i * (SLOT_SIZE + SPACING);
-      let y = 18;
+      let col = i % columns;
+      let row = Math.floor(i / columns);
 
-      uiCtx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+      let x = startX + col * (SLOT_SIZE + SPACING);
+      let y = startY + row * (SLOT_SIZE + SPACING);
 
-      uiCtx.fillRect(x, y, SLOT_SIZE, SLOT_SIZE);
-
-      if (i === this.selectedSlot) {
+      if (selected && i === this.selectedSlot) {
         uiCtx.strokeStyle = 'yellow';
         uiCtx.lineWidth = 4;
         uiCtx.strokeRect( x, y, SLOT_SIZE, SLOT_SIZE);
       }
-
       if (slot.itemID === null) {
         continue;
       }
 
       uiCtx.fillStyle = 'white';
       uiCtx.font = '14px Arial';
-
-      uiCtx.fillText(slot.itemID, x + 8, y + 22);
-
+      uiCtx.fillText( slot.itemID, x + 8, y + 22);
       uiCtx.fillText(slot.count, x + 8, y + 44);
     }
+  }
+
+  renderHotbar(uiCtx, uiCanvas) {
+    //const in here since uiCanvas is only in renderHotbar
+    const hotbarX = (uiCanvas.width - HOTBAR_WIDTH) / 2;
+    const hotbarY = 10; 
+    uiCtx.clearRect( 0, 0, uiCanvas.width, uiCanvas.height);
+    uiCtx.drawImage(this.hotbar, hotbarX, hotbarY, HOTBAR_WIDTH, HOTBAR_HEIGHT);
+    this.render( uiCtx, hotbarX + 16, hotbarY + 8,  HOTBAR_SIZE, 1);
   }
 }
