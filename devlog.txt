@@ -119,7 +119,7 @@ sarahZ -- 2026-05-10 23:59
 - generated output.pdf, pdflatex was having some problems with the fonts so used xelatex
 
 kiranS -- 2026-05-11 10:50
-- made pine tree sprite 
+- made pine tree sprite
 
 kiranS -- 2026-05-11 19:50
 - finished logic for gifting system
@@ -134,17 +134,20 @@ sarahZ -- 2026-05-11 21:05
 INITIAL DD REVIEW:
   - broken formatting/margins of design doc from markdown to pdf conversion
   - missing specific deliverables section in team ownership plan
-  - stamina should not be a stretch feature 
-  - fair distribution of tasks 
+  - stamina should not be a stretch feature
+  - fair distribution of tasks
   - detailed and well-organized database design
   - detailed and specific deliverables and timeline
 DESIGN REVISIONS THUS FAR:
 ------------------------------------
   * fixed margins formatting of design doc when converted to pdf
   * modified team ownership plan with general primary/secondary ownerships and added specific deliverables
-  * changed stamina to a core feature 
+  * changed stamina to a core feature
 
 sarahZ -- 2026-05-11 23:11
 - got town map from game files and tiled (buildings are on the same layer as map features, so not sure how to isolate. maybe manually erase from tile sheets? discuss with team tmr)
 - added ability to set map destination and tile destination x y coords for teleporter tiles in editor.js and drop-down menu in editor.html
 - added ability to warp with teleporter checker in script.js
+
+sarahZ -- 2026-05-12 11:00
+- added map selector and town map to editor.js
