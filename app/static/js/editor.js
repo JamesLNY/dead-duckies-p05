@@ -1,5 +1,5 @@
-// key bindings 
-// t - add tile/remove tile mode 
+// key bindings
+// t - add tile/remove tile mode
 // s - download JSON
 // p - print tile to console
 
@@ -23,10 +23,14 @@ const PROPERTIES = {
   teleporter: {defaultValue: false, color: 'rgba(0, 0, 255, 0.35)'}
 };
 
+const propertySelect = document.getElementById('property-select');
+const mapSelect = document.getElementById('map-select');
+
 let currentProperty = 'passable';
+let currentMap = 'farm';
 
 const map = new Image();
-map.src = '/static/images/maps/farm.png';
+map.src = '/static/images/maps/farm.png'
 
 const canvas = document.getElementById('main-canvas');
 const ctx = canvas.getContext('2d');
@@ -45,9 +49,7 @@ ctx.imageSmoothingEnabled = false;
 //   }
 // }
 
-const propertySelect = document.getElementById('property-select');
-
-let tiles = await getJson("maps/farm.json");
+let tiles = await getJson(`maps/${currentMap}.json`);
 
 let paint = true;
 let held = false;
@@ -128,6 +130,12 @@ window.addEventListener('keydown', e => {
 
 propertySelect.addEventListener('change', () => {
   currentProperty = propertySelect.value;
+});
+
+mapSelect.addEventListener('change', () => {
+  currentMap = mapSelect.value;
+  map = new Image()
+  map.src = `/static/images/maps/${currentMap}.png`
 });
 
 canvas.addEventListener('mousedown', e => {
