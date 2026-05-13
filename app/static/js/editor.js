@@ -13,8 +13,8 @@ async function getJson(file_name) {
 
 // Specifically for editor.html
 const TILE_SIZE = 16;
-const MAP_WIDTH = 1280;
-const MAP_HEIGHT = 1040;
+// const MAP_WIDTH = 1280;
+// const MAP_HEIGHT = 1040;
 // const MODIFYING_ATTRIBUTE = "passable";
 // const DEFAULT_VALUE = true;
 const PROPERTIES = {
@@ -37,9 +37,9 @@ const ctx = canvas.getContext('2d');
 ctx.imageSmoothingEnabled = false;
 
 // let tiles = [];
-// for (let x = 0; x < MAP_WIDTH / TILE_SIZE; x++) {
+// for (let x = 0; x < map.width / TILE_SIZE; x++) {
 //   tiles.push([]);
-//   for (let y = 0; y < MAP_HEIGHT / TILE_SIZE; y++) {
+//   for (let y = 0; y < map.height / TILE_SIZE; y++) {
 //     tiles.at(-1).push({
 //       "passable": true,
 //       "tillable": true, // Only for farm map
@@ -49,19 +49,19 @@ ctx.imageSmoothingEnabled = false;
 //   }
 // }
 
-let tiles = await getJson(`maps/${currentMap}.json`);
+let tiles = await getJson('maps/farm.json');
 
 let paint = true;
 let held = false;
 
 function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(map, 0, 0, MAP_WIDTH, MAP_HEIGHT, 0, 0, MAP_WIDTH, MAP_HEIGHT);
+  ctx.drawImage(map, 0, 0, map.width, map.height, 0, 0, map.width, map.height);
 
   for (const [key, def] of Object.entries(PROPERTIES)) {
     ctx.fillStyle = def.color;
-    for (let x = 0; x < MAP_WIDTH / TILE_SIZE; x++) {
-      for (let y = 0; y < MAP_HEIGHT / TILE_SIZE; y++) {
+    for (let x = 0; x < map.width / TILE_SIZE; x++) {
+      for (let y = 0; y < map.height / TILE_SIZE; y++) {
         if (tiles[x][y][key] != def.defaultValue) {
           ctx.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         }
@@ -108,10 +108,14 @@ function draw(e) {
 
 
 window.addEventListener('load', function() {
-  canvas.width = MAP_WIDTH;
-  canvas.height = MAP_HEIGHT;
-  render();
-})
+  map.onload = () => {
+    canvas.width = map.width;
+    canvas.height = map.height;
+    ctx.imageSmoothingEnabled = false;
+    render();
+  }
+  map.src = '/static/images/maps/farm.png'
+});
 
 window.addEventListener('keydown', e => {
   if (e.key === 'p') {
@@ -126,7 +130,7 @@ window.addEventListener('keydown', e => {
   } else if (e.key === 't') {
     paint = !paint;
   }
-})
+});
 
 propertySelect.addEventListener('change', () => {
   currentProperty = propertySelect.value;
@@ -134,11 +138,15 @@ propertySelect.addEventListener('change', () => {
 
 mapSelect.addEventListener('change', async () => {
   currentMap = mapSelect.value;
-  map = new Image()
-  map.src = `/static/images/maps/${currentMap}.png`
-  map.onload = render;
   tiles = await getJson(`maps/${currentMap}.json`);
-  render();
+  map = new Image()
+  map.onload = () => {
+    canvas.width = map.width;
+    canvas.height = map.height;
+    ctx.imageSmoothingEnabled = false;
+    render();
+  };
+  map.src = `/static/images/maps/${currentMap}.png`
 });
 
 canvas.addEventListener('mousedown', e => {
