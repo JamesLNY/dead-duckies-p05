@@ -1,10 +1,11 @@
-import { ITEMS } from './constants.js';
+import { ITEMS, UI_FACTOR } from './constants.js';
 
 export default class Shop {
-    constructor (shopInventory) {
+    constructor (shopInventory, npc) {
       // this.player = player;
       this.shopInventory = shopInventory; // {String item: INT cost}
       // this.playerInventory = playerInventory;
+      this.npc = npc;
     }
 
     buy(itemID, player, playerInventory) {
@@ -34,5 +35,9 @@ export default class Shop {
         return true;
         }
       return false;
+    }
+
+    render(ctx) {
+      ctx.drawImage("/static/images/ui/shop.png", 0, 0, UI_FACTOR * 375, UI_FACTOR * 176)
     }
   }

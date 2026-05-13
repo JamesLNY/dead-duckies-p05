@@ -39,7 +39,7 @@ class InputHandler {
 
 //doesn't need to be a class, but doing it for organization
 class StardewValley {
-  constructor(canvas, uiCanvas) {
+  constructor(canvas, uiCanvas, overlayCanvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = false;
@@ -48,6 +48,10 @@ class StardewValley {
     this.uiCanvas = uiCanvas;
     this.uiCtx = this.uiCanvas.getContext('2d');
     this.uiCtx.imageSmoothingEnabled = false;
+
+    this.overlayCanvas = overlayCanvas;
+    this.overlayCtx = this.overlayCanvas.getContext('2d');
+    this.overlayCtx.imageSmoothingEnabled = false;
 
     this.maps = {
       farm: new Map('farm'),
@@ -67,7 +71,7 @@ class StardewValley {
     // this.pierre = new NPC("Pierre");
     // this.willy = new NPC("Willy");
 
-    this.pierreShop = new Shop({"seed": 25})
+    this.pierreShop = new Shop({"seed": 25}, "Pierre")
 
     //test
     this.player.inventory.addItem("wood", 50);
@@ -149,6 +153,8 @@ loop() {
   this.time.update();
   this.time.render(this.ctx);
 
+  this.pierreShop.render(this.overlayCtx);
+
   //redraw since it won't show up otherwise
   this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
 
@@ -166,5 +172,9 @@ loop() {
   uiCanvas.width = HOTBAR_WIDTH * UI_FACTOR;
   uiCanvas.height = HOTBAR_HEIGHT * UI_FACTOR;
 
-  new StardewValley(canvas, uiCanvas);
+  const overlayCanvas = document.getElementById('overlay-canvas');
+  canvas.width = CANVAS_WIDTH;
+  canvas.height = CANVAS_HEIGHT;
+
+  new StardewValley(canvas, uiCanvas, overlayCanvas);
 // });
