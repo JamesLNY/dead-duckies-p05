@@ -1,11 +1,4 @@
-import { ITEMS } from "./constants.js";
-
-const HOTBAR_SIZE = 9;
-const SLOT_WIDTH = 50;
-const SLOT_HEIGHT = 60;
-const SPACING = 4;
-const HOTBAR_WIDTH = 640;
-const HOTBAR_HEIGHT = 80;
+import { TILE_SIZE, ITEMS, HOTBAR_HEIGHT, HOTBAR_WIDTH, UI_FACTOR, HOTBAR_SIZE } from "./constants.js";
 
 export class Inventory {
   constructor(size = 24) {
@@ -13,6 +6,8 @@ export class Inventory {
     this.selectedSlot = 0;
     this.hotbar = new Image();
     this.hotbar.src = '/static/images/hotbar.png';
+    this.select = new Image();
+    this.select.src = '/static/images/select.png'
 
     for (let i = 0; i < size; i += 1) {
       this.slots[i] = {itemID: null, count: 0};
@@ -65,6 +60,7 @@ export class Inventory {
         break;
       }
     }
+
     return remaining === 0;
   }
 
@@ -94,13 +90,11 @@ export class Inventory {
       let col = i % columns;
       let row = Math.floor(i / columns);
 
-      let x = startX + col * (SLOT_WIDTH + SPACING);
-      let y = startY + row * (SLOT_HEIGHT + SPACING);
+      let x = startX + col * TILE_SIZE * UI_FACTOR;
+      let y = startY + row * TILE_SIZE * UI_FACTOR;
 
       if (selected && i === this.selectedSlot) {
-        uiCtx.strokeStyle = 'yellow';
-        uiCtx.lineWidth = 4;
-        uiCtx.strokeRect(x, y, SLOT_WIDTH, SLOT_HEIGHT);
+        uiCtx.drawImage(this.select, x, y, 48, 48);
       }
       if (slot.itemID === null) {
         continue;
@@ -115,10 +109,8 @@ export class Inventory {
 
   renderHotbar(uiCtx, uiCanvas) {
     //const in here since uiCanvas is only in renderHotbar
-    const hotbarX = (uiCanvas.width - HOTBAR_WIDTH) / 2;
-    const hotbarY = 10; 
-    uiCtx.clearRect( 0, 0, uiCanvas.width, uiCanvas.height);
-    uiCtx.drawImage(this.hotbar, hotbarX, hotbarY, HOTBAR_WIDTH, HOTBAR_HEIGHT);
-    this.render( uiCtx, hotbarX + 9, hotbarY + 10,  HOTBAR_SIZE, 1);
+    uiCtx.clearRect(0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
+    uiCtx.drawImage(this.hotbar, 0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
+    this.render(uiCtx, 9, 9, HOTBAR_SIZE, 1);
   }
 }

@@ -39,9 +39,9 @@ export default class Map {
 
   removeBigEntity(x, y) {
     if (this.tiles[x][y].layers["front"] instanceof BigEntity) {
-      this.tiles[x][y].layers["front"].destroy();
+      this.tiles[x][y].layers["front"].destroy(this);
       this.bigEntities = this.bigEntities.filter((ent) => {
-        return ent.x != x && ent.y != y;
+        return ent.x != x || ent.y != y;
       })
     }
   }

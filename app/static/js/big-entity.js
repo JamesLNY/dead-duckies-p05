@@ -14,7 +14,9 @@ export default class BigEntity {
       for (let dy = 0; dy < this.image.height / TILE_SIZE; dy++) {
         try { // If tile doesn't exist, just ignore
           let tile = map.tiles[this.x - this.image_x + dx][this.y - this.image_y + dy];
-          tile.add(true, "front");
+          if (tile.layers["front"] == null) {
+            tile.add(true, "front");
+          }
         } catch {}
       }
     }
@@ -29,10 +31,13 @@ export default class BigEntity {
       for (let dy = 0; dy < this.image.height / TILE_SIZE; dy++) {
         try {
           let tile = map.tiles[this.x - this.image_x + dx][this.y - this.image_y + dy];
+          if (! (tile.layers["front"] instanceof BigEntity)) {
+            tile.remove("front");
+          }
         } catch {}
-        tile.remove("front");
       }
     }
+    map.tiles[this.x][this.y].remove("front");
   }
 
   render(ctx, map, player) {

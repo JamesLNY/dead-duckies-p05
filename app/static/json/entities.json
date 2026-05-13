@@ -3,7 +3,7 @@
     "tools": [
       "axe"
     ],
-    "drop": {
+    "drops": {
       "wood": 1
     }
   },
@@ -11,7 +11,7 @@
     "tools": [
       "pickaxe"
     ],
-    "drop": {
+    "drops": {
       "stone": 1
     }
   },
@@ -19,7 +19,7 @@
     "tools": [
       "scythe"
     ],
-    "drop": {
+    "drops": {
       "mixed seeds": 1
     }
   },
@@ -27,7 +27,7 @@
     "tools": [
       "axe"
     ],
-    "drop": {
+    "drops": {
       "wood": 10
     }
   }

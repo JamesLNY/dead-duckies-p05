@@ -1,3 +1,4 @@
+import BigEntity from "./big-entity.js";
 import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, MOVEMENT_SPEED } from "./constants.js";
 import { Inventory } from './inventory.js';
 
@@ -74,6 +75,18 @@ export default class Player {
     if (entity != null) {
       if (ENTITIES[entity]["tools"].includes(item)) {
         tile.remove("middle");
+        for (const [key, value] of Object.entries(ENTITIES[entity]["drops"])) {
+          this.inventory.addItem(key, value);
+        }
+      }
+    }
+    entity = tile.layers["front"];
+    if (entity instanceof BigEntity) {
+      if (ENTITIES[entity.type]["tools"].includes(item)) {
+        map.removeBigEntity(tile.x, tile.y);
+        for (const [key, value] of Object.entries(ENTITIES[entity.type]["drops"])) {
+          this.inventory.addItem(key, value);
+        }
       }
     }
   }
@@ -91,7 +104,7 @@ export default class Player {
         tile = map.getTile(this.x, this.y);
         break;
       case DOWN:
-        tile = map.getTile(this.x, this.y + TILE_SIZE * 1.5);
+        tile = map.getTile(this.x, this.y + TILE_SIZE * 1.5 + MOVEMENT_SPEED);
         break;
     }
     return tile;

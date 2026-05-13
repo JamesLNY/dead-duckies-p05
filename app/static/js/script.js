@@ -1,4 +1,5 @@
-import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE } from './constants.js'
+import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE,
+         UI_FACTOR, HOTBAR_HEIGHT, HOTBAR_WIDTH } from './constants.js'
 
 import Map from './map.js'
 import Player from './player.js';
@@ -14,7 +15,17 @@ class InputHandler {
         this.keys[e.key] = true;
         e.preventDefault();
       } else if (Number.isInteger(parseInt(e.key))) {
-        game.player.inventory.selectSlot(e.key - 1);
+        if (parseInt(e.key) == 0) {
+          game.player.inventory.selectSlot(10);
+        } else {
+          game.player.inventory.selectSlot(e.key - 1);
+        }
+        game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
+      } else if (e.key == "-") {
+        game.player.inventory.selectSlot(11);
+        game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
+      } else if (e.key == "=") {
+        game.player.inventory.selectSlot(12);
         game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
       } else if (e.key == "c") {
         game.player.interact(game.map);
@@ -119,6 +130,10 @@ checkTeleport() {
   }
 }
 
+pauseLoop() {
+  
+}
+
 loop() {
   // this.updateHotbarInput();
   this.player.move(this.input.keys, this.map);
@@ -148,8 +163,8 @@ loop() {
   // StardewValley.create(canvas);
 
   const uiCanvas = document.getElementById('ui-canvas');
-  uiCanvas.width = CANVAS_WIDTH;
-  uiCanvas.height = 100;
+  uiCanvas.width = HOTBAR_WIDTH * UI_FACTOR;
+  uiCanvas.height = HOTBAR_HEIGHT * UI_FACTOR;
 
   new StardewValley(canvas, uiCanvas);
 // });
