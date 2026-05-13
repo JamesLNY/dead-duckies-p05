@@ -8,7 +8,7 @@
 
 ## Description:
 
-We are creating a Stardew Valley emulator with our initial phase focused on the standard farm map. Games can be joined by players through the lobby in a pregenerated map. Players will have inventories, be able to sell and buy goods, fish, mine, craft, and establish relationships. 
+We are creating a Stardew Valley emulator with our initial phase focused on the standard farm map. Games can be joined by players through the lobby. Players start with a farm with randomized trees and debris. Players will have inventories, be able to sell and buy goods, fish, mine, craft, and establish relationships along with a time and gold system.
 
 Map / Tiles / Movement: The world consists of a scrolling, tile-based map divided into regions (farm, town, forest, mines). Tiles represent terrain like water and trees. Players will be able to move across the map tile to tile. 
 
