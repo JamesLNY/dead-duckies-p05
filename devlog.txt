@@ -166,6 +166,7 @@ sarahZ -- 2026-05-12 20:50
 - debugged editor.js to show town map on drop down menu
 - set destination in json files for map and town, put in place-holder town json
 - warp works, need to fix town map sizing in editor
+
 emaanA --2026-05-12 20:20
 ------------------------
 PYTHON STYLE:
@@ -181,3 +182,7 @@ JAVASCRIPT STYLE:
 - aspects of the style guide most appreciated by devo's were single line comments + a lack of redundant comments: redundancy bad, explanation good
 reference of usage: (in map.js)
  this.image.src = `/static/images/maps/${name}.png`
+
+jamesL --2026-05-12 21:20
+- Updated hotbar to follow Stardew tile sizes
+- Allowed player to chop items and receive it in their inventory
