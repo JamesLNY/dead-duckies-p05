@@ -72,20 +72,27 @@ export default class Player {
     let item = this.inventory.getSelectedItemID();
     let tile = this.getTile(map);
     let entity = tile.layers["middle"];
-    if (entity != null) {
-      if (ENTITIES[entity]["tools"].includes(item)) {
-        tile.remove("middle");
-        for (const [key, value] of Object.entries(ENTITIES[entity]["drops"])) {
-          this.inventory.addItem(key, value);
+
+    if (item == "hoe") {
+      if (entity != null) {
+        tile.add()
+      }
+    } else {
+      if (entity != null) {
+        if (ENTITIES[entity]["tools"].includes(item)) {
+          tile.remove("middle");
+          for (const [key, value] of Object.entries(ENTITIES[entity]["drops"])) {
+            this.inventory.addItem(key, value);
+          }
         }
       }
-    }
-    entity = tile.layers["front"];
-    if (entity instanceof BigEntity) {
-      if (ENTITIES[entity.type]["tools"].includes(item)) {
-        map.removeBigEntity(tile.x, tile.y);
-        for (const [key, value] of Object.entries(ENTITIES[entity.type]["drops"])) {
-          this.inventory.addItem(key, value);
+      entity = tile.layers["front"];
+      if (entity instanceof BigEntity) {
+        if (ENTITIES[entity.type]["tools"].includes(item)) {
+          map.removeBigEntity(tile.x, tile.y);
+          for (const [key, value] of Object.entries(ENTITIES[entity.type]["drops"])) {
+            this.inventory.addItem(key, value);
+          }
         }
       }
     }

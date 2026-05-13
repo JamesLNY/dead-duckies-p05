@@ -70,9 +70,8 @@ class StardewValley {
     this.pierreShop = new Shop({"seed": 25})
 
     //test
-    this.player.inventory.addItem("wood", 50);
-    this.player.inventory.addItem("stone", 25);
     this.player.inventory.addItem("axe", 1);
+    this.player.inventory.addItem("hoe", 1)
 
     this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
 
@@ -131,7 +130,7 @@ checkTeleport() {
 }
 
 pauseLoop() {
-  
+
 }
 
 loop() {
@@ -148,8 +147,8 @@ loop() {
 
   this.time.update();
   this.time.render(this.ctx);
-  
-  //redraw since it won't show up otherwise 
+
+  //redraw since it won't show up otherwise
   this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
 
   requestAnimationFrame(() => this.loop());

@@ -10,16 +10,16 @@ export default class BigEntity {
     this.image_x = OBJECT_PLACEMENT[type]["x"];
     this.image_y = OBJECT_PLACEMENT[type]["y"];
 
-    for (let dx = 0; dx < this.image.width / TILE_SIZE; dx++) {
-      for (let dy = 0; dy < this.image.height / TILE_SIZE; dy++) {
-        try { // If tile doesn't exist, just ignore
-          let tile = map.tiles[this.x - this.image_x + dx][this.y - this.image_y + dy];
-          if (tile.layers["front"] == null) {
-            tile.add(true, "front");
-          }
-        } catch {}
-      }
-    }
+    // for (let dx = 0; dx < this.image.width / TILE_SIZE; dx++) {
+    //   for (let dy = 0; dy < this.image.height / TILE_SIZE; dy++) {
+    //     try { // If tile doesn't exist, just ignore
+    //       let tile = map.tiles[this.x - this.image_x + dx][this.y - this.image_y + dy];
+    //       if (tile.layers["front"] == null) {
+    //         tile.add(true, "front");
+    //       }
+    //     } catch {}
+    //   }
+    // }
     if (breakable) {
       let tile = map.tiles[this.x][this.y];
       tile.add(this, "front");
@@ -27,16 +27,16 @@ export default class BigEntity {
   }
 
   destroy(map) {
-    for (let dx = 0; dx < this.image.width / TILE_SIZE; dx++) {
-      for (let dy = 0; dy < this.image.height / TILE_SIZE; dy++) {
-        try {
-          let tile = map.tiles[this.x - this.image_x + dx][this.y - this.image_y + dy];
-          if (! (tile.layers["front"] instanceof BigEntity)) {
-            tile.remove("front");
-          }
-        } catch {}
-      }
-    }
+    // for (let dx = 0; dx < this.image.width / TILE_SIZE; dx++) {
+    //   for (let dy = 0; dy < this.image.height / TILE_SIZE; dy++) {
+    //     try {
+    //       let tile = map.tiles[this.x - this.image_x + dx][this.y - this.image_y + dy];
+    //       if (! (tile.layers["front"] instanceof BigEntity)) {
+    //         tile.remove("front");
+    //       }
+    //     } catch {}
+    //   }
+    // }
     map.tiles[this.x][this.y].remove("front");
   }
 
@@ -48,7 +48,7 @@ export default class BigEntity {
         (this.y - this.image_y) * TILE_SIZE + this.image.height > player.y + 2 * TILE_SIZE) {
       ctx.globalAlpha = 0.5;
     }
-    
+
     ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height,
       ((this.x - this.image_x) * TILE_SIZE - map.x) * SCALE_FACTOR,
       ((this.y - this.image_y) * TILE_SIZE - map.y) * SCALE_FACTOR,
