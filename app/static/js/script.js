@@ -64,8 +64,8 @@ class StardewValley {
     this.time = new Time();
 
     //npcs and shops
-    this.pierre = new NPC("Pierre");
-    this.willy = new NPC("Willy");
+    // this.pierre = new NPC("Pierre");
+    // this.willy = new NPC("Willy");
 
     this.pierreShop = new Shop({"seed": 25})
 
@@ -131,7 +131,7 @@ checkTeleport() {
 }
 
 pauseLoop() {
-  
+
 }
 
 loop() {
@@ -148,8 +148,8 @@ loop() {
 
   this.time.update();
   this.time.render(this.ctx);
-  
-  //redraw since it won't show up otherwise 
+
+  //redraw since it won't show up otherwise
   this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
 
   requestAnimationFrame(() => this.loop());
