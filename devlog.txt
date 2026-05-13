@@ -158,3 +158,6 @@ jamesL -- 2026-05-12 11:40
 
 emaanA --2026-05-12 20:00
 - updates to inventory.js (rendering using hotbar.png + render function)
+
+kiranS -- 2026-05-12 20:00
+- created shop ui and gold meter sprite in ms paint using components in game files
