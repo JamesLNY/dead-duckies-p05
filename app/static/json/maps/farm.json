@@ -31062,19 +31062,31 @@
       "passable": true,
       "tillable": false,
       "teleporter": true,
-      "destination": null
+      "destination": {
+        "map": "town",
+        "x": 6,
+        "y": 54
+      }
     },
     {
       "passable": true,
       "tillable": false,
       "teleporter": true,
-      "destination": null
+      "destination": {
+        "map": "town",
+        "x": 6,
+        "y": 54
+      }
     },
     {
       "passable": true,
       "tillable": false,
       "teleporter": true,
-      "destination": null
+      "destination": {
+        "map": "town",
+        "x": 6,
+        "y": 54
+      }
     },
     {
       "passable": false,

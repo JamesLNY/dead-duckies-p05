@@ -68,7 +68,7 @@ class StardewValley {
     //i think this loads both maps at the same time before game starts
     Promise.all([
       this.maps['farm'].loadTiles('farm'),
-      // this.maps['town'].loadTiles('town'),
+      this.maps['town'].loadTiles('town'),
     ]).then(() => {
       this.initializeFarm();
       this.loop();

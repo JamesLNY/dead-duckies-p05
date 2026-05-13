@@ -29,7 +29,7 @@ const mapSelect = document.getElementById('map-select');
 let currentProperty = 'passable';
 let currentMap = 'farm';
 
-const map = new Image();
+let map = new Image();
 map.src = '/static/images/maps/farm.png'
 
 const canvas = document.getElementById('main-canvas');
@@ -81,12 +81,12 @@ function render() {
 function draw(e) {
   const x = Math.floor((e.offsetX) / TILE_SIZE);
   const y = Math.floor((e.offsetY) / TILE_SIZE);
-  console.log(tiles[x][y]);
+  console.log(`${x}, ${y}`);
   if (currentProperty === 'setwarp') {
     if (!tiles[x][y].teleporter) {
-      alert('dis not a teleporter tile doofus');
       return;
     }
+    held = false;
     const destination = prompt('destination map?');
     if (!destination) return;
     const destX = parseInt(prompt('destination x?'));
@@ -132,10 +132,13 @@ propertySelect.addEventListener('change', () => {
   currentProperty = propertySelect.value;
 });
 
-mapSelect.addEventListener('change', () => {
+mapSelect.addEventListener('change', async () => {
   currentMap = mapSelect.value;
   map = new Image()
   map.src = `/static/images/maps/${currentMap}.png`
+  map.onload = render;
+  tiles = await getJson(`maps/${currentMap}.json`);
+  render();
 });
 
 canvas.addEventListener('mousedown', e => {
