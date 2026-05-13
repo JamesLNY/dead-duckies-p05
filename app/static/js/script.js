@@ -4,7 +4,7 @@ import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE,
 import Map from './map.js'
 import Player from './player.js';
 import Time from './time.js';
-import NPC from './npc.js';
+//import NPC from './npc.js';
 import Shop from './shop.js';
 
 class InputHandler {
