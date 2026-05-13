@@ -68,9 +68,9 @@ export default class NPC {
 
   renderDialogue(player, dialogue) {
     console.log(dialogue)
-    // document.getElementById("npc").innerHTML = this.name
-    // document.getElementById("dialogue").innerHTML = dialogue.replaceAll("@", player)
-    // document.getElementById("portrait").src = `/static/images/portraits/${this.name}.png`
+    document.getElementById("npc").innerHTML = this.name
+    document.getElementById("dialogue").innerHTML = dialogue.replaceAll("@", player)
+    document.getElementById("portrait").src = `/static/images/portraits/${this.name}.png`
   }
 
   addPlayer(player){

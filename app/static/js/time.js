@@ -8,7 +8,7 @@ export default class Time {
     this.currTime = 0 //600-2600 (mod 2400 for display)
     this.numTicks = 0
     this.display = new Image()
-    this.display.src = "/static/images/clock.png"
+    this.display.src = "/static/images/ui/clock.png"
   }
 
   getTime() {

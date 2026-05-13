@@ -5,9 +5,9 @@ export class Inventory {
     this.slots = [];
     this.selectedSlot = 0;
     this.hotbar = new Image();
-    this.hotbar.src = '/static/images/hotbar.png';
+    this.hotbar.src = '/static/images/ui/hotbar.png';
     this.select = new Image();
-    this.select.src = '/static/images/select.png'
+    this.select.src = '/static/images/ui/select.png'
 
     for (let i = 0; i < size; i += 1) {
       this.slots[i] = {itemID: null, count: 0};
