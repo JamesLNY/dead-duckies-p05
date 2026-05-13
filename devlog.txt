@@ -186,3 +186,8 @@ reference of usage: (in map.js)
 jamesL --2026-05-12 21:20
 - Updated hotbar to follow Stardew tile sizes
 - Allowed player to chop items and receive it in their inventory
+
+emaanA --2026-05-13 14:00 
+- updated keys for hotbar input in scripts.js
+- added click and drag to inventory + added renderInventory
+- changed uiCanvas to hotbarCanvas

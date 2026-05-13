@@ -1,17 +1,26 @@
-import { TILE_SIZE, ITEMS, HOTBAR_HEIGHT, HOTBAR_WIDTH, UI_FACTOR, HOTBAR_SIZE } from "./constants.js";
+import {TILE_SIZE, ITEMS, HOTBAR_HEIGHT, HOTBAR_WIDTH, UI_FACTOR, HOTBAR_SIZE } from "./constants.js";
 
 export class Inventory {
   constructor(size = 24) {
     this.slots = [];
     this.selectedSlot = 0;
+    this.open = false;
+    this.draggingSlot = null;
+    this.draggingItem = null;
     this.hotbar = new Image();
     this.hotbar.src = '/static/images/ui/hotbar.png';
+    this.inventoryMenu = new Image();
+    this.inventoryMenu.src = '/static/images/ui/inventory.png';
     this.select = new Image();
-    this.select.src = '/static/images/ui/select.png'
+    this.select.src = '/static/images/ui/select.png';
 
     for (let i = 0; i < size; i += 1) {
       this.slots[i] = {itemID: null, count: 0};
     }
+  }
+
+  toggle() {
+    this.open = !this.open;
   }
 
   selectSlot(index) {
@@ -60,7 +69,6 @@ export class Inventory {
         break;
       }
     }
-
     return remaining === 0;
   }
 
@@ -69,7 +77,7 @@ export class Inventory {
     for (let i = 0; i < this.slots.length; i += 1) {
       let slot = this.slots[i];
       if (slot.itemID === itemID) {
-        let remove = Math.min(slot.count,remaining);
+        let remove = Math.min(slot.count, remaining);
         slot.count -= remove;
         remaining -= remove;
         if (slot.count === 0) {
@@ -83,8 +91,72 @@ export class Inventory {
     return remaining === 0;
   }
 
+  getSlotAtPosition(mouseX, mouseY, startX, startY, columns, rows) {
+    for (let i = 0; i < columns * rows; i += 1) {
+      let col = i % columns;
+      let row = Math.floor(i / columns);
+      let x = startX + col * TILE_SIZE * UI_FACTOR;
+      let y = startY + row * TILE_SIZE * UI_FACTOR;
+      let size = TILE_SIZE * UI_FACTOR;
+      if ( mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size) {
+        return i;
+      }
+    }
+    return null;
+  }
+
+  startDrag(index) {
+    let slot = this.slots[index];
+    if (slot.itemID === null) {
+      return;
+    }
+    this.draggingSlot = index;
+    this.draggingItem = {
+      itemID: slot.itemID,
+      count: slot.count
+    };
+    slot.itemID = null;
+    slot.count = 0;
+  }
+
+  endDrag(index) {
+    if (this.draggingItem === null) {
+      return;
+    }
+    let target = this.slots[index];
+    if (target.itemID === null) {
+      target.itemID = this.draggingItem.itemID;
+      target.count = this.draggingItem.count;
+    }
+    else if (target.itemID === this.draggingItem.itemID) {
+      let max = ITEMS[target.itemID].maxStack;
+      let space = max - target.count;
+      let add = Math.min(space, this.draggingItem.count);
+      target.count += add;
+      this.draggingItem.count -= add;
+      if (this.draggingItem.count > 0) {
+        this.slots[this.draggingSlot] = {
+          itemID: this.draggingItem.itemID,
+          count: this.draggingItem.count
+        };
+      }
+    }
+
+    else {
+      let temp = {
+        itemID: target.itemID,
+        count: target.count
+      };
+      target.itemID = this.draggingItem.itemID;
+      target.count = this.draggingItem.count;
+      this.slots[this.draggingSlot] = temp;
+    }
+    this.draggingItem = null;
+    this.draggingSlot = null;
+  }
+
   //this takes coordinates of upper left corner
-  render(uiCtx, startX, startY, columns, rows, selected = true) {
+  render(hotbarCtx, startX, startY, columns, rows, selected = true) {
     for (let i = 0; i < columns * rows; i += 1) {
       let slot = this.getSlot(i);
       let col = i % columns;
@@ -94,23 +166,45 @@ export class Inventory {
       let y = startY + row * TILE_SIZE * UI_FACTOR;
 
       if (selected && i === this.selectedSlot) {
-        uiCtx.drawImage(this.select, x, y, 48, 48);
+        hotbarCtx.drawImage(this.select, x, y, 48, 48);
       }
       if (slot.itemID === null) {
         continue;
       }
 
-      uiCtx.fillStyle = 'white';
-      uiCtx.font = '14px Arial';
-      uiCtx.fillText(slot.itemID, x + 8, y + 22);
-      uiCtx.fillText(slot.count, x + 8, y + 44);
+      hotbarCtx.fillStyle = 'white';
+      hotbarCtx.font = '14px Arial';
+      hotbarCtx.fillText(slot.itemID, x + 8, y + 22);
+      hotbarCtx.fillText(slot.count, x + 8, y + 44);
     }
   }
 
-  renderHotbar(uiCtx, uiCanvas) {
-    //const in here since uiCanvas is only in renderHotbar
-    uiCtx.clearRect(0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
-    uiCtx.drawImage(this.hotbar, 0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
-    this.render(uiCtx, 9, 9, HOTBAR_SIZE, 1);
+  renderHotbar(hotbarCtx) {
+    hotbarCtx.clearRect(0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
+    hotbarCtx.drawImage( this.hotbar,0,0,HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
+    this.render(hotbarCtx, 9, 9, HOTBAR_SIZE, 1);
+  }
+
+  renderInventory(hotbarCtx, canvas) {
+    if (!this.open) {
+      return;
+    }
+    let width = 352;
+    let height = 256;
+    let startX = (canvas.width - width) / 2;
+    let startY = (canvas.height - height) / 2;
+    hotbarCtx.drawImage(this.inventoryMenu,startX,startY,width,height);
+
+    this.render( hotbarCtx, startX + 32, startY + 32, 8, 3, false);
+  }
+
+  renderDraggedItem(hotbarCtx, mouseX, mouseY) {
+    if (this.draggingItem === null) {
+      return;
+    }
+    hotbarCtx.fillStyle = 'white';
+    hotbarCtx.font = '14px Arial';
+    hotbarCtx.fillText(this.draggingItem.itemID, mouseX, mouseY);
+    hotbarCtx.fillText(this.draggingItem.count, mouseX, mouseY + 18);
   }
 }

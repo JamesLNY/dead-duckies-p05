@@ -20,13 +20,13 @@ class InputHandler {
         } else {
           game.player.inventory.selectSlot(e.key - 1);
         }
-        game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
+        game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
       } else if (e.key == "-") {
         game.player.inventory.selectSlot(10);
-        game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
+        game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
       } else if (e.key == "=") {
         game.player.inventory.selectSlot(11);
-        game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
+        game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
       } else if (e.key == "c") {
         game.player.interact(game.map);
       }
@@ -39,15 +39,15 @@ class InputHandler {
 
 //doesn't need to be a class, but doing it for organization
 class StardewValley {
-  constructor(canvas, uiCanvas) {
+  constructor(canvas, hotbarCanvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = false;
 
     //ui canvas to stop redrawing
-    this.uiCanvas = uiCanvas;
-    this.uiCtx = this.uiCanvas.getContext('2d');
-    this.uiCtx.imageSmoothingEnabled = false;
+    this.hotbarCanvas = hotbarCanvas;
+    this.hotbarCtx = this.hotbarCanvas.getContext('2d');
+    this.hotbarCtx.imageSmoothingEnabled = false;
 
     this.maps = {
       farm: new Map('farm'),
@@ -73,7 +73,7 @@ class StardewValley {
     this.player.inventory.addItem("axe", 1);
     this.player.inventory.addItem("hoe", 1)
 
-    this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
+    this.player.inventory.renderHotbar(this.hotbarCtx, this.hotbarCanvas);
 
     //i think this loads both maps at the same time before game starts
     Promise.all([
@@ -149,7 +149,7 @@ loop() {
   this.time.render(this.ctx);
 
   //redraw since it won't show up otherwise
-  this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
+  this.player.inventory.renderHotbar(this.hotbarCtx);
 
   requestAnimationFrame(() => this.loop());
   };
@@ -161,9 +161,9 @@ loop() {
   canvas.height = CANVAS_HEIGHT;
   // StardewValley.create(canvas);
 
-  const uiCanvas = document.getElementById('ui-canvas');
-  uiCanvas.width = HOTBAR_WIDTH * UI_FACTOR;
-  uiCanvas.height = HOTBAR_HEIGHT * UI_FACTOR;
+  const hotbarCanvas = document.getElementById('hotbar-canvas');
+  hotbarCanvas.width = HOTBAR_WIDTH * UI_FACTOR;
+  hotbarCanvas.height = HOTBAR_HEIGHT * UI_FACTOR;
 
-  new StardewValley(canvas, uiCanvas);
+  new StardewValley(canvas, hotbarCanvas);
 // });
