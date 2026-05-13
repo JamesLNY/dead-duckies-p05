@@ -4,7 +4,7 @@ import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE,
 import Map from './map.js'
 import Player from './player.js';
 import Time from './time.js';
-// import NPC from './npc.js';
+import NPC from './npc.js';
 import Shop from './shop.js';
 
 class InputHandler {
@@ -49,9 +49,9 @@ class StardewValley {
     this.uiCtx = this.uiCanvas.getContext('2d');
     this.uiCtx.imageSmoothingEnabled = false;
 
-    this.overlayCanvas = overlayCanvas;
-    this.overlayCtx = this.overlayCanvas.getContext('2d');
-    this.overlayCtx.imageSmoothingEnabled = false;
+    // this.overlayCanvas = overlayCanvas;
+    // this.overlayCtx = this.overlayCanvas.getContext('2d');
+    // this.overlayCtx.imageSmoothingEnabled = false;
 
     this.maps = {
       farm: new Map('farm'),
@@ -74,8 +74,9 @@ class StardewValley {
     this.pierreShop = new Shop({"seed": 25}, "Pierre")
 
     //test
+    this.player.inventory.addItem("wood", 50);
+    this.player.inventory.addItem("stone", 25);
     this.player.inventory.addItem("axe", 1);
-    this.player.inventory.addItem("hoe", 1)
 
     this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
 
@@ -152,7 +153,9 @@ loop() {
   this.time.update();
   this.time.render(this.ctx);
 
-  this.pierreShop.render(this.overlayCtx);
+  // console.log(this.overlayCtx);
+  // this.pierreShop.render(this.overlayCtx);
+
 
   //redraw since it won't show up otherwise
   this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
@@ -172,8 +175,8 @@ loop() {
   uiCanvas.height = HOTBAR_HEIGHT * UI_FACTOR;
 
   const overlayCanvas = document.getElementById('overlay-canvas');
-  canvas.width = CANVAS_WIDTH;
-  canvas.height = CANVAS_HEIGHT;
+  overlayCanvas.width = CANVAS_WIDTH;
+  overlayCanvas.height = CANVAS_HEIGHT;
 
   new StardewValley(canvas, uiCanvas, overlayCanvas);
 // });

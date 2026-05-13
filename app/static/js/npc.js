@@ -1,5 +1,6 @@
-import { NPC_INFO, ITEMS } from "./constants.js"
+import { NPC_INFO, ITEMS, CANVAS_WIDTH, CANVAS_HEIGHT } from "./constants.js"
 const giftPoints = {"hate": -40, "dislike": -20, "neutral": 20, "like": 45, "love": 80}
+import Shop from "./shop.js"
 
 export default class NPC {
   constructor(name) {
@@ -80,8 +81,15 @@ export default class NPC {
     this.status[player] = 0
   }
 
+  loop() {
+
+  }
 }
 
 let Willy = new NPC("Willy")
 Willy.gift("Kiran", "fish")
 console.log(Willy.points)
+
+const overlayCanvas = document.getElementById('overlay-canvas');
+overlayCanvas.width = CANVAS_WIDTH;
+overlayCanvas.height = CANVAS_HEIGHT;
