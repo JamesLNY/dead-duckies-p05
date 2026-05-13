@@ -16,16 +16,16 @@ class InputHandler {
         e.preventDefault();
       } else if (Number.isInteger(parseInt(e.key))) {
         if (parseInt(e.key) == 0) {
-          game.player.inventory.selectSlot(9);
+          game.player.inventory.selectSlot(10);
         } else {
           game.player.inventory.selectSlot(e.key - 1);
         }
         game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
       } else if (e.key == "-") {
-        game.player.inventory.selectSlot(10);
+        game.player.inventory.selectSlot(11);
         game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
       } else if (e.key == "=") {
-        game.player.inventory.selectSlot(11);
+        game.player.inventory.selectSlot(12);
         game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
       } else if (e.key == "c") {
         game.player.interact(game.map);

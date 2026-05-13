@@ -2,10 +2,18 @@
 let loadedCrops = {};
 
 export default class Crop {
-  constructor(x, y, type, map, breakable=true) {
+  constructor(x, y, type, map) {
     this.x = x;
     this.y = y;
     this.type = type;
+
+    if (type in loadedCrops) {
+      this.image = loadedCrops[type];
+    } else {
+      let asset = new Image();
+      asset.src = ""
+    }
+
     this.image = TILE_IMAGES["front"][type];
     this.image_x = OBJECT_PLACEMENT[type]["x"];
     this.image_y = OBJECT_PLACEMENT[type]["y"];
