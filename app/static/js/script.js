@@ -4,7 +4,7 @@ import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE,
 import Map from './map.js'
 import Player from './player.js';
 import Time from './time.js';
-// import NPC from './npc.js';
+import NPC from './npc.js';
 import Shop from './shop.js';
 
 class InputHandler {
@@ -16,16 +16,16 @@ class InputHandler {
         e.preventDefault();
       } else if (Number.isInteger(parseInt(e.key))) {
         if (parseInt(e.key) == 0) {
-          game.player.inventory.selectSlot(10);
+          game.player.inventory.selectSlot(9);
         } else {
           game.player.inventory.selectSlot(e.key - 1);
         }
         game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
       } else if (e.key == "-") {
-        game.player.inventory.selectSlot(11);
+        game.player.inventory.selectSlot(10);
         game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
       } else if (e.key == "=") {
-        game.player.inventory.selectSlot(12);
+        game.player.inventory.selectSlot(11);
         game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
       } else if (e.key == "c") {
         game.player.interact(game.map);
@@ -64,14 +64,15 @@ class StardewValley {
     this.time = new Time();
 
     //npcs and shops
-    // this.pierre = new NPC("Pierre");
-    // this.willy = new NPC("Willy");
+    this.pierre = new NPC("Pierre");
+    this.willy = new NPC("Willy");
 
     this.pierreShop = new Shop({"seed": 25})
 
     //test
+    this.player.inventory.addItem("wood", 50);
+    this.player.inventory.addItem("stone", 25);
     this.player.inventory.addItem("axe", 1);
-    this.player.inventory.addItem("hoe", 1)
 
     this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
 
