@@ -161,3 +161,19 @@ emaanA --2026-05-12 20:00
 
 kiranS -- 2026-05-12 20:00
 - created shop ui and gold meter sprite in ms paint using components in game files
+
+emaanA --2026-05-12 20:20
+------------------------
+PYTHON STYLE:
+- aspects of the style guide that were most applicable to our python style was our imports: at the top of the file, in order of standard library imports, then third party imports, and include blank line between each group of imports
+- aspects of the style guide devo's deemed most useful were indentation; indents make code readable
+reference of usage: (in __init___.py)
+from flask import Flask, render_template, request, session, redirect, flash, url_for
+
+from flask_socketio import SocketIO, join_room, emit
+------------------------
+JAVASCRIPT STYLE:
+- aspects of the style guide that were most applicable to our javascript style was concatenation of strings
+- aspects of the style guide most appreciated by devo's were single line comments + a lack of redundant comments: redundancy bad, explanation good
+reference of usage: (in map.js)
+ this.image.src = `/static/images/maps/${name}.png`
