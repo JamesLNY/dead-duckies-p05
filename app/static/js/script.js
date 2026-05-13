@@ -4,7 +4,7 @@ import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE,
 import Map from './map.js'
 import Player from './player.js';
 import Time from './time.js';
-import NPC from './npc.js';
+// import NPC from './npc.js';
 import Shop from './shop.js';
 
 class InputHandler {
@@ -16,16 +16,16 @@ class InputHandler {
         e.preventDefault();
       } else if (Number.isInteger(parseInt(e.key))) {
         if (parseInt(e.key) == 0) {
-          game.player.inventory.selectSlot(9);
+          game.player.inventory.selectSlot(10);
         } else {
           game.player.inventory.selectSlot(e.key - 1);
         }
         game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
       } else if (e.key == "-") {
-        game.player.inventory.selectSlot(10);
+        game.player.inventory.selectSlot(11);
         game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
       } else if (e.key == "=") {
-        game.player.inventory.selectSlot(11);
+        game.player.inventory.selectSlot(12);
         game.player.inventory.renderHotbar(game.uiCtx, game.uiCanvas);
       } else if (e.key == "c") {
         game.player.interact(game.map);
@@ -39,7 +39,7 @@ class InputHandler {
 
 //doesn't need to be a class, but doing it for organization
 class StardewValley {
-  constructor(canvas, uiCanvas, overlayCanvas) {
+  constructor(canvas, uiCanvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = false;
@@ -48,10 +48,6 @@ class StardewValley {
     this.uiCanvas = uiCanvas;
     this.uiCtx = this.uiCanvas.getContext('2d');
     this.uiCtx.imageSmoothingEnabled = false;
-
-    // this.overlayCanvas = overlayCanvas;
-    // this.overlayCtx = this.overlayCanvas.getContext('2d');
-    // this.overlayCtx.imageSmoothingEnabled = false;
 
     this.maps = {
       farm: new Map('farm'),
@@ -71,12 +67,11 @@ class StardewValley {
     // this.pierre = new NPC("Pierre");
     // this.willy = new NPC("Willy");
 
-    this.pierreShop = new Shop({"seed": 25}, "Pierre")
+    // this.pierreShop = new Shop({"seed": 25})
 
     //test
-    this.player.inventory.addItem("wood", 50);
-    this.player.inventory.addItem("stone", 25);
     this.player.inventory.addItem("axe", 1);
+    this.player.inventory.addItem("hoe", 1)
 
     this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
 
@@ -153,10 +148,6 @@ loop() {
   this.time.update();
   this.time.render(this.ctx);
 
-  // console.log(this.overlayCtx);
-  // this.pierreShop.render(this.overlayCtx);
-
-
   //redraw since it won't show up otherwise
   this.player.inventory.renderHotbar(this.uiCtx, this.uiCanvas);
 
@@ -174,9 +165,5 @@ loop() {
   uiCanvas.width = HOTBAR_WIDTH * UI_FACTOR;
   uiCanvas.height = HOTBAR_HEIGHT * UI_FACTOR;
 
-  const overlayCanvas = document.getElementById('overlay-canvas');
-  overlayCanvas.width = CANVAS_WIDTH;
-  overlayCanvas.height = CANVAS_HEIGHT;
-
-  new StardewValley(canvas, uiCanvas, overlayCanvas);
+  new StardewValley(canvas, uiCanvas);
 // });
