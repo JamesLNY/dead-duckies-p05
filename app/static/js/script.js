@@ -5,7 +5,7 @@ import Map from './map.js'
 import Player from './player.js';
 import Time from './time.js';
 // import NPC from './npc.js';
-import Shop from './shop.js';
+// import Shop from './shop.js';
 
 class InputHandler {
   constructor(game) {
@@ -64,9 +64,9 @@ class StardewValley {
     this.time = new Time();
 
     //npcs and shops
-    let pierre = this.map.addNPC(5, 5, "Pierre")
+    // let pierre = this.map.addNPC(5, 5, "Pierre")
 
-    this.pierreShop = new Shop({"seed": 25})
+    // this.pierreShop = new Shop({"seed": 25})
 
     //test
     this.player.inventory.addItem("axe", 1);
@@ -125,7 +125,7 @@ checkTeleport() {
   } else {
     this.justTeleported = false;
   }
-  
+
 }
 
 pauseLoop() {

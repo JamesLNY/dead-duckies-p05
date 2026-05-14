@@ -1,7 +1,7 @@
 import BigEntity from './big-entity.js';
 import { TILE_SIZE, CANVAS_WIDTH, CANVAS_HEIGHT, X_RES, Y_RES, SCALE_FACTOR, NPC_INFO, getJson } from './constants.js'
 import Tile from './tile.js';
-import NPC from './npc.js';
+// import NPC from './npc.js';
 
 export default class Map {
   constructor(name) {
@@ -52,9 +52,9 @@ export default class Map {
   }
 
   addNPC(x, y, name) {
-    let npc = new NPC(name, x, y, this);
-    this.npcList.push(npc);
-    return npc;
+    // let npc = new NPC(name, x, y, this);
+    // this.npcList.push(npc);
+    // return npc;
   }
 
   clampEdges() {
@@ -91,13 +91,13 @@ export default class Map {
       }
     })
 
-    this.npcList.forEach((npc) => {
-      if (npc.x > leftBound - 5 && npc.x < rightBound + 5
-        && npc.y > topBound - 5 && npc.y < bottomBound + 5
-        && npc.map == this
-      ) {
-        npc.render(ctx);
-      }
-    })
+    // this.npcList.forEach((npc) => {
+    //   if (npc.x > leftBound - 5 && npc.x < rightBound + 5
+    //     && npc.y > topBound - 5 && npc.y < bottomBound + 5
+    //     && npc.map == this
+    //   ) {
+    //     npc.render(ctx);
+    //   }
+    // })
   }
 }
