@@ -199,3 +199,15 @@ sarahZ -- 2026-05-13 20:30
 kiranS -- 2026-05-13 21:30
 - found npc sprites and cropped properly
 - worked on npc rendering in map.js
+
+emaanA -- 2026-05-14 11:00 
+- working on inventoryCanvas / rendering inventory
+
+sarahZ -- 2026-05-14 11:00
+- working on town.json 
+
+kiranS -- 2026-05-14 11:00
+- working on rendering npcs in maps 
+
+jamesL -- 2026-05-14 11:00
+- working on rendering npcs in maps

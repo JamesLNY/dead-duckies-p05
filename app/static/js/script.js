@@ -29,7 +29,9 @@ class InputHandler {
         game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
       } else if (e.key == "c") {
         game.player.interact(game.map);
-      }
+      } /* else if (e.key == 'e') {
+        game.player.inventory.renderInventory(this.hotbarCtx, game.hotbarCanvas);
+      } */
     });
     window.addEventListener('keyup', e => {
       this.keys[e.key] = false;
@@ -48,6 +50,10 @@ class StardewValley {
     this.hotbarCanvas = hotbarCanvas;
     this.hotbarCtx = this.hotbarCanvas.getContext('2d');
     this.hotbarCtx.imageSmoothingEnabled = false;
+
+    this.inventoryCanvas = inventoryCanvas;
+    this.inventoryCtx = this.inventoryCanvas.getContext('2d');
+    this.inventoryCtx.imageSmoothingEnabled = false;
 
     this.maps = {
       farm: new Map('farm'),
@@ -170,6 +176,9 @@ loop() {
   const hotbarCanvas = document.getElementById('hotbar-canvas');
   hotbarCanvas.width = HOTBAR_WIDTH * UI_FACTOR;
   hotbarCanvas.height = HOTBAR_HEIGHT * UI_FACTOR;
+
+  const inventoryCanvas = document.getElementById('inventory-canvas');
+  inventoryCanvas.width = ;
 
   new StardewValley(canvas, hotbarCanvas);
 // });
