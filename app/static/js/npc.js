@@ -1,10 +1,13 @@
-import { NPC_INFO, ITEMS, CANVAS_WIDTH, CANVAS_HEIGHT } from "./constants.js"
+import { NPC_INFO, ITEMS, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_SIZE, SCALE_FACTOR } from "./constants.js"
 const giftPoints = {"hate": -40, "dislike": -20, "neutral": 20, "like": 45, "love": 80}
 import Shop from "./shop.js"
 
 export default class NPC {
-  constructor(name) {
+  constructor(name, x, y, map) {
     this.name = name
+    this.x = x
+    this.y = y
+    this.map = map
 
     this.points = {"Kiran": 0}
     this.giftNumber = {"Kiran": 0}
@@ -79,6 +82,13 @@ export default class NPC {
     this.giftNumber[player] = 0
     this.talked[player] = false
     this.status[player] = 0
+  }
+
+  render(ctx) {
+    ctx.drawImage(`/static/images/npcs/${this.name}.png`,
+      this.x, this.y - TILE_SIZE * SCALE_FACTOR,
+      TILE_SIZE * SCALE_FACTOR, 2 * TILE_SIZE * SCALE_FACTOR
+    )
   }
 
   loop() {

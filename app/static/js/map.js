@@ -1,12 +1,14 @@
 import BigEntity from './big-entity.js';
-import { TILE_SIZE, CANVAS_WIDTH, CANVAS_HEIGHT, X_RES, Y_RES, SCALE_FACTOR, getJson } from './constants.js'
+import { TILE_SIZE, CANVAS_WIDTH, CANVAS_HEIGHT, X_RES, Y_RES, SCALE_FACTOR, NPC_INFO, getJson } from './constants.js'
 import Tile from './tile.js';
+import NPC from './npc.js';
 
 export default class Map {
   constructor(name) {
     this.image = new Image();
     this.image.src = `/static/images/maps/${name}.png`
     this.bigEntities = [];
+    this.npcList = []
   }
 
   async loadTiles(name) {
@@ -49,6 +51,12 @@ export default class Map {
     }
   }
 
+  addNPC(x, y, name) {
+    let npc = new NPC(name, x, y, this);
+    this.npcList.push(npc);
+    return npc;
+  }
+
   clampEdges() {
     this.x = Math.max(0, Math.min(this.x, this.image.width - TILE_SIZE * X_RES));
     this.y = Math.max(0, Math.min(this.y, this.image.height - TILE_SIZE * Y_RES));
@@ -80,6 +88,15 @@ export default class Map {
         && ent.y > topBound - 5 && ent.y < bottomBound + 5
       ) {
         ent.render(ctx, this, player);
+      }
+    })
+
+    this.npcList.forEach((npc) => {
+      if (npc.x > leftBound - 5 && npc.x < rightBound + 5
+        && npc.y > topBound - 5 && npc.y < bottomBound + 5
+        && npc.map == this
+      ) {
+        npc.render(ctx);
       }
     })
   }
