@@ -31064,7 +31064,7 @@
       "teleporter": true,
       "destination": {
         "map": "town",
-        "x": 5,
+        "x": 6,
         "y": 54
       }
     },
@@ -31074,7 +31074,7 @@
       "teleporter": true,
       "destination": {
         "map": "town",
-        "x": 5,
+        "x": 6,
         "y": 54
       }
     },
@@ -31084,7 +31084,7 @@
       "teleporter": true,
       "destination": {
         "map": "town",
-        "x": 5,
+        "x": 6,
         "y": 54
       }
     },

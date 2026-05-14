@@ -122,10 +122,10 @@ checkTeleport() {
       this.player.x = tile.destination.x * TILE_SIZE;
       this.player.y = tile.destination.y * TILE_SIZE;
     }
-    else {
-      this.justTeleported = false;
-    }
+  } else {
+    this.justTeleported = false;
   }
+  
 }
 
 pauseLoop() {

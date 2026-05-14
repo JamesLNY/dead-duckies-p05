@@ -191,3 +191,6 @@ emaanA --2026-05-13 14:00
 - updated keys for hotbar input in scripts.js
 - added click and drag to inventory + added renderInventory
 - changed uiCanvas to hotbarCanvas
+
+sarahZ -- 2026-05-13 20:30
+- trying really hard to debug and figure out why teleport from town to farm isn't working, will come back to later
