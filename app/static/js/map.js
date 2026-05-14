@@ -24,6 +24,9 @@ export default class Map {
   getTile(x, y) {
     x = Math.round(x / TILE_SIZE);
     y = Math.round(y / TILE_SIZE);
+    if (x < 0 || y < 0 || x >= this.tiles.length || y >= this.tiles[x].length) {
+      return null;
+    }
     return this.tiles[x][y];
   }
 
@@ -67,6 +70,7 @@ export default class Map {
     let bottomBound = Math.ceil((this.y + CANVAS_HEIGHT / SCALE_FACTOR) / TILE_SIZE);
     for (let x = leftBound; x < rightBound; x++) {
       for (let y = topBound; y < bottomBound; y++) {
+        if (x < 0 || y < 0 || x >= this.tiles.length || y >= this.tiles[x].length) continue;
         this.tiles[x][y].render(ctx, this);
       }
     }
