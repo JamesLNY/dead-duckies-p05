@@ -1,7 +1,7 @@
 import BigEntity from './big-entity.js';
 import { TILE_SIZE, CANVAS_WIDTH, CANVAS_HEIGHT, X_RES, Y_RES, SCALE_FACTOR, NPC_INFO, getJson } from './constants.js'
 import Tile from './tile.js';
-// import NPC from './npc.js';
+import NPC from './npc.js';
 
 export default class Map {
   constructor(name) {
@@ -20,6 +20,11 @@ export default class Map {
         this.tiles.at(-1).push(new Tile(x, y, data[x][y]));
       }
     }
+    const metadata = await getJson(`metadata/${name}.json`);
+    metadata["npcs"].forEach((data) => {
+      let npc = new NPC(data["name"], data["x"], data["y"], this);
+      this.npcList.push(npc);
+    });
   }
 
   // Physical coordinate in unscaled map
@@ -49,12 +54,6 @@ export default class Map {
         return ent.x != x || ent.y != y;
       })
     }
-  }
-
-  addNPC(x, y, name) {
-    // let npc = new NPC(name, x, y, this);
-    // this.npcList.push(npc);
-    // return npc;
   }
 
   clampEdges() {
@@ -90,6 +89,23 @@ export default class Map {
         ent.render(ctx, this, player);
       }
     })
+
+    let npcsToDraw = [];
+
+    // this.npcList.forEach((npc) => {
+    //   if (npc.x > leftBound - 5 && npc.x < rightBound + 5
+    //     && npc.y > topBound - 5 && npc.y < bottomBound + 5
+    //   ) {
+    //     if (player.y + TILE_SIZE * 2 > npc.y * TILE_SIZE && player.x == npc.x) {
+    //       npcsToDraw.push(npc);
+    //     } else {
+    //       npc.render(ctx, this);
+    //     }
+    //   }
+    // });
+
+    return npcsToDraw;
+
 
     // this.npcList.forEach((npc) => {
     //   if (npc.x > leftBound - 5 && npc.x < rightBound + 5

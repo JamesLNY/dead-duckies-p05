@@ -1,4 +1,4 @@
-import {TILE_SIZE, ITEMS, HOTBAR_HEIGHT, HOTBAR_WIDTH, UI_FACTOR, HOTBAR_SIZE } from "./constants.js";
+import {TILE_SIZE, ITEMS, HOTBAR_HEIGHT, HOTBAR_WIDTH, UI_FACTOR, HOTBAR_SIZE, INVENTORY_HEIGHT, INVENTORY_WIDTH} from "./constants.js";
 
 export class Inventory {
   constructor(size = 24) {
@@ -185,16 +185,14 @@ export class Inventory {
     this.render(hotbarCtx, 9, 9, HOTBAR_SIZE, 1);
   }
 
-  renderInventory(hotbarCtx, canvas) {
+  renderInventory(InventoryCtx, canvas) {
     if (!this.open) {
       return;
     }
-    let width = 352;
-    let height = 256;
-    let startX = (canvas.width - width) / 2;
-    let startY = (canvas.height - height) / 2;
-    hotbarCtx.drawImage(this.inventoryMenu,startX,startY,width,height);
-
+    let startX = (canvas.width - INVENTORY_WIDTH) / 2;
+    let startY = (canvas.height - INVENTORY_HEIGHT) / 2;
+    inventoryCtx.drawImage(this.inventoryMenu, startX, startY, width, height);
+ 
     this.render( hotbarCtx, startX + 32, startY + 32, 8, 3, false);
   }
 

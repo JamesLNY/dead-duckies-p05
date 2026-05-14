@@ -4,7 +4,7 @@ import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE,
 import Map from './map.js'
 import Player from './player.js';
 import Time from './time.js';
-// import NPC from './npc.js';
+import NPC from './npc.js';
 // import Shop from './shop.js';
 
 class InputHandler {
@@ -29,7 +29,9 @@ class InputHandler {
         game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
       } else if (e.key == "c") {
         game.player.interact(game.map);
-      }
+      } /* else if (e.key == 'e') {
+        game.player.inventory.renderInventory(this.hotbarCtx, game.hotbarCanvas);
+      } */
     });
     window.addEventListener('keyup', e => {
       this.keys[e.key] = false;
@@ -48,6 +50,10 @@ class StardewValley {
     this.hotbarCanvas = hotbarCanvas;
     this.hotbarCtx = this.hotbarCanvas.getContext('2d');
     this.hotbarCtx.imageSmoothingEnabled = false;
+
+    this.inventoryCanvas = inventoryCanvas;
+    this.inventoryCtx = this.inventoryCanvas.getContext('2d');
+    this.inventoryCtx.imageSmoothingEnabled = false;
 
     this.maps = {
       farm: new Map('farm'),
@@ -141,8 +147,15 @@ loop() {
 
   this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-  this.map.render(this.ctx, this.player);
+  let npcsToDraw = this.map.render(this.ctx, this.player);
   this.player.render(this.ctx, this.map);
+
+  // console.log(npcsToDraw);
+
+  npcsToDraw.forEach((npc) => {
+    npc.render(this.ctx, this.map)
+  });
+
 
   this.time.update();
   this.time.render(this.ctx);
@@ -163,6 +176,9 @@ loop() {
   const hotbarCanvas = document.getElementById('hotbar-canvas');
   hotbarCanvas.width = HOTBAR_WIDTH * UI_FACTOR;
   hotbarCanvas.height = HOTBAR_HEIGHT * UI_FACTOR;
+
+  const inventoryCanvas = document.getElementById('inventory-canvas');
+  inventoryCanvas.width = ;
 
   new StardewValley(canvas, hotbarCanvas);
 // });

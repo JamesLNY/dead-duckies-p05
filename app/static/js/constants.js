@@ -15,20 +15,22 @@ export const HOTBAR_SIZE = 12;
 export const UI_FACTOR = 3
 export const HOTBAR_WIDTH = 198;
 export const HOTBAR_HEIGHT = 22;
+export const INVENTORY_WIDTH = 352;
+export const INVENTORY_HEIGHT = 256;
 
 export const CANVAS_WIDTH = TILE_SIZE * SCALE_FACTOR * X_RES;
 export const CANVAS_HEIGHT = TILE_SIZE * SCALE_FACTOR * Y_RES;
 
-export const MOVEMENT_SPEED = 1.5;
+export const MOVEMENT_SPEED = 3;
 export const FRAME_RATE = 16;
 export const TIME_CONVERSION = 450; // HIGHER = Slower Time
 
 export const ITEMS = await getJson("items.json");
 export const ENTITIES = await getJson("entities.json")
 
-const PIERRE = await getJson("npcs/Pierre.json")
-const WILLY = await getJson("npcs/Willy.json")
-export const NPC_INFO = {"Pierre": PIERRE, "Willy": WILLY}
+const PIERRE = await getJson("npcs/pierre.json")
+const WILLY = await getJson("npcs/willy.json")
+export const NPC_INFO = {"pierre": PIERRE, "willy": WILLY}
 
 const MIDDLE_LAYER_ENTITIES = [
   "stone",
