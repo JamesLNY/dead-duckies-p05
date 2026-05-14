@@ -194,3 +194,7 @@ emaanA --2026-05-13 14:00
 
 sarahZ -- 2026-05-13 20:30
 - trying really hard to debug and figure out why teleport from town to farm isn't working, will come back to later
+
+kiranS -- 2026-05-13 21:30
+- found npc sprites and cropped properly
+- worked on npc rendering in map.js
