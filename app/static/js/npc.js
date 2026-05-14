@@ -7,7 +7,11 @@ export default class NPC {
     this.name = name
     this.x = x
     this.y = y
-    this.map = map
+    this.sprite = new Image();
+    this.sprite.src = `/static/images/npcs/${name}.png`
+
+    let tile = map.tiles[x][y];
+    tile.add(this, "middle")
 
     this.points = {"Kiran": 0}
     this.giftNumber = {"Kiran": 0}
@@ -84,22 +88,18 @@ export default class NPC {
     this.status[player] = 0
   }
 
-  render(ctx) {
-    ctx.drawImage(`/static/images/npcs/${this.name}.png`,
-      this.x, this.y - TILE_SIZE * SCALE_FACTOR,
-      TILE_SIZE * SCALE_FACTOR, 2 * TILE_SIZE * SCALE_FACTOR
+  render(ctx, map) {
+    ctx.drawImage(this.sprite, 0, 0, TILE_SIZE, TILE_SIZE * 2,
+      ((this.x * TILE_SIZE) - map.x) * SCALE_FACTOR, ((this.y - 1) * TILE_SIZE - map.y) * SCALE_FACTOR,
+      TILE_SIZE * SCALE_FACTOR, TILE_SIZE * 2 * SCALE_FACTOR
     )
-  }
-
-  loop() {
-
   }
 }
 
-let Willy = new NPC("Willy")
-Willy.gift("Kiran", "fish")
-console.log(Willy.points)
-
-const overlayCanvas = document.getElementById('overlay-canvas');
-overlayCanvas.width = CANVAS_WIDTH;
-overlayCanvas.height = CANVAS_HEIGHT;
+// let Willy = new NPC("Willy")
+// Willy.gift("Kiran", "fish")
+// console.log(Willy.points)
+//
+// const overlayCanvas = document.getElementById('overlay-canvas');
+// overlayCanvas.width = CANVAS_WIDTH;
+// overlayCanvas.height = CANVAS_HEIGHT;

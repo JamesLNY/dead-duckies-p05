@@ -4,7 +4,7 @@ import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE,
 import Map from './map.js'
 import Player from './player.js';
 import Time from './time.js';
-// import NPC from './npc.js';
+import NPC from './npc.js';
 // import Shop from './shop.js';
 
 class InputHandler {
@@ -141,8 +141,15 @@ loop() {
 
   this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-  this.map.render(this.ctx, this.player);
+  let npcsToDraw = this.map.render(this.ctx, this.player);
   this.player.render(this.ctx, this.map);
+
+  // console.log(npcsToDraw);
+
+  npcsToDraw.forEach((npc) => {
+    npc.render(this.ctx, this.map)
+  });
+
 
   this.time.update();
   this.time.render(this.ctx);

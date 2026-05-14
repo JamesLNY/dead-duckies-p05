@@ -1,6 +1,7 @@
 import BigEntity from "./big-entity.js";
 import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, MOVEMENT_SPEED } from "./constants.js";
 import { Inventory } from './inventory.js';
+import NPC from "./npc.js"
 
 // Correspond with rows in player.png
 const DOWN = 0;
@@ -82,7 +83,9 @@ export default class Player {
         tile.add()
       }
     } else {
-      if (entity != null) {
+      if (entity instanceof NPC) {
+        console.log("Meeting npc");
+      } else if (entity != null) {
         if (ENTITIES[entity]["tools"].includes(item)) {
           tile.remove("middle");
           for (const [key, value] of Object.entries(ENTITIES[entity]["drops"])) {

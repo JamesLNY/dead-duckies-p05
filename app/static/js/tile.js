@@ -1,5 +1,6 @@
 import { TILE_SIZE, SCALE_FACTOR, TILE_IMAGES } from "./constants.js";
 import BigEntity from "./big-entity.js"
+import NPC from "./npc.js"
 
 const IMPASSABLE_ENTITIES = new Set([
   "twig",
@@ -28,6 +29,9 @@ export default class Tile {
   add(entity, layer) {
     this.layers[layer] = entity;
     if (layer == "front" && entity instanceof BigEntity) {
+      this.passable = false;
+    }
+    if (entity instanceof NPC) {
       this.passable = false;
     }
     if (layer == "middle" && IMPASSABLE_ENTITIES.has(entity)) this.passable = false;
@@ -62,6 +66,7 @@ export default class Tile {
     // if (this.layers["front"] != null) this.highlight(ctx, map, true);
     for (const [key, value] of Object.entries(this.layers)) {
       if (value == null || key == "front") continue;
+      if (value instanceof NPC) continue;
       ctx.drawImage(TILE_IMAGES[key][value], 0, 0, TILE_SIZE, TILE_SIZE,
         (this.x * TILE_SIZE - map.x) * SCALE_FACTOR,
         (this.y * TILE_SIZE - map.y) * SCALE_FACTOR,
