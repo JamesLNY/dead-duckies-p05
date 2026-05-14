@@ -64,10 +64,9 @@ class StardewValley {
     this.time = new Time();
 
     //npcs and shops
-    // this.pierre = new NPC("Pierre");
-    // this.willy = new NPC("Willy");
+    let pierre = this.map.addNPC(5, 5, "Pierre")
 
-    // this.pierreShop = new Shop({"seed": 25})
+    this.pierreShop = new Shop({"seed": 25})
 
     //test
     this.player.inventory.addItem("axe", 1);
