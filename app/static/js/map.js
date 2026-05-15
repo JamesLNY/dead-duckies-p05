@@ -8,7 +8,8 @@ export default class Map {
     this.image = new Image();
     this.image.src = `/static/images/maps/${name}.png`
     this.bigEntities = [];
-    this.npcList = []
+    this.npcList = [];
+    this.crops = [];
   }
 
   async loadTiles(name) {

@@ -2,6 +2,7 @@ import BigEntity from "./big-entity.js";
 import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, MOVEMENT_SPEED } from "./constants.js";
 import { Inventory } from './inventory.js';
 import NPC from "./npc.js"
+import Crop from "./npc.js"
 
 // Correspond with rows in player.png
 const DOWN = 0;
@@ -78,10 +79,10 @@ export default class Player {
     let tile = this.getTile(map);
     let entity = tile.layers["middle"];
     if (tile.layers["back"] == "tilled" && item == "pickaxe") {
-      tile.remove("back");
+      tile.layers["middle"].remove();
     } else if (item == "hoe") {
       if (entity == null && tile.tillable) {
-        tile.add("tilled", "back");
+        
       }
     } else {
       if (entity instanceof NPC) {

@@ -1,6 +1,7 @@
 import { TILE_SIZE, SCALE_FACTOR, TILE_IMAGES } from "./constants.js";
 import BigEntity from "./big-entity.js"
 import NPC from "./npc.js"
+import Crop from "./crop.js"
 
 const IMPASSABLE_ENTITIES = new Set([
   "twig",
@@ -67,11 +68,17 @@ export default class Tile {
     for (const [key, value] of Object.entries(this.layers)) {
       if (value == null || key == "front") continue;
       if (value instanceof NPC) continue;
-      ctx.drawImage(TILE_IMAGES[key][value], 0, 0, TILE_SIZE, TILE_SIZE,
-        (this.x * TILE_SIZE - map.x) * SCALE_FACTOR,
-        (this.y * TILE_SIZE - map.y) * SCALE_FACTOR,
-        TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR
-      )
+
+      if (value instanceof Crop) {
+        value.render(ctx, map);
+      } else {
+        ctx.drawImage(TILE_IMAGES[key][value], 0, 0, TILE_SIZE, TILE_SIZE,
+          (this.x * TILE_SIZE - map.x) * SCALE_FACTOR,
+          (this.y * TILE_SIZE - map.y) * SCALE_FACTOR,
+          TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR
+        )
+      }
+
     }
   }
 }

@@ -1,5 +1,8 @@
 {
   "parsnip": {
-    "growthTime": 4
+    "growthTime": 4,
+    "yield": {
+      "parsnip": 2,
+    }
   }
 }

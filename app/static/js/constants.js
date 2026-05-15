@@ -27,6 +27,7 @@ export const TIME_CONVERSION = 450; // HIGHER = Slower Time
 
 export const ITEMS = await getJson("items.json");
 export const ENTITIES = await getJson("entities.json")
+export const CROPS = await getJson("crops.json")
 
 const PIERRE = await getJson("npcs/pierre.json")
 const WILLY = await getJson("npcs/willy.json")

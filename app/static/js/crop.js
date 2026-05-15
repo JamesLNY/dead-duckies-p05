@@ -1,36 +1,53 @@
+import { TILE_SIZE, CROPS } from './constants.js'
 
 let loadedCrops = {};
 
 export default class Crop {
   constructor(x, y, type, map) {
+    this.type = null;
+    this.tile = map.tiles[x][y];
+    
+    this.tile.add("tilled", "back");
+    this.tile.add(this, "middle");
     this.x = x;
     this.y = y;
-    this.type = type;
+  }
 
+  plant(type) {
+    this.type = type;
     if (type in loadedCrops) {
       this.image = loadedCrops[type];
     } else {
       let asset = new Image();
-      asset.src = ""
+      asset.src = `/images/front-layer/crops/${type}.png`;
+      loadedCrops[type] = asset;
+      this.image = asset;
     }
+    this.growthTime = CROPS[type]["growthTime"];
+    this.progress = 0;
+  }
 
-    this.image = TILE_IMAGES["front"][type];
-    this.image_x = OBJECT_PLACEMENT[type]["x"];
-    this.image_y = OBJECT_PLACEMENT[type]["y"];
+  update() {
+    if (this.progress < growthTime) {
+      this.progress++;
+    }
+  }
 
-    // for (let dx = 0; dx < this.image.width / TILE_SIZE; dx++) {
-    //   for (let dy = 0; dy < this.image.height / TILE_SIZE; dy++) {
-    //     try { // If tile doesn't exist, just ignore
-    //       let tile = map.tiles[this.x - this.image_x + dx][this.y - this.image_y + dy];
-    //       if (tile.layers["front"] == null) {
-    //         tile.add(true, "front");
-    //       }
-    //     } catch {}
-    //   }
-    // }
-    if (breakable) {
-      let tile = map.tiles[this.x][this.y];
-      tile.add(this, "front");
+  remove() {
+    this.tile.remove("back");
+    this.tile.remove("middle");
+  }
+
+  harvest() {
+    
+  }
+
+  render(ctx, map) {
+    if (this.type != null) {
+      ctx.drawImage(this.image, this.progress * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE,
+        (this.x * TILE_SIZE - map.x) * SCALE_FACTOR,
+        (this.y * TILE_SIZE - map.y) * SCALE_FACTOR,
+        TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR)
     }
   }
 }
