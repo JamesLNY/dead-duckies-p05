@@ -21,7 +21,7 @@ export const INVENTORY_HEIGHT = 256;
 export const CANVAS_WIDTH = TILE_SIZE * SCALE_FACTOR * X_RES;
 export const CANVAS_HEIGHT = TILE_SIZE * SCALE_FACTOR * Y_RES;
 
-export const MOVEMENT_SPEED = 3;
+export const MOVEMENT_SPEED = 2;
 export const FRAME_RATE = 16;
 export const TIME_CONVERSION = 450; // HIGHER = Slower Time
 
@@ -32,15 +32,11 @@ const PIERRE = await getJson("npcs/pierre.json")
 const WILLY = await getJson("npcs/willy.json")
 export const NPC_INFO = {"pierre": PIERRE, "willy": WILLY}
 
-const MIDDLE_LAYER_ENTITIES = [
-  "stone",
-  "twig",
-  "weed"
-];
-
-const FRONT_LAYER_ENTITIES = [
-  "tree",
-];
+const ENTITY_NAMES = {
+  "back": ["tilled"],
+  "middle": ["stone", "twig", "weed"],
+  "front": ["tree"]
+}
 
 export const TILE_IMAGES = {
   "back": {},
@@ -48,15 +44,12 @@ export const TILE_IMAGES = {
   "front": {}
 };
 
-MIDDLE_LAYER_ENTITIES.forEach((entity) => {
-  TILE_IMAGES["middle"][entity] = new Image();
-  TILE_IMAGES["middle"][entity].src = `/static/images/middle-layer/${entity}.png`;
-})
-
-FRONT_LAYER_ENTITIES.forEach((entity) => {
-  TILE_IMAGES["front"][entity] = new Image();
-  TILE_IMAGES["front"][entity].src = `/static/images/front-layer/${entity}.png`;
-})
+for (const [key, value] of Object.entries(ENTITY_NAMES)) {
+  value.forEach((entity) => {
+    TILE_IMAGES[key][entity] = new Image();
+    TILE_IMAGES[key][entity].src = `/static/images/${key}-layer/${entity}.png`;
+  })
+}
 
 // Base Tile in Image File
 export const OBJECT_PLACEMENT = {
