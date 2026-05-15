@@ -324,8 +324,8 @@
       "teleporter": true,
       "destination": {
         "map": "farm",
-        "x": 79,
-        "y": 17
+        "x": 78,
+        "y": 16
       }
     },
     {
@@ -334,8 +334,8 @@
       "teleporter": true,
       "destination": {
         "map": "farm",
-        "x": 79,
-        "y": 17
+        "x": 78,
+        "y": 16
       }
     },
     {
