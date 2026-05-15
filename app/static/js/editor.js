@@ -48,6 +48,7 @@ ctx.imageSmoothingEnabled = false;
 //     })
 //   }
 // }
+// console.log(tiles);
 
 let tiles = await getJson('maps/farm.json');
 

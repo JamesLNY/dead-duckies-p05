@@ -28827,8 +28827,12 @@
     {
       "passable": true,
       "tillable": true,
-      "teleporter": false,
-      "destination": null
+      "teleporter": true,
+      "destination": {
+        "map": "seedshop",
+        "x": 6,
+        "y": 29
+      }
     },
     {
       "passable": true,
@@ -29489,8 +29493,12 @@
     {
       "passable": true,
       "tillable": true,
-      "teleporter": false,
-      "destination": null
+      "teleporter": true,
+      "destination": {
+        "map": "seedshop",
+        "x": 6,
+        "y": 29
+      }
     },
     {
       "passable": true,

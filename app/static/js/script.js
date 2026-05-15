@@ -58,7 +58,7 @@ class StardewValley {
     this.maps = {
       farm: new Map('farm'),
       town: new Map('town'),
-      // town: new Map('town'),
+      seedshop: new Map('seedshop')
     };
     this.currentMap = 'farm';
     this.map = this.maps['farm'];
@@ -82,9 +82,11 @@ class StardewValley {
     this.player.inventory.renderHotbar(this.hotbarCtx, this.hotbarCanvas);
 
     //i think this loads both maps at the same time before game starts
+    //MAKE IT LOAD WHEN ACTUALLY TELEPORTED
     Promise.all([
       this.maps['farm'].loadTiles('farm'),
       this.maps['town'].loadTiles('town'),
+      this.maps['seedshop'].loadTiles('seedshop')
     ]).then(() => {
       this.initializeFarm();
       this.loop();
