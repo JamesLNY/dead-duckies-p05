@@ -211,3 +211,6 @@ kiranS -- 2026-05-14 11:00
 
 jamesL -- 2026-05-14 11:00
 - working on rendering npcs in maps
+
+jamesL -- 2026-05-14 22:00
+- added the option to till tiles
