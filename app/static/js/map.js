@@ -92,17 +92,20 @@ export default class Map {
 
     let npcsToDraw = [];
 
-    // this.npcList.forEach((npc) => {
-    //   if (npc.x > leftBound - 5 && npc.x < rightBound + 5
-    //     && npc.y > topBound - 5 && npc.y < bottomBound + 5
-    //   ) {
-    //     if (player.y + TILE_SIZE * 2 > npc.y * TILE_SIZE && player.x == npc.x) {
-    //       npcsToDraw.push(npc);
-    //     } else {
-    //       npc.render(ctx, this);
-    //     }
-    //   }
-    // });
+    this.npcList.forEach((npc) => {
+      if (npc.x > leftBound - 5 && npc.x < rightBound + 5
+        && npc.y > topBound - 5 && npc.y < bottomBound + 5
+      ) {
+        if (player.y + TILE_SIZE * 2 <= npc.y * TILE_SIZE + 15 && Math.abs(player.x - npc.x * TILE_SIZE) <= TILE_SIZE) {
+          npcsToDraw.push(npc);
+        } else {
+          npc.render(ctx, this);
+        }
+        // console.log(`${npc.y * TILE_SIZE}, ${player.y + TILE_SIZE * 2}`)
+        // console.log(`${npc.x * TILE_SIZE}, ${player.x}`)
+        // console.log(player.y + TILE_SIZE * 2 > npc.y * TILE_SIZE)
+      }
+    });
 
     return npcsToDraw;
 
