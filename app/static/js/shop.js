@@ -6,6 +6,8 @@ export default class Shop {
       this.shopInventory = shopInventory; // {String item: INT cost}
       // this.playerInventory = playerInventory;
       this.npc = npc;
+      this.display = new Image()
+      this.display.src = "/static/images/ui/shop.png"
     }
 
     buy(itemID, player, playerInventory) {
@@ -38,6 +40,6 @@ export default class Shop {
     }
 
     render(ctx) {
-      ctx.drawImage("/static/images/ui/shop.png", 0, 0, UI_FACTOR * 375, UI_FACTOR * 176)
+      ctx.drawImage(this.display, 0, 0, 375, 136)
     }
   }
