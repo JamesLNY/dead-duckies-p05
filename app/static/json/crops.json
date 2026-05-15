@@ -2,7 +2,7 @@
   "parsnip": {
     "growthTime": 4,
     "yield": {
-      "parsnip": 2,
+      "parsnip": 2
     }
   }
 }
