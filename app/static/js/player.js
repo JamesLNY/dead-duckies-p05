@@ -77,10 +77,11 @@ export default class Player {
     let item = this.inventory.getSelectedItemID();
     let tile = this.getTile(map);
     let entity = tile.layers["middle"];
-
-    if (item == "hoe") {
-      if (entity != null) {
-        tile.add()
+    if (tile.layers["back"] == "tilled" && item == "pickaxe") {
+      tile.remove("back");
+    } else if (item == "hoe") {
+      if (entity == null && tile.tillable) {
+        tile.add("tilled", "back");
       }
     } else {
       if (entity instanceof NPC) {

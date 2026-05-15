@@ -76,7 +76,8 @@ class StardewValley {
 
     //test
     this.player.inventory.addItem("axe", 1);
-    this.player.inventory.addItem("hoe", 1)
+    this.player.inventory.addItem("hoe", 1);
+    this.player.inventory.addItem("pickaxe", 1)
 
     this.player.inventory.renderHotbar(this.hotbarCtx, this.hotbarCanvas);
 
@@ -178,7 +179,7 @@ loop() {
   hotbarCanvas.height = HOTBAR_HEIGHT * UI_FACTOR;
 
   const inventoryCanvas = document.getElementById('inventory-canvas');
-  inventoryCanvas.width = ;
+  // inventoryCanvas.width = ;
 
   new StardewValley(canvas, hotbarCanvas);
 // });
