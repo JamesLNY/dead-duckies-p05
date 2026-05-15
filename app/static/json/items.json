@@ -11,7 +11,7 @@
     "sellPrice": 4,
     "reaction": "dislike"
   },
-  "mixed seeds": {
+  "mixed_seeds": {
     "maxStack": 99,
     "sellPrice": 5,
     "reaction": "neutral"
@@ -39,7 +39,7 @@
   "scythe": {
     "maxStack": 1
   },
-  "watering can": {
+  "watering_can": {
     "maxStack": 1
   }
 }

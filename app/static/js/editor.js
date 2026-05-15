@@ -11,7 +11,6 @@ async function getJson(file_name) {
   return parsed;
 }
 
-// Specifically for editor.html
 const TILE_SIZE = 16;
 // const MAP_WIDTH = 1280;
 // const MAP_HEIGHT = 1040;
@@ -36,6 +35,7 @@ const canvas = document.getElementById('main-canvas');
 const ctx = canvas.getContext('2d');
 ctx.imageSmoothingEnabled = false;
 
+//this initializes initial json for a map
 // let tiles = [];
 // for (let x = 0; x < map.width / TILE_SIZE; x++) {
 //   tiles.push([]);
@@ -50,6 +50,21 @@ ctx.imageSmoothingEnabled = false;
 // }
 
 let tiles = await getJson('maps/farm.json');
+
+//this converts every impassable tile into an untillable one
+// async function tillableHelper() {
+//   for (const col of tiles) {
+//     for (const tile of col) {
+//       if (!tile.passable) {
+//         tile.tillable = false;
+//       }
+//     }
+//   }
+//   render();
+// }
+
+// tillableHelper();
+
 
 let paint = true;
 let held = false;

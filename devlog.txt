@@ -211,3 +211,8 @@ kiranS -- 2026-05-14 11:00
 
 jamesL -- 2026-05-14 11:00
 - working on rendering npcs in maps
+
+sarahZ -- 2026-05-14 23:40
+- updated town.json, wrote editor func to turn all impassable to untillable tiles
+- started stamina class 
+- added base assets for pierre's and items
