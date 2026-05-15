@@ -214,3 +214,12 @@ jamesL -- 2026-05-14 11:00
 
 jamesL -- 2026-05-14 22:00
 - added the option to till tiles
+
+emaanA -- 2026-05-14 23:40
+MODIFICATIONS MADE TO TIMELINE: 
+- Moved rendering Pierre's shop / shop menu to further date
+- Moved rendering Static NPC's to further date
+- Behind on inventory; should be done by Friday evening
+- Behind on town map; should be done by Friday evening
+- Behind on stamina bar; should be done by Friday evening
+- Teleporter / Relationships moved to later date
