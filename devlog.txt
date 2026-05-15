@@ -228,3 +228,15 @@ sarahZ -- 2026-05-14 23:40
 - updated town.json, wrote editor func to turn all impassable to untillable tiles
 - started stamina class 
 - added base assets for pierre's and items
+
+sarahZ -- 2026-05-15 11:00 
+- set up pierres map
+
+emaanA -- 2026-05-15 11:00 
+- fixes to inventory, going to render using overlay canvas
+
+jamesL -- 2026-05-15 11:00
+- working on crops
+
+kiranS -- 2026-05-15 11:00
+- working on rendering npcs with overlay canvas

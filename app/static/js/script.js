@@ -5,7 +5,7 @@ import Map from './map.js'
 import Player from './player.js';
 import Time from './time.js';
 import NPC from './npc.js';
-// import Shop from './shop.js';
+import Shop from './shop.js';
 
 class InputHandler {
   constructor(game) {
@@ -51,14 +51,14 @@ class StardewValley {
     this.hotbarCtx = this.hotbarCanvas.getContext('2d');
     this.hotbarCtx.imageSmoothingEnabled = false;
 
-    this.inventoryCanvas = inventoryCanvas;
-    this.inventoryCtx = this.inventoryCanvas.getContext('2d');
-    this.inventoryCtx.imageSmoothingEnabled = false;
+    this.overlayCanvas = overlayCanvas;
+    this.overlayCtx = this.overlayCanvas.getContext('2d');
+    this.overlayCtx.imageSmoothingEnabled = false;
 
     this.maps = {
       farm: new Map('farm'),
       town: new Map('town'),
-      // town: new Map('town'),
+      seedshop: new Map('seedshop')
     };
     this.currentMap = 'farm';
     this.map = this.maps['farm'];
@@ -72,7 +72,7 @@ class StardewValley {
     //npcs and shops
     // let pierre = this.map.addNPC(5, 5, "Pierre")
 
-    // this.pierreShop = new Shop({"seed": 25})
+    this.pierreShop = new Shop({"seed": 25}, this.map.npcList[0])
 
     //test
     this.player.inventory.addItem("axe", 1);
@@ -82,9 +82,11 @@ class StardewValley {
     this.player.inventory.renderHotbar(this.hotbarCtx, this.hotbarCanvas);
 
     //i think this loads both maps at the same time before game starts
+    //MAKE IT LOAD WHEN ACTUALLY TELEPORTED
     Promise.all([
       this.maps['farm'].loadTiles('farm'),
       this.maps['town'].loadTiles('town'),
+      this.maps['seedshop'].loadTiles('seedshop')
     ]).then(() => {
       this.initializeFarm();
       this.loop();
@@ -163,6 +165,7 @@ loop() {
 
   //redraw since it won't show up otherwise
   this.player.inventory.renderHotbar(this.hotbarCtx);
+  this.pierreShop.render(this.overlayCtx);
 
   requestAnimationFrame(() => this.loop());
   };
@@ -178,8 +181,12 @@ loop() {
   hotbarCanvas.width = HOTBAR_WIDTH * UI_FACTOR;
   hotbarCanvas.height = HOTBAR_HEIGHT * UI_FACTOR;
 
-  const inventoryCanvas = document.getElementById('inventory-canvas');
+  // const inventoryCanvas = document.getElementById('inventory-canvas');
   // inventoryCanvas.width = ;
 
-  new StardewValley(canvas, hotbarCanvas);
+  const overlayCanvas = document.getElementById('overlay-canvas');
+  overlayCanvas.width = CANVAS_WIDTH;
+  overlayCanvas.height = CANVAS_HEIGHT;
+
+  new StardewValley(canvas, hotbarCanvas, overlayCanvas);
 // });

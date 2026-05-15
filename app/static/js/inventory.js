@@ -13,6 +13,27 @@ export class Inventory {
     this.inventoryMenu.src = '/static/images/ui/inventory.png';
     this.select = new Image();
     this.select.src = '/static/images/ui/select.png';
+    
+    this.axe = new Image();
+    this.axe.src = '/static/images/items/axe.png';
+    this.fish = new Image();
+    this.fish.src = '/static/images/items/fish.png';
+    this.hoe = new Image();
+    this.hoe.src = '/static/images/items/hoe.png';
+    this.mixed_seeds = new Image();
+    this.mixed_seeds.src = '/static/images/items/mixed_seeds.png';
+    this.pickaxe = new Image();
+    this.pickaxe.src = '/static/images/items/pickaxe.png';
+    this.scythe = new Image();
+    this.scythe.src = '/static/images/items/scythe.png';
+    this.seed = new Image();
+    this.seed.src = '/static/images/items/seed.png';
+    this.stone = new Image();
+    this.stone.src = '/static/images/items/stone.png';
+    this.watering_can = new Image();
+    this.watering_can.src = '/static/images/items/watering_can.png';
+    this.wood = new Image();
+    this.wood.src = '/static/images/items/wood.png';
 
     for (let i = 0; i < size; i += 1) {
       this.slots[i] = {itemID: null, count: 0};
@@ -206,3 +227,4 @@ export class Inventory {
     hotbarCtx.fillText(this.draggingItem.count, mouseX, mouseY + 18);
   }
 }
+
