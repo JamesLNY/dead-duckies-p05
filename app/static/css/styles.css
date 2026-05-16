@@ -25,7 +25,7 @@ body {
   src: url("/static/fonts/bold.woff2/svbold.otf.woff2");
 }
 
-#ui-canvas {
+#hotbar-canvas {
   margin-top: 1rem;
 }
 
@@ -34,3 +34,10 @@ body {
   height: 100vh;
   overflow: auto;
 }
+
+#overlay-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+

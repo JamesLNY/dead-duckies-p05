@@ -2,7 +2,7 @@ import BigEntity from "./big-entity.js";
 import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, MOVEMENT_SPEED } from "./constants.js";
 import { Inventory } from './inventory.js';
 import NPC from "./npc.js"
-import Crop from "./npc.js"
+import Crop from "./crop.js"
 
 // Correspond with rows in player.png
 const DOWN = 0;
@@ -77,29 +77,48 @@ export default class Player {
   interact(map) {
     let item = this.inventory.getSelectedItemID();
     let tile = this.getTile(map);
+
+    let back = tile.layers["back"];
     let entity = tile.layers["middle"];
-    if (tile.layers["back"] == "tilled" && item == "pickaxe") {
-      tile.layers["middle"].remove();
-    } else if (item == "hoe") {
-      if (entity == null && tile.tillable) {
-        
+    let front = tile.layers["front"];
+
+    if (entity instanceof NPC) {
+      console.log("Interaction");
+    }
+    
+    else if (front instanceof BigEntity) {
+      if (ENTITIES[front.type]["tools"].includes(item)) {
+        map.removeBigEntity(tile.x, tile.y);
+        for (const [key, value] of Object.entries(ENTITIES[front.type]["drops"])) {
+          this.inventory.addItem(key, value);
+        }
       }
-    } else {
-      if (entity instanceof NPC) {
-        console.log("Meeting npc");
-      } else if (entity != null) {
+    }
+
+    if (item != null) {
+      if (item == "pickaxe" && back == "tilled") {
+        entity.remove();
+      }
+      
+      else if (item == "hoe" && entity == null && tile.tillable) {
+        map.crops.push(new Crop(tile.x, tile.y, map));
+      } 
+
+      else if (item == "watering can" && entity instanceof Crop) {
+        entity.water();
+      }
+      
+      else if (entity instanceof Crop && item.includes("seed")) {
+        if (entity.type == null) {
+          entity.plant(item.split(" ")[0]);
+          this.inventory.removeItem(item, 1);
+        }
+      }
+      
+      else if (entity != null) {
         if (ENTITIES[entity]["tools"].includes(item)) {
           tile.remove("middle");
           for (const [key, value] of Object.entries(ENTITIES[entity]["drops"])) {
-            this.inventory.addItem(key, value);
-          }
-        }
-      }
-      entity = tile.layers["front"];
-      if (entity instanceof BigEntity) {
-        if (ENTITIES[entity.type]["tools"].includes(item)) {
-          map.removeBigEntity(tile.x, tile.y);
-          for (const [key, value] of Object.entries(ENTITIES[entity.type]["drops"])) {
             this.inventory.addItem(key, value);
           }
         }

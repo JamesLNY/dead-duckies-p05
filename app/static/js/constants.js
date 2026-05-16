@@ -23,7 +23,7 @@ export const CANVAS_HEIGHT = TILE_SIZE * SCALE_FACTOR * Y_RES;
 
 export const MOVEMENT_SPEED = 2;
 export const FRAME_RATE = 16;
-export const TIME_CONVERSION = 450; // HIGHER = Slower Time
+export const TIME_CONVERSION = 10; // HIGHER = Slower Time
 
 export const ITEMS = await getJson("items.json");
 export const ENTITIES = await getJson("entities.json")
@@ -34,7 +34,7 @@ const WILLY = await getJson("npcs/willy.json")
 export const NPC_INFO = {"pierre": PIERRE, "willy": WILLY}
 
 const ENTITY_NAMES = {
-  "back": ["tilled"],
+  "back": ["tilled", "watered"],
   "middle": ["stone", "twig", "weed"],
   "front": ["tree"]
 }

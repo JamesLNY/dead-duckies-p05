@@ -15,12 +15,16 @@ export default class Time {
     return currTime
   }
 
-  nextDay() {
+  nextDay(game) {
     this.currDay++
     if (this.currDay == 29) {
       this.currYear++
       this.currDay = 1
     }
+
+    game.maps["farm"].crops.forEach(crop => {
+      crop.update();
+    })
   }
   // Overlay on top of upper right of canvas (Only update when time changes)
   render(ctx) {
@@ -47,7 +51,8 @@ export default class Time {
   }
 
   // called upon each frame load
-  update() {
+  // Returns true when new day
+  update(game) {
     this.numTicks++
     if (this.numTicks % TIME_CONVERSION == 0) {
       this.currTime += 10
@@ -55,7 +60,7 @@ export default class Time {
     // this block is just for testing -- remove when fainting mechanic added
     if (this.currTime >= 1080) {
       this.currTime = 0
-      this.nextDay()
+      this.nextDay(game)
     }
   }
 }

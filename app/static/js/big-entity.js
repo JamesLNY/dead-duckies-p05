@@ -20,6 +20,7 @@ export default class BigEntity {
     //     } catch {}
     //   }
     // }
+    
     if (breakable) {
       let tile = map.tiles[this.x][this.y];
       tile.add(this, "front");

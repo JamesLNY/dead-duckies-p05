@@ -71,13 +71,13 @@ class StardewValley {
 
     //npcs and shops
     // let pierre = this.map.addNPC(5, 5, "Pierre")
+    // this.pierreShop = new Shop({"seed": 25}, this.map.npcList[0])
 
-    this.pierreShop = new Shop({"seed": 25}, this.map.npcList[0])
-
-    //test
     this.player.inventory.addItem("axe", 1);
     this.player.inventory.addItem("hoe", 1);
-    this.player.inventory.addItem("pickaxe", 1)
+    this.player.inventory.addItem("pickaxe", 1);
+    this.player.inventory.addItem("watering can", 1);
+    this.player.inventory.addItem("parsnip seeds", 5);
 
     this.player.inventory.renderHotbar(this.hotbarCtx, this.hotbarCanvas);
 
@@ -121,53 +121,51 @@ class StardewValley {
     this.map.removeBigEntity(playerTile.x, playerTile.y);
   }
 
-checkTeleport() {
-  const tile = this.map.getTile(this.player.x, this.player.y + 23);
-  if (tile && tile.teleporter && tile.destination) {
-    if (!this.justTeleported) {
-      this.justTeleported = true;
-      this.currentMap = tile.destination.map;
-      this.map = this.maps[tile.destination.map];
-      this.player.x = tile.destination.x * TILE_SIZE;
-      this.player.y = tile.destination.y * TILE_SIZE;
+  checkTeleport() {
+    const tile = this.map.getTile(this.player.x, this.player.y + 23);
+    if (tile && tile.teleporter && tile.destination) {
+      if (!this.justTeleported) {
+        this.justTeleported = true;
+        this.currentMap = tile.destination.map;
+        this.map = this.maps[tile.destination.map];
+        this.player.x = tile.destination.x * TILE_SIZE;
+        this.player.y = tile.destination.y * TILE_SIZE;
+      }
+    } else {
+      this.justTeleported = false;
     }
-  } else {
-    this.justTeleported = false;
   }
 
-}
+  pauseLoop() {
 
-pauseLoop() {
+  }
 
-}
+  loop() {
+    // this.updateHotbarInput();
+    this.player.move(this.input.keys, this.map);
+    this.checkTeleport();
 
-loop() {
-  // this.updateHotbarInput();
-  this.player.move(this.input.keys, this.map);
-  this.checkTeleport();
+    this.map.follow(this.player);
 
-  this.map.follow(this.player);
+    this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-  this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    let npcsToDraw = this.map.render(this.ctx, this.player);
+    this.player.render(this.ctx, this.map);
 
-  let npcsToDraw = this.map.render(this.ctx, this.player);
-  this.player.render(this.ctx, this.map);
+    // console.log(npcsToDraw);
 
-  // console.log(npcsToDraw);
+    npcsToDraw.forEach((npc) => {
+      npc.render(this.ctx, this.map)
+    });
 
-  npcsToDraw.forEach((npc) => {
-    npc.render(this.ctx, this.map)
-  });
+    this.time.update(this);
+    this.time.render(this.ctx);
 
+    //redraw since it won't show up otherwise
+    this.player.inventory.renderHotbar(this.hotbarCtx);
+    // this.pierreShop.render(this.overlayCtx);
 
-  this.time.update();
-  this.time.render(this.ctx);
-
-  //redraw since it won't show up otherwise
-  this.player.inventory.renderHotbar(this.hotbarCtx);
-  this.pierreShop.render(this.overlayCtx);
-
-  requestAnimationFrame(() => this.loop());
+    requestAnimationFrame(() => this.loop());
   };
 }
 

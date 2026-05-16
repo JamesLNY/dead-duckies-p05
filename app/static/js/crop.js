@@ -1,9 +1,9 @@
-import { TILE_SIZE, CROPS } from './constants.js'
+import { TILE_SIZE, CROPS, SCALE_FACTOR } from './constants.js'
 
 let loadedCrops = {};
 
 export default class Crop {
-  constructor(x, y, type, map) {
+  constructor(x, y, map) {
     this.type = null;
     this.tile = map.tiles[x][y];
     
@@ -11,6 +11,17 @@ export default class Crop {
     this.tile.add(this, "middle");
     this.x = x;
     this.y = y;
+    this.watered = false;
+  }
+
+  water() {
+    this.tile.add("watered", "back");
+    this.watered = true;
+  }
+
+  dry() {
+    this.tile.add("tilled", "back");
+    this.watered = false;
   }
 
   plant(type) {
@@ -19,7 +30,7 @@ export default class Crop {
       this.image = loadedCrops[type];
     } else {
       let asset = new Image();
-      asset.src = `/images/front-layer/crops/${type}.png`;
+      asset.src = `/static/images/middle-layer/crops/${type}.png`;
       loadedCrops[type] = asset;
       this.image = asset;
     }
@@ -28,7 +39,7 @@ export default class Crop {
   }
 
   update() {
-    if (this.progress < growthTime) {
+    if (this.progress < this.growthTime) {
       this.progress++;
     }
   }
