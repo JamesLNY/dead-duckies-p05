@@ -97,7 +97,7 @@ export default class Player {
     }
 
     if (item != null) {
-      if (item == "pickaxe" && back == "tilled") {
+      if (item == "pickaxe" && entity instanceof Crop) {
         entity.remove();
         stamina.useEnergy(5);
       }
