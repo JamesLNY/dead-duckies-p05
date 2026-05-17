@@ -240,3 +240,9 @@ jamesL -- 2026-05-15 11:00
 
 kiranS -- 2026-05-15 11:00
 - working on rendering npcs with overlay canvas
+
+emaanA -- 2026-05-17 2:20
+- renderInventory working with escape key input
+- item images up in hotbar and in inventory. centering issue currently and slots need to be tweaked
+- click and drag work: added mouse.js for mouse input 
+- changed time conversion in constants.js back to 450

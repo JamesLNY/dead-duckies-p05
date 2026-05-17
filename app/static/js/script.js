@@ -6,6 +6,7 @@ import Player from './player.js';
 import Time from './time.js';
 import NPC from './npc.js';
 import Shop from './shop.js';
+import MouseHandler from './mouse.js';
 
 class InputHandler {
   constructor(game) {
@@ -29,9 +30,10 @@ class InputHandler {
         game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
       } else if (e.key == "c") {
         game.player.interact(game.map);
-      } /* else if (e.key == 'e') {
-        game.player.inventory.renderInventory(this.hotbarCtx, game.hotbarCanvas);
-      } */
+      } else if (e.key == "Escape") {
+        game.player.inventory.toggle();
+        game.player.inventory.renderInventory(game.overlayCtx, game.overlayCanvas);
+      }
     });
     window.addEventListener('keyup', e => {
       this.keys[e.key] = false;
@@ -41,7 +43,7 @@ class InputHandler {
 
 //doesn't need to be a class, but doing it for organization
 class StardewValley {
-  constructor(canvas, hotbarCanvas) {
+  constructor(canvas, hotbarCanvas, overlayCanvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = false;
@@ -54,6 +56,8 @@ class StardewValley {
     this.overlayCanvas = overlayCanvas;
     this.overlayCtx = this.overlayCanvas.getContext('2d');
     this.overlayCtx.imageSmoothingEnabled = false;
+
+    this.mouse = new MouseHandler(this);
 
     this.maps = {
       farm: new Map('farm'),
@@ -164,6 +168,8 @@ class StardewValley {
     //redraw since it won't show up otherwise
     this.player.inventory.renderHotbar(this.hotbarCtx);
     // this.pierreShop.render(this.overlayCtx);
+    this.player.inventory.renderInventory(this.overlayCtx, this.overlayCanvas);
+    this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouse.mouseX, this.mouse.mouseY);
 
     requestAnimationFrame(() => this.loop());
   };
