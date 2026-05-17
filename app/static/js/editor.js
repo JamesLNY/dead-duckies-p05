@@ -66,6 +66,17 @@ let tiles = await getJson('maps/farm.json');
 
 // tillableHelper();
 
+//this converts every tile to untillable
+async function untillableHelper() {
+  for (const col of tiles) {
+    for (const tile of col) {
+      tile.tillable = false;
+    }
+  }
+  render();
+}
+
+untillableHelper();
 
 let paint = true;
 let held = false;

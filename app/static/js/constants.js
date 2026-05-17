@@ -60,3 +60,10 @@ export const OBJECT_PLACEMENT = {
     "y": 5
   }
 }
+
+// export const STAMINA_COSTS = {
+//   axe: 5,
+//   hoe: 5,
+//   pickaxe: 5,
+//   fishing: 10
+// }

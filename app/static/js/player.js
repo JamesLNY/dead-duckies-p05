@@ -74,7 +74,7 @@ export default class Player {
     // }
   }
 
-  interact(map) {
+  interact(map, stamina) {
     let item = this.inventory.getSelectedItemID();
     let tile = this.getTile(map);
 
@@ -92,20 +92,24 @@ export default class Player {
         for (const [key, value] of Object.entries(ENTITIES[front.type]["drops"])) {
           this.inventory.addItem(key, value);
         }
+        stamina.useEnergy(5);
       }
     }
 
     if (item != null) {
       if (item == "pickaxe" && back == "tilled") {
         entity.remove();
+        stamina.useEnergy(5);
       }
       
       else if (item == "hoe" && entity == null && tile.tillable) {
         map.crops.push(new Crop(tile.x, tile.y, map));
+        stamina.useEnergy(5);
       } 
 
       else if (item == "watering can" && entity instanceof Crop) {
         entity.water();
+        stamina.useEnergy(2);
       }
       
       else if (entity instanceof Crop && item.includes("seed")) {
@@ -121,6 +125,7 @@ export default class Player {
           for (const [key, value] of Object.entries(ENTITIES[entity]["drops"])) {
             this.inventory.addItem(key, value);
           }
+          stamina.useEnergy(5);
         }
       }
     }
