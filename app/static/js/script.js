@@ -184,7 +184,7 @@ class StardewValley {
 
     //redraw since it won't show up otherwise
     this.player.inventory.renderHotbar(this.hotbarCtx);
-    this.pierreShop.render(this.overlayCtx);
+    // this.pierreShop.render(this.overlayCtx);
 
     requestAnimationFrame(() => this.loop());
   };
