@@ -79,8 +79,8 @@ class StardewValley {
     this.player.inventory.addItem("axe", 1);
     this.player.inventory.addItem("hoe", 1);
     this.player.inventory.addItem("pickaxe", 1);
-    this.player.inventory.addItem("watering can", 1);
-    this.player.inventory.addItem("parsnip seeds", 5);
+    this.player.inventory.addItem("watering_can", 1);
+    this.player.inventory.addItem("parsnip_seeds", 5);
 
     this.player.inventory.renderHotbar(this.hotbarCtx, this.hotbarCanvas);
 

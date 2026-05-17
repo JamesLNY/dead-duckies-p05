@@ -17,8 +17,9 @@ export default class Shop {
       this.sprites = [];
       Object.keys(this.shopInventory).forEach((item, i) => {
         this.sprites.push(new Image());
-        this.sprites[i].src = `/static/images/items/${item}`;
+        this.sprites[i].src = `/static/images/items/${item}.png`;
       });
+      console.log(this.sprites);
     }
 
     buy(itemID, player, playerInventory) {

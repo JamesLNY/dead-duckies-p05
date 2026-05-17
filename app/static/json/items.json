@@ -20,7 +20,7 @@
     "maxStack": 10,
     "reaction": "neutral"
   },
-  "parsnip seeds": {
+  "parsnip_seeds": {
     "maxStack": 99,
     "buyPrice": 20,
     "sellPrice": 10,
@@ -39,7 +39,7 @@
   "scythe": {
     "maxStack": 1
   },
-  "watering can": {
+  "watering_can": {
     "maxStack": 1
   }
 }
