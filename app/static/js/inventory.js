@@ -16,7 +16,7 @@ export class Inventory {
     this.select = new Image();
     this.select.src = '/static/images/ui/select.png';
 
-    let itemNames = ["axe", "fish","hoe", "mixed_seeds", "pickaxe", "scythe", "seed","stone", "watering_can", "wood"];
+    let itemNames = ["axe", "fish","hoe", "mixed_seeds", "pickaxe", "scythe", "parsnip_seeds", "stone", "watering_can", "wood"];
 
     for (let i = 0; i < itemNames.length; i += 1) {
       let name = itemNames[i];

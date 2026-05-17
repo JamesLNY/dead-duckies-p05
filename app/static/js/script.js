@@ -7,6 +7,7 @@ import Time from './time.js';
 import NPC from './npc.js';
 import Shop from './shop.js';
 import MouseHandler from './mouse.js';
+import Stamina from './stamina.js';
 
 class InputHandler {
   constructor(game) {
@@ -29,7 +30,7 @@ class InputHandler {
         game.player.inventory.selectSlot(11);
         game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
       } else if (e.key == "c") {
-        game.player.interact(game.map);
+        game.player.interact(game.map, game.stamina);
       } else if (e.key == "Escape") {
         game.player.inventory.toggle();
         game.player.inventory.renderInventory(game.overlayCtx, game.overlayCanvas);
@@ -72,6 +73,7 @@ class StardewValley {
     this.input = new InputHandler(this);
     this.player = new Player();
     this.time = new Time();
+    this.stamina = new Stamina(100); //in game it is 270, but doubt we need that much
 
     //npcs and shops
     // let pierre = this.map.addNPC(5, 5, "Pierre")
@@ -85,16 +87,21 @@ class StardewValley {
 
     this.player.inventory.renderHotbar(this.hotbarCtx, this.hotbarCanvas);
 
-    //i think this loads both maps at the same time before game starts
-    //MAKE IT LOAD WHEN ACTUALLY TELEPORTED
-    Promise.all([
-      this.maps['farm'].loadTiles('farm'),
-      this.maps['town'].loadTiles('town'),
-      this.maps['seedshop'].loadTiles('seedshop')
-    ]).then(() => {
+    this.maps['farm'].loadTiles('farm').then(() => {
       this.initializeFarm();
       this.loop();
     });
+
+    //i think this loads both maps at the same time before game starts
+    //MAKE IT LOAD WHEN ACTUALLY TELEPORTED
+    // Promise.all([
+    //   this.maps['farm'].loadTiles('farm'),
+    //   this.maps['town'].loadTiles('town'),
+    //   this.maps['seedshop'].loadTiles('seedshop')
+    // ]).then(() => {
+    //   this.initializeFarm();
+    //   this.loop();
+    // });
   }
 
   // static async create(canvas) {
@@ -129,11 +136,20 @@ class StardewValley {
     const tile = this.map.getTile(this.player.x, this.player.y + 23);
     if (tile && tile.teleporter && tile.destination) {
       if (!this.justTeleported) {
-        this.justTeleported = true;
-        this.currentMap = tile.destination.map;
-        this.map = this.maps[tile.destination.map];
-        this.player.x = tile.destination.x * TILE_SIZE;
-        this.player.y = tile.destination.y * TILE_SIZE;
+        const teleport = () => {
+          this.justTeleported = true;
+          this.currentMap = tile.destination.map;
+          this.map = this.maps[tile.destination.map];
+          this.player.x = tile.destination.x * TILE_SIZE;
+          this.player.y = tile.destination.y * TILE_SIZE;
+        }
+
+        if (this.maps[tile.destination.map].tiles) {
+          teleport();
+        }
+        else {
+          this.maps[tile.destination.map].loadTiles(tile.destination.map).then(teleport);
+        }
       }
     } else {
       this.justTeleported = false;
@@ -164,6 +180,8 @@ class StardewValley {
 
     this.time.update(this);
     this.time.render(this.ctx);
+    
+    this.stamina.render(this.ctx);
 
     //redraw since it won't show up otherwise
     this.player.inventory.renderHotbar(this.hotbarCtx);

@@ -246,3 +246,11 @@ emaanA -- 2026-05-17 2:20
 - item images up in hotbar and in inventory. centering issue currently and slots need to be tweaked
 - click and drag work: added mouse.js for mouse input 
 - changed time conversion in constants.js back to 450
+
+sarahZ -- 2026-05-18 16:20
+- fixed issue with seedshop.json & updated it with impassable tiles
+- updated town.json to be completely untillable, wrote func for it in editor.js
+- fixed seed in inventory rendering issue
+- updated maps and tiles to only load upon teleport
+- finished stamina class, added stamina ui, and stamina draining when tools are used
+- need to work on flask messages for stamina as well as exhaustion -> walking speed tomorrow, also will add more to this as we implement eating
