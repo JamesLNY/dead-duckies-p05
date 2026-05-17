@@ -12,12 +12,12 @@ export default class Shop {
       this.portrait = new Image();
       this.portrait.src = `/static/images/portraits/${npc}.png`;
 
-      this.itemsStart = 0 // starting index for 4 displayed items
+      this.itemsStart = 0; // starting index for 4 displayed items
 
-      this.sprites = []
+      this.sprites = [];
       Object.keys(this.shopInventory).forEach((item, i) => {
         this.sprites.push(new Image());
-        this.sprites[i].src = `/static/`
+        this.sprites[i].src = `/static/images/items/${item}`;
       });
     }
 

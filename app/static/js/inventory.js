@@ -1,5 +1,7 @@
 import {TILE_SIZE, ITEMS, HOTBAR_HEIGHT, HOTBAR_WIDTH, UI_FACTOR, HOTBAR_SIZE, INVENTORY_HEIGHT, INVENTORY_WIDTH} from "./constants.js";
 
+let loadedItems = {};
+
 export class Inventory {
   constructor(size = 24) {
     this.slots = [];
@@ -13,29 +15,17 @@ export class Inventory {
     this.inventoryMenu.src = '/static/images/ui/inventory.png';
     this.select = new Image();
     this.select.src = '/static/images/ui/select.png';
-    
-    this.axe = new Image();
-    this.axe.src = '/static/images/items/axe.png';
-    this.fish = new Image();
-    this.fish.src = '/static/images/items/fish.png';
-    this.hoe = new Image();
-    this.hoe.src = '/static/images/items/hoe.png';
-    this.mixed_seeds = new Image();
-    this.mixed_seeds.src = '/static/images/items/mixed_seeds.png';
-    this.pickaxe = new Image();
-    this.pickaxe.src = '/static/images/items/pickaxe.png';
-    this.scythe = new Image();
-    this.scythe.src = '/static/images/items/scythe.png';
-    this.seed = new Image();
-    this.seed.src = '/static/images/items/seed.png';
-    this.stone = new Image();
-    this.stone.src = '/static/images/items/stone.png';
-    this.watering_can = new Image();
-    this.watering_can.src = '/static/images/items/watering_can.png';
-    this.wood = new Image();
-    this.wood.src = '/static/images/items/wood.png';
 
+    let itemNames = ["axe", "fish","hoe", "mixed_seeds", "pickaxe", "scythe", "seed","stone", "watering_can", "wood"];
+
+    for (let i = 0; i < itemNames.length; i += 1) {
+      let name = itemNames[i];
+      let asset = new Image();
+      asset.src = `/static/images/items/${name}.png`;
+      loadedItems[name] = asset;
+    }
     for (let i = 0; i < size; i += 1) {
+      //this.slots.count = this.slots.itemID ? this.slots.count : 0;
       this.slots[i] = {itemID: null, count: 0};
     }
   }
@@ -119,13 +109,12 @@ export class Inventory {
       let x = startX + col * TILE_SIZE * UI_FACTOR;
       let y = startY + row * TILE_SIZE * UI_FACTOR;
       let size = TILE_SIZE * UI_FACTOR;
-      if ( mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size) {
+      if (mouseX >= x &&  mouseX <= x + size && mouseY >= y && mouseY <= y + size) {
         return i;
       }
     }
     return null;
   }
-
   startDrag(index) {
     let slot = this.slots[index];
     if (slot.itemID === null) {
@@ -176,8 +165,7 @@ export class Inventory {
     this.draggingSlot = null;
   }
 
-  //this takes coordinates of upper left corner
-  render(hotbarCtx, startX, startY, columns, rows, selected = true) {
+  render(ctx, startX, startY, columns, rows, selected = true) {
     for (let i = 0; i < columns * rows; i += 1) {
       let slot = this.getSlot(i);
       let col = i % columns;
@@ -187,44 +175,61 @@ export class Inventory {
       let y = startY + row * TILE_SIZE * UI_FACTOR;
 
       if (selected && i === this.selectedSlot) {
-        hotbarCtx.drawImage(this.select, x, y, 48, 48);
+        ctx.drawImage(this.select, x, y, 48, 48);
       }
       if (slot.itemID === null) {
         continue;
       }
 
-      hotbarCtx.fillStyle = 'white';
-      hotbarCtx.font = '14px Arial';
-      hotbarCtx.fillText(slot.itemID, x + 8, y + 22);
-      hotbarCtx.fillText(slot.count, x + 8, y + 44);
+      let imageName = slot.itemID.replaceAll(" ", "_");
+
+      if (loadedItems[imageName]) {
+        ctx.drawImage(loadedItems[imageName], x + 8, y + 8, 32, 32);
+      }
+
+      ctx.fillStyle = 'white';
+      ctx.font = '14px Arial';
+      ctx.fillText(slot.count, x + 30, y + 42);
     }
   }
 
   renderHotbar(hotbarCtx) {
-    hotbarCtx.clearRect(0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
-    hotbarCtx.drawImage( this.hotbar,0,0,HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
+    hotbarCtx.clearRect( 0,  0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
+    hotbarCtx.drawImage(this.hotbar, 0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR );
     this.render(hotbarCtx, 9, 9, HOTBAR_SIZE, 1);
   }
 
-  renderInventory(InventoryCtx, canvas) {
-    if (!this.open) {
-      return;
-    }
-    let startX = (canvas.width - INVENTORY_WIDTH) / 2;
-    let startY = (canvas.height - INVENTORY_HEIGHT) / 2;
-    inventoryCtx.drawImage(this.inventoryMenu, startX, startY, width, height);
- 
-    this.render( hotbarCtx, startX + 32, startY + 32, 8, 3, false);
+  renderInventory(overlayCtx, canvas) {
+  overlayCtx.clearRect(0, 0, canvas.width, canvas.height);
+  if (!this.open) {
+    return;
   }
 
-  renderDraggedItem(hotbarCtx, mouseX, mouseY) {
+  let width = INVENTORY_WIDTH * UI_FACTOR;
+  let height = INVENTORY_HEIGHT * UI_FACTOR;
+  let startX = (canvas.width - width) / 1.3;
+  let startY = (canvas.height - height) / 2;
+
+  overlayCtx.drawImage( this.inventoryMenu, startX + 20 , startY, width, height);
+
+  let slotAreaWidth = 8 * TILE_SIZE * UI_FACTOR;
+  let slotAreaHeight = 3 * TILE_SIZE * UI_FACTOR;
+  let slotStartX = startX + (width - slotAreaWidth) / 4 ;
+  let slotStartY = startY + (height - slotAreaHeight) / 2;
+
+  this.render(overlayCtx, slotStartX - 20, slotStartY - 5 , 8, 3, false);
+}
+
+  renderDraggedItem(ctx, mouseX, mouseY) {
     if (this.draggingItem === null) {
       return;
     }
-    hotbarCtx.fillStyle = 'white';
-    hotbarCtx.font = '14px Arial';
-    hotbarCtx.fillText(this.draggingItem.itemID, mouseX, mouseY);
-    hotbarCtx.fillText(this.draggingItem.count, mouseX, mouseY + 18);
+    let imageName = this.draggingItem.itemID.replaceAll(" ", "_");
+    if (loadedItems[imageName]) {
+      ctx.drawImage(loadedItems[imageName], mouseX, mouseY, 32, 32);
+    }
+    ctx.fillStyle = 'white';
+    ctx.font = '14px Arial';
+    ctx.fillText(this.draggingItem.count, mouseX + 18, mouseY + 32);
   }
 }
-
