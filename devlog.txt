@@ -256,9 +256,11 @@ sarahZ -- 2026-05-17 16:20
 - updated maps and tiles to only load upon teleport
 - finished stamina class, added stamina ui, and stamina draining when tools are used
 - need to work on flask messages for stamina as well as exhaustion -> walking speed tomorrow, also will add more to this as we implement eating
+- fixed planting/watering issue b/c of item naming
 
 kiranS -- 2026-05-17 16:40
 - created function to wrap and render text on canvas
 - created function to convert item_name to Item Title
 - finished rendering shop overlay
 - converted items.json item names from spaces to underscores to match convention
+
