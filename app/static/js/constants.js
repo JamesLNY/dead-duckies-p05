@@ -33,6 +33,7 @@ const PIERRE = await getJson("npcs/pierre.json")
 const WILLY = await getJson("npcs/willy.json")
 export const NPC_INFO = {"pierre": PIERRE, "willy": WILLY}
 
+export const SHOPS = await getJson("shops.json");
 const ENTITY_NAMES = {
   "back": ["tilled", "watered"],
   "middle": ["stone", "twig", "weed"],

@@ -58,8 +58,6 @@ class StardewValley {
     this.overlayCtx = this.overlayCanvas.getContext('2d');
     this.overlayCtx.imageSmoothingEnabled = false;
 
-    this.mouse = new MouseHandler(this);
-
     this.maps = {
       farm: new Map('farm'),
       town: new Map('town'),
@@ -77,13 +75,14 @@ class StardewValley {
 
     //npcs and shops
     // let pierre = this.map.addNPC(5, 5, "Pierre")
-    // this.pierreShop = new Shop({"seed": 25}, this.map.npcList[0])
+
+    this.pierreShop = new Shop("pierre");
 
     this.player.inventory.addItem("axe", 1);
     this.player.inventory.addItem("hoe", 1);
     this.player.inventory.addItem("pickaxe", 1);
-    this.player.inventory.addItem("watering can", 1);
-    this.player.inventory.addItem("parsnip seeds", 5);
+    this.player.inventory.addItem("watering_can", 1);
+    this.player.inventory.addItem("parsnip_seeds", 5);
 
     this.player.inventory.renderHotbar(this.hotbarCtx, this.hotbarCanvas);
 
@@ -186,8 +185,6 @@ class StardewValley {
     //redraw since it won't show up otherwise
     this.player.inventory.renderHotbar(this.hotbarCtx);
     // this.pierreShop.render(this.overlayCtx);
-    this.player.inventory.renderInventory(this.overlayCtx, this.overlayCanvas);
-    this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouse.mouseX, this.mouse.mouseY);
 
     requestAnimationFrame(() => this.loop());
   };

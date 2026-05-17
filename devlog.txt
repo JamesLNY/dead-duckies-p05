@@ -239,6 +239,8 @@ jamesL -- 2026-05-15 11:00
 - working on crops
 
 kiranS -- 2026-05-15 11:00
+- finished npc rendering w/ proper layering
+- created overlay canvas for displaying inventory/shop overlays
 - working on rendering npcs with overlay canvas
 
 emaanA -- 2026-05-17 2:20

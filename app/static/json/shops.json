@@ -1,0 +1,11 @@
+{
+    "pierre": {
+        "inventory": {
+            "mixed_seeds": 25
+        },
+        "text": "Welcome to Pierre's! I carry only the finest goods."
+    },
+    "willy": {
+        "inventory": {}
+    }
+}
