@@ -53,6 +53,12 @@ export class Inventory {
   }
 
   addItem(itemID, amount) {
+    if (!(itemID in loadedItems)) {
+      let asset = new Image();
+      asset.src = `/static/images/items/${itemID}.png`;
+      loadedItems[itemID] = asset;
+    }
+
     let remaining = amount;
     for (let i = 0; i < this.slots.length; i += 1) {
       let slot = this.slots[i];

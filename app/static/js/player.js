@@ -96,7 +96,13 @@ export default class Player {
       }
     }
 
-    if (item != null) {
+    if (item == null) {
+      if (entity instanceof Crop && entity.matured) {
+        entity.harvest(this.inventory);
+      }
+    }
+
+    else {
       if (item == "pickaxe" && entity instanceof Crop) {
         entity.remove();
         stamina.useEnergy(5);
