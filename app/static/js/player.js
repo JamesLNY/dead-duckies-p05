@@ -107,14 +107,14 @@ export default class Player {
         stamina.useEnergy(5);
       } 
 
-      else if (item == "watering can" && entity instanceof Crop) {
+      else if (item == "watering_can" && entity instanceof Crop) {
         entity.water();
         stamina.useEnergy(2);
       }
       
-      else if (entity instanceof Crop && item.includes("seed")) {
+      else if (entity instanceof Crop && item.includes("seeds")) {
         if (entity.type == null) {
-          entity.plant(item.split(" ")[0]);
+          entity.plant(item.split("_")[0]);
           this.inventory.removeItem(item, 1);
         }
       }
