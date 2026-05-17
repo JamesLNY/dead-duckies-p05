@@ -1,0 +1,9 @@
+{
+    "pierre": {
+        "inventory": {},
+        "text": "Welcome to Pierre's! I carry only the finest goods."
+    },
+    "willy": {
+        "inventory": {}
+    }
+}

@@ -41,7 +41,7 @@ class InputHandler {
 
 //doesn't need to be a class, but doing it for organization
 class StardewValley {
-  constructor(canvas, hotbarCanvas) {
+  constructor(canvas, hotbarCanvas, overlayCanvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = false;
@@ -54,6 +54,7 @@ class StardewValley {
     this.overlayCanvas = overlayCanvas;
     this.overlayCtx = this.overlayCanvas.getContext('2d');
     this.overlayCtx.imageSmoothingEnabled = false;
+    this.overlayCtx.font = "25px thin"
 
     this.maps = {
       farm: new Map('farm'),
@@ -71,7 +72,8 @@ class StardewValley {
 
     //npcs and shops
     // let pierre = this.map.addNPC(5, 5, "Pierre")
-    // this.pierreShop = new Shop({"seed": 25}, this.map.npcList[0])
+
+    this.pierreShop = new Shop("pierre");
 
     this.player.inventory.addItem("axe", 1);
     this.player.inventory.addItem("hoe", 1);
@@ -163,7 +165,9 @@ class StardewValley {
 
     //redraw since it won't show up otherwise
     this.player.inventory.renderHotbar(this.hotbarCtx);
-    // this.pierreShop.render(this.overlayCtx);
+    this.pierreShop.render(this.overlayCtx);
+
+    //put this behind a check that a shop overlay is active
 
     requestAnimationFrame(() => this.loop());
   };

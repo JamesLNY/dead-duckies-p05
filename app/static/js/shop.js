@@ -1,13 +1,24 @@
-import { ITEMS, UI_FACTOR } from './constants.js';
+import { ITEMS, UI_FACTOR, CANVAS_HEIGHT, CANVAS_WIDTH, SHOPS } from './constants.js';
+import renderWrappedText from './text.js'
 
 export default class Shop {
-    constructor (shopInventory, npc) {
-      // this.player = player;
-      this.shopInventory = shopInventory; // {String item: INT cost}
-      // this.playerInventory = playerInventory;
+    constructor (npc) {
+      this.shopInventory = SHOPS[npc]["inventory"]; // {String item: INT cost}
       this.npc = npc;
-      this.display = new Image()
-      this.display.src = "/static/images/ui/shop.png"
+      this.shopText = SHOPS[npc]["text"]
+
+      this.display = new Image();
+      this.display.src = "/static/images/ui/shop.png";
+      this.portrait = new Image();
+      this.portrait.src = `/static/images/portraits/${npc}.png`;
+
+      this.itemsStart = 0 // starting index for 4 displayed items
+
+      this.sprites = []
+      Object.keys(this.shopInventory).forEach((item, i) => {
+        this.sprites.push(new Image());
+        this.sprites[i].src = `/static/`
+      });
     }
 
     buy(itemID, player, playerInventory) {
@@ -18,7 +29,7 @@ export default class Shop {
         return false;
       }
       let cost = shopInventory[itemID]
-      if (this.player.gold < cost); {
+      if (this.player.gold < cost) {
         return false;
       }
       if (this.playerInventory.addItem(itemID, 1)) {
@@ -39,7 +50,35 @@ export default class Shop {
       return false;
     }
 
+    moveUp() {
+
+    }
+
+    moveDown() {
+
+    }
+
     render(ctx) {
-      ctx.drawImage(this.display, 0, 0, 375, 136)
+      // top left corner for shop menu render
+      let xStart = (CANVAS_WIDTH / 2) - 375;
+      let yStart = (CANVAS_HEIGHT / 2) - 136;
+      let overlayScale = 2;
+      let fontSize = 12 * overlayScale;
+
+      ctx.drawImage(this.display, 
+        xStart, yStart, 
+        375 * overlayScale, 136 * overlayScale
+      );
+      ctx.drawImage(this.portrait, 
+        xStart + 10 * overlayScale, yStart + 7 * overlayScale,
+        64 * overlayScale, 64 * overlayScale
+      );
+
+      ctx.font = `${fontSize}px thin`
+      renderWrappedText(ctx, this.shopText, xStart + 5 * overlayScale, yStart + 85 * overlayScale + fontSize / 2 + 2, 63 * overlayScale, 10 * overlayScale)
+
+      for (let i = 0; i < 4; i++) {
+
+      }
     }
   }
