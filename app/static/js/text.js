@@ -1,4 +1,4 @@
-export default function renderWrappedText(ctx, text, xStart, yStart, width, lineHeight) {
+export function renderWrappedText(ctx, text, xStart, yStart, width, lineHeight) {
   let words = text.split(" ");
   let currentLine = "";
   let lines = [];
@@ -17,4 +17,14 @@ export default function renderWrappedText(ctx, text, xStart, yStart, width, line
   lines.forEach((line, i) => {
     ctx.fillText(line, xStart, yStart + i * lineHeight)
   });
+}
+
+export function getItemTitle(item) {
+  let title = "";
+  item.split("_").forEach(word => {
+    if (word.length > 0) {
+      title += word[0].toUpperCase() + word.slice(1) + " ";
+    }
+  });
+  return title.trim()
 }

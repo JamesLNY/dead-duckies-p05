@@ -1,5 +1,5 @@
 import { ITEMS, UI_FACTOR, CANVAS_HEIGHT, CANVAS_WIDTH, SHOPS } from './constants.js';
-import renderWrappedText from './text.js'
+import { renderWrappedText, getItemTitle } from './text.js'
 
 export default class Shop {
     constructor (npc) {
@@ -15,11 +15,15 @@ export default class Shop {
       this.itemsStart = 0; // starting index for 4 displayed items
 
       this.sprites = [];
+      this.itemTitles = []; // to prevent running getItemTitle method on each render
       Object.keys(this.shopInventory).forEach((item, i) => {
         this.sprites.push(new Image());
         this.sprites[i].src = `/static/images/items/${item}.png`;
+        this.itemTitles.push(getItemTitle(Object.keys(this.shopInventory)[i])) 
       });
-      console.log(this.sprites);
+
+
+      // console.log(this.sprites);
     }
 
     buy(itemID, player, playerInventory) {
@@ -52,11 +56,15 @@ export default class Shop {
     }
 
     moveUp() {
-
+      if (this.itemsStart > 0) {
+        this.itemsStart--;
+      }
     }
 
     moveDown() {
-
+      if (this.itemsStart < this.itemTitles.length - 4) {
+        this.itemsStart++;
+      }
     }
 
     render(ctx) {
@@ -75,11 +83,33 @@ export default class Shop {
         64 * overlayScale, 64 * overlayScale
       );
 
+      ctx.textAlign = "left";
+      ctx.letterSpacing = "1px";
       ctx.font = `${fontSize}px thin`
+      ctx.fillStyle = "black";
       renderWrappedText(ctx, this.shopText, xStart + 5 * overlayScale, yStart + 85 * overlayScale + fontSize / 2 + 2, 63 * overlayScale, 10 * overlayScale)
+
+      ctx.font = `${fontSize}px bold`
+      ctx.fillStyle = "#56160c";
+      ctx.letterSpacing = "2px";
 
       for (let i = 0; i < 4; i++) {
 
+        ctx.textAlign = "left";
+
+        ctx.drawImage(this.sprites[this.itemsStart + i],
+          xStart + 94 * overlayScale, yStart + 12 * overlayScale + i * 27 * overlayScale,
+          16 * overlayScale, 16 * overlayScale
+        )
+        ctx.fillText(this.itemTitles[this.itemsStart + i],
+          xStart + 114 * overlayScale, yStart + 23 * overlayScale + i * 27 * overlayScale
+        )
+
+        ctx.textAlign = "right";
+
+        ctx.fillText(Object.values(this.shopInventory)[this.itemsStart + i],
+          xStart + 340 * overlayScale, yStart + 23 * overlayScale + i * 27 * overlayScale
+        )
       }
     }
   }

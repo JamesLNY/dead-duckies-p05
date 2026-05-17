@@ -23,6 +23,7 @@ body {
 @font-face {
   font-family: "bold";
   src: url("/static/fonts/bold.woff2/svbold.otf.woff2");
+  color: #56160c;
 }
 
 #hotbar-canvas {
