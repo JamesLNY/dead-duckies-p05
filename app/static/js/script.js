@@ -78,7 +78,8 @@ class StardewValley {
     this.maps = {
       farm: new Map('farm'),
       town: new Map('town'),
-      seedshop: new Map('seedshop')
+      seedshop: new Map('seedshop'),
+      farmhouse: new Map('farmhouse')
     };
     this.currentMap = 'farm';
     this.map = this.maps['farm'];

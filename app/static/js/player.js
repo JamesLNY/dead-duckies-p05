@@ -94,7 +94,7 @@ export default class Player {
     let entity = tile.layers["middle"];
     let front = tile.layers["front"];
 
-    console.log(`${tile.x}, ${tile.y}`)
+    // console.log(`${tile.x}, ${tile.y}`)
 
     if (entity instanceof NPC) {
       if (ITEMS[item]["reaction"] != null && entity.giftNumber[this.name] < 2 && !entity.gifted[this.name]) {
@@ -103,7 +103,7 @@ export default class Player {
         }
       }
       else {
-        console.log("A")
+        // console.log("A")
         entity.talk(this.name);
       }
       this.game.menu = "dialogue";
@@ -163,9 +163,9 @@ export default class Player {
         }
       }
 
-      if (ENTITIES[entity.type]["tools"].includes(item)) {
+      else if (entity != null && ENTITIES[entity]["tools"].includes(item)) {
           tile.remove("middle");
-          for (const [key, value] of Object.entries(ENTITIES[entity.type]["drops"])) {
+          for (const [key, value] of Object.entries(ENTITIES[entity]["drops"])) {
             this.inventory.addItem(key, value);
           }
           stamina.useEnergy(5);

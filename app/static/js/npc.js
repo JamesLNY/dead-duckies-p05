@@ -76,7 +76,7 @@ export default class NPC {
     if (!(player in this.points)) {
       // this.addPlayer(player)
       this.points[player] += 20;
-      console.log("a")
+      // console.log("a")
       this.dialogue = this.normalDialogue[0] //default introduction dialogue
     }
     else if (this.talked[player] == false) {
@@ -89,7 +89,7 @@ export default class NPC {
   }
 
   renderDialogue(ctx, player) {
-    console.log(this.dialogue)
+    // console.log(this.dialogue)
     let overlayScale = 2;
     let xStart = (CANVAS_WIDTH - 321 * overlayScale) / 2;
     let yStart = CANVAS_HEIGHT - (113 + 15) * overlayScale;
