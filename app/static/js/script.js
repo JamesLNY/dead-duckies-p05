@@ -72,7 +72,7 @@ class StardewValley {
     this.justTeleported = false;
 
     this.input = new InputHandler(this);
-    this.player = new Player("Kiran");
+    this.player = new Player("Kiran", this);
     this.time = new Time();
     this.stamina = new Stamina(100); //in game it is 270, but doubt we need that much
 
@@ -160,10 +160,6 @@ class StardewValley {
     }
   }
 
-  pauseLoop() {
-
-  }
-
   clearMenus() {
     this.hotbarCtx.clearRect(0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
     this.overlayCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -201,10 +197,13 @@ class StardewValley {
       case "inventory":
         this.player.inventory.renderInventory(this.overlayCtx, this.overlayCanvas);
         break;
+      case "shop":
+        this.pierreShop.render(this.overlayCtx);
+        break;
     }
     // this.updateHotbarInput();
 
-    // this.pierreShop.render(this.overlayCtx);
+    //
 
     requestAnimationFrame(() => this.loop());
   };

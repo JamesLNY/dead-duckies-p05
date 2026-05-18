@@ -15,9 +15,11 @@ function passable(tile) {
 }
 
 export default class Player {
-  constructor(name) {
+  constructor(name, game) {
     this.x = TILE_SIZE * 9;
     this.y = TILE_SIZE * 10;
+
+    this.game = game;
 
     this.name = name;
     this.facing = DOWN;
@@ -83,6 +85,8 @@ export default class Player {
     let entity = tile.layers["middle"];
     let front = tile.layers["front"];
 
+    console.log(`${tile.x}, ${tile.y}`)
+
     if (entity instanceof NPC) {
       if (ITEMS[item]["reaction"] != null && entity.giftNumber[this.name] < 2 && !entity.gifted[this.name]) {
         entity.gift(this.name, item);
@@ -91,6 +95,12 @@ export default class Player {
       else {
         entity.talk(this.name);
       }
+    }
+
+    else if (map.name == "seedshop" && tile.x == 4 && tile.y == 18) {
+      console.log("HERE");
+      this.game.clearMenus();
+      this.game.menu = "shop";
     }
 
     else if (front instanceof BigEntity) {
