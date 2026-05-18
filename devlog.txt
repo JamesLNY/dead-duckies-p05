@@ -264,3 +264,17 @@ kiranS -- 2026-05-17 16:40
 - finished rendering shop overlay
 - converted items.json item names from spaces to underscores to match convention
 
+emaanA -- 2026-05-18 11:00
+- centered inventory; click and drag broken? need 2 fix
+
+sarahZ -- 2026-05-18 11:00
+- got exhaustion working
+- changed key bindings for player 
+- fixed stamina bar scaling
+
+jamesL -- 2026-05-18 11:00
+- created general functions for displaying various menus
+
+kiranS -- 2026-05-18 11:00
+- working on npcs
+
