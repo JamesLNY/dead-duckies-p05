@@ -289,3 +289,6 @@ kiranS -- 2026-05-18 17:30
 
 kiranS -- 2026-05-18 17:50
 - added ability to scroll through available items with arrow keys on shop screen
+
+jamesL -- 2026-05-18 20:00
+- created assets for the farmhouse
