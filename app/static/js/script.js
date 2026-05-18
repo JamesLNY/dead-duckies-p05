@@ -72,7 +72,7 @@ class StardewValley {
     this.justTeleported = false;
 
     this.input = new InputHandler(this);
-    this.player = new Player();
+    this.player = new Player("Kiran");
     this.time = new Time();
     this.stamina = new Stamina(100); //in game it is 270, but doubt we need that much
 

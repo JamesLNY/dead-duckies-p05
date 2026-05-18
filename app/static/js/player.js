@@ -1,5 +1,5 @@
 import BigEntity from "./big-entity.js";
-import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, MOVEMENT_SPEED } from "./constants.js";
+import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, MOVEMENT_SPEED, ITEMS } from "./constants.js";
 import { Inventory } from './inventory.js';
 import NPC from "./npc.js"
 import Crop from "./crop.js"
@@ -15,10 +15,11 @@ function passable(tile) {
 }
 
 export default class Player {
-  constructor() {
+  constructor(name) {
     this.x = TILE_SIZE * 9;
     this.y = TILE_SIZE * 10;
 
+    this.name = name;
     this.facing = DOWN;
     this.moving = false;
     this.frame = 0;
@@ -83,9 +84,15 @@ export default class Player {
     let front = tile.layers["front"];
 
     if (entity instanceof NPC) {
-      console.log("Interaction");
+      if (ITEMS[item]["reaction"] != null && entity.giftNumber[this.name] < 2 && !entity.gifted[this.name]) {
+        entity.gift(this.name, item);
+        console.log("gift")
+      }
+      else {
+        entity.talk(this.name);
+      }
     }
-    
+
     else if (front instanceof BigEntity) {
       if (ENTITIES[front.type]["tools"].includes(item)) {
         map.removeBigEntity(tile.x, tile.y);
@@ -96,7 +103,7 @@ export default class Player {
       }
     }
 
-    if (item == null) {
+    else if (item == null) {
       if (entity instanceof Crop && entity.matured) {
         entity.harvest(this.inventory);
       }
@@ -107,24 +114,24 @@ export default class Player {
         entity.remove();
         stamina.useEnergy(5);
       }
-      
+
       else if (item == "hoe" && entity == null && tile.tillable) {
         map.crops.push(new Crop(tile.x, tile.y, map));
         stamina.useEnergy(5);
-      } 
+      }
 
       else if (item == "watering_can" && entity instanceof Crop) {
         entity.water();
         stamina.useEnergy(2);
       }
-      
+
       else if (entity instanceof Crop && item.includes("seeds")) {
         if (entity.type == null) {
           entity.plant(item.split("_")[0]);
           this.inventory.removeItem(item, 1);
         }
       }
-      
+
       else if (entity != null) {
         if (ENTITIES[entity]["tools"].includes(item)) {
           tile.remove("middle");
