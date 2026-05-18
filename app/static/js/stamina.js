@@ -21,14 +21,17 @@ export default class Stamina {
         this.curr = Math.min(this.max, this.curr + energy);
     }
 
+    isLow() {
+      return (this.curr/this.max) <= 0.2;
+    }
     isEmpty() {
         return this.curr <= 0;
     }
 
     render(ctx) {
         //i js kinda tweaked around for these, no idea how it works so do not touch
-        const imgW = 0.04 * CANVAS_WIDTH;
-        const imgH = imgW * 5;
+        const imgW = 0.04 * CANVAS_WIDTH * 0.85;
+        const imgH = imgW * 5 * 0.85;
         const x = CANVAS_WIDTH - imgW - 0.01 * CANVAS_WIDTH;
         const y = CANVAS_HEIGHT - imgH - 0.01 * CANVAS_HEIGHT;
         const staminaPercent = this.curr / this.max;

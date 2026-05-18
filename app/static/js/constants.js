@@ -21,9 +21,9 @@ export const INVENTORY_HEIGHT = 64;
 export const CANVAS_WIDTH = TILE_SIZE * SCALE_FACTOR * X_RES;
 export const CANVAS_HEIGHT = TILE_SIZE * SCALE_FACTOR * Y_RES;
 
-export const MOVEMENT_SPEED = 2;
+// export const MOVEMENT_SPEED = 2;
 export const FRAME_RATE = 16;
-export const TIME_CONVERSION = 10; // HIGHER = Slower Time
+export const TIME_CONVERSION = 450; // HIGHER = Slower Time
 
 export const ITEMS = await getJson("items.json");
 export const ENTITIES = await getJson("entities.json")

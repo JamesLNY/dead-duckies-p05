@@ -19,7 +19,7 @@ export default class Shop {
       Object.keys(this.shopInventory).forEach((item, i) => {
         this.sprites.push(new Image());
         this.sprites[i].src = `/static/images/items/${item}.png`;
-        this.itemTitles.push(getItemTitle(Object.keys(this.shopInventory)[i])) 
+        this.itemTitles.push(getItemTitle(Object.keys(this.shopInventory)[i]))
       });
 
 
@@ -74,11 +74,11 @@ export default class Shop {
       let overlayScale = 2;
       let fontSize = 12 * overlayScale;
 
-      ctx.drawImage(this.display, 
-        xStart, yStart, 
+      ctx.drawImage(this.display,
+        xStart, yStart,
         375 * overlayScale, 136 * overlayScale
       );
-      ctx.drawImage(this.portrait, 
+      ctx.drawImage(this.portrait,
         xStart + 10 * overlayScale, yStart + 7 * overlayScale,
         64 * overlayScale, 64 * overlayScale
       );
@@ -111,5 +111,6 @@ export default class Shop {
           xStart + 340 * overlayScale, yStart + 23 * overlayScale + i * 27 * overlayScale
         )
       }
+
     }
   }
