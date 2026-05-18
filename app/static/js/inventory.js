@@ -30,10 +30,6 @@ export class Inventory {
     }
   }
 
-  toggle() {
-    this.open = !this.open;
-  }
-
   selectSlot(index) {
     if (index >= 0 && index < HOTBAR_SIZE) {
       this.selectedSlot = parseInt(index);
@@ -206,11 +202,27 @@ export class Inventory {
   }
 
   renderInventory(overlayCtx, canvas) {
-  overlayCtx.clearRect(0, 0, canvas.width, canvas.height);
-  if (!this.open) {
-    return;
+    overlayCtx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!this.open) {
+      return;
+    }
+
+    let width = INVENTORY_WIDTH * UI_FACTOR;
+    let height = INVENTORY_HEIGHT * UI_FACTOR;
+    let startX = (canvas.width - width) / 1.3;
+    let startY = (canvas.height - height) / 2;
+
+    overlayCtx.drawImage( this.inventoryMenu, startX + 20 , startY, width, height);
+
+    let slotAreaWidth = 8 * TILE_SIZE * UI_FACTOR;
+    let slotAreaHeight = 3 * TILE_SIZE * UI_FACTOR;
+    let slotStartX = startX + (width - slotAreaWidth) / 4 ;
+    let slotStartY = startY + (height - slotAreaHeight) / 2;
+
+    this.render(overlayCtx, slotStartX - 20, slotStartY - 5 , 8, 3, false);
   }
 
+<<<<<<< HEAD
   let width = INVENTORY_WIDTH * UI_FACTOR;
   let height = INVENTORY_HEIGHT * UI_FACTOR;
   let startX = (canvas.width - width) / 1.3;
@@ -226,6 +238,8 @@ export class Inventory {
   this.render(overlayCtx, slotStartX - 110, slotStartY - 5 , 8, 3, false);
 }
 
+=======
+>>>>>>> 4dd11d3129c5eb8ee84032f556d205e37ae18a40
   renderDraggedItem(ctx, mouseX, mouseY) {
     if (this.draggingItem === null) {
       return;

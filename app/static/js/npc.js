@@ -4,77 +4,80 @@ import Shop from "./shop.js"
 
 export default class NPC {
   constructor(name, x, y, map) {
-    this.name = name
-    this.x = x
-    this.y = y
+    this.name = name;
+    this.x = x;
+    this.y = y;
     this.sprite = new Image();
-    this.sprite.src = `/static/images/npcs/${name}.png`
+    this.sprite.src = `/static/images/npcs/${name}.png`;
 
     let tile = map.tiles[x][y];
-    tile.add(this, "middle")
+    tile.add(this, "middle");
 
-    this.points = {"Kiran": 0}
-    this.giftNumber = {"Kiran": 0}
-    this.talked = {"Kiran": false}
-    this.status = {"Kiran": 0}
+    // placeholders
+    this.points = {"Kiran": 0};
+    this.giftNumber = {"Kiran": 0};
+    this.talked = {"Kiran": false};
+    this.gifted = {"Kiran": false};
+    this.status = {"Kiran": 0};
 
-    this.reactions = {}
+    this.reactions = {};
     Object.keys(NPC_INFO[this.name]["reactions"]).forEach(reaction => {
       NPC_INFO[this.name]["reactions"][reaction].forEach(item => {
-        this.reactions[item] = reaction
+        this.reactions[item] = reaction;
       })
     })
-    this.normalDialogue = NPC_INFO[this.name]["normal_dialogue"]
-    this.giftDialogue = NPC_INFO[this.name]["gift_dialogue"]
+    this.normalDialogue = NPC_INFO[this.name]["normal_dialogue"];
+    this.giftDialogue = NPC_INFO[this.name]["gift_dialogue"];
     // console.log(this.reactions)
     // console.log(this.normalDialogue)
   }
 
   getGiftNumber() {
-    return this.giftNumber
+    return this.giftNumber;
   }
 
   getTalked() {
-    return this.talked
+    return this.talked;
   }
 
   // possibly implement birthdays
   gift(player, item) {
     if (!(player in this.points)) {
-      this.addPlayer(player)
+      this.addPlayer(player);
     }
     if (this.giftNumber[player] == 2) {
       // possibly display msg
-      return
+      return;
     }
-    let reaction
+    let reaction = 0;
     if (item in this.reactions) { // checks npc-specific reactions
-      reaction = this.reactions[item]
+      reaction = this.reactions[item];
     }
     else { // defaults to universal reaction
-      reaction = ITEMS[item]["reaction"]
+      reaction = ITEMS[item]["reaction"];
     }
-    this.points[player] += giftPoints[reaction]
-    this.giftNumber[player] += 1
-    this.renderDialogue(player, this.giftDialogue[reaction])
+    this.points[player] += giftPoints[reaction];
+    this.giftNumber[player] += 1;
+    this.gifted = true;
+    this.renderDialogue(player, this.giftDialogue[reaction]);
   }
 
-  talk(player) {
+  talk(ctx, player) {
     if (!(player in this.points)) {
       this.addPlayer(player)
       this.points[player] += 20
       console.log("a")
-      this.renderDialogue(player, this.normalDialogue[0]) //default introduction dialogue
+      this.renderDialogue(ctx, player, this.normalDialogue[0]) //default introduction dialogue
     }
     else if (this.talked[player] == false) {
       console.log("b")
       this.points[player] += 20
-      this.renderDialogue(player, this.normalDialogue[Math.ceil(Math.random() * (this.normalDialogue.length - 1))]) //random dialogue option (excluding intro dialogue stored at index 0 of array)
+      this.renderDialogue(ctx, player, this.normalDialogue[Math.ceil(Math.random() * (this.normalDialogue.length - 1))]) //random dialogue option (excluding intro dialogue stored at index 0 of array)
     }
     this.talked = true
   }
 
-  renderDialogue(player, dialogue) {
+  renderDialogue(ctx, player, dialogue) {
     console.log(dialogue)
     document.getElementById("npc").innerHTML = this.name
     document.getElementById("dialogue").innerHTML = dialogue.replaceAll("@", player)

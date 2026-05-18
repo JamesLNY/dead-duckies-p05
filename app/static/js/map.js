@@ -5,6 +5,7 @@ import NPC from './npc.js';
 
 export default class Map {
   constructor(name) {
+    this.name = name;
     this.image = new Image();
     this.image.src = `/static/images/maps/${name}.png`
     this.bigEntities = [];

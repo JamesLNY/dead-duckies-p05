@@ -1,4 +1,4 @@
-import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE,
+import { CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE,
          UI_FACTOR, HOTBAR_HEIGHT, HOTBAR_WIDTH } from './constants.js'
 
 import Map from './map.js'
@@ -13,7 +13,7 @@ class InputHandler {
   constructor(game) {
     this.keys = {};
     window.addEventListener('keydown', e => {
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+      if (['W', 'w', 'A', 'a', 'S', 's', 'D', 'd'].includes(e.key)) {
         this.keys[e.key] = true;
         e.preventDefault();
       } else if (Number.isInteger(parseInt(e.key))) {
@@ -31,9 +31,12 @@ class InputHandler {
         game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
       } else if (e.key == "c") {
         game.player.interact(game.map, game.stamina);
+      } else if (e.key == "e") {
+        game.clearMenus();
+        game.player.inventory.open = true;
+        game.menu = "inventory";
       } else if (e.key == "Escape") {
-        game.player.inventory.toggle();
-        game.player.inventory.renderInventory(game.overlayCtx, game.overlayCanvas);
+        game.clearMenus();
       }
     });
     window.addEventListener('keyup', e => {
@@ -42,7 +45,7 @@ class InputHandler {
   }
 }
 
-//doesn't need to be a class, but doing it for organization
+//doesn't need to be a class, but doing it for organizasation
 class StardewValley {
   constructor(canvas, hotbarCanvas, overlayCanvas) {
     this.canvas = canvas;
@@ -69,9 +72,11 @@ class StardewValley {
     this.justTeleported = false;
 
     this.input = new InputHandler(this);
-    this.player = new Player();
+    this.player = new Player("Kiran", this);
     this.time = new Time();
     this.stamina = new Stamina(100); //in game it is 270, but doubt we need that much
+
+    this.menu = "map";
 
     //npcs and shops
     // let pierre = this.map.addNPC(5, 5, "Pierre")
@@ -155,36 +160,52 @@ class StardewValley {
     }
   }
 
-  pauseLoop() {
-
+  clearMenus() {
+    this.hotbarCtx.clearRect(0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
+    this.overlayCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+    this.player.inventory.open = false;
+    this.menu = "map";
   }
 
   loop() {
+    switch (this.menu) {
+      case "map":
+        this.player.move(this.input.keys, this.map);
+        this.checkTeleport();
+
+        this.map.follow(this.player);
+
+        this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+        let npcsToDraw = this.map.render(this.ctx, this.player);
+        this.player.render(this.ctx, this.map);
+
+        // console.log(npcsToDraw);
+
+        npcsToDraw.forEach((npc) => {
+          npc.render(this.ctx, this.map)
+        });
+
+        this.time.update(this);
+        this.time.render(this.ctx);
+
+        this.stamina.render(this.ctx);
+
+        //redraw since it won't show up otherwise
+        this.player.inventory.renderHotbar(this.hotbarCtx);
+        break;
+      case "inventory":
+        this.player.inventory.renderInventory(this.overlayCtx, this.overlayCanvas);
+        break;
+      case "shop":
+        this.pierreShop.render(this.overlayCtx);
+        break;
+    }
     // this.updateHotbarInput();
-    this.player.move(this.input.keys, this.map);
+    this.player.move(this.input.keys, this.map, this.stamina);
     this.checkTeleport();
 
-    this.map.follow(this.player);
-
-    this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-    let npcsToDraw = this.map.render(this.ctx, this.player);
-    this.player.render(this.ctx, this.map);
-
-    // console.log(npcsToDraw);
-
-    npcsToDraw.forEach((npc) => {
-      npc.render(this.ctx, this.map)
-    });
-
-    this.time.update(this);
-    this.time.render(this.ctx);
-    
-    this.stamina.render(this.ctx);
-
-    //redraw since it won't show up otherwise
-    this.player.inventory.renderHotbar(this.hotbarCtx);
-    // this.pierreShop.render(this.overlayCtx);
+    //
 
     requestAnimationFrame(() => this.loop());
   };

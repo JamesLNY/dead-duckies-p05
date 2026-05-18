@@ -1,5 +1,5 @@
 import BigEntity from "./big-entity.js";
-import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, MOVEMENT_SPEED } from "./constants.js";
+import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, ITEMS } from "./constants.js";
 import { Inventory } from './inventory.js';
 import NPC from "./npc.js"
 import Crop from "./crop.js"
@@ -9,16 +9,20 @@ const DOWN = 0;
 const RIGHT = 1;
 const UP = 2;
 const LEFT = 3;
+var MOVEMENT_SPEED = 2;
 
 function passable(tile) {
   return tile != null && tile.passable;
 }
 
 export default class Player {
-  constructor() {
+  constructor(name, game) {
     this.x = TILE_SIZE * 9;
     this.y = TILE_SIZE * 10;
 
+    this.game = game;
+
+    this.name = name;
     this.facing = DOWN;
     this.moving = false;
     this.frame = 0;
@@ -29,7 +33,13 @@ export default class Player {
     this.sprite.src = '/static/images/player.png';
   }
 
-  move(keys, map) {
+  move(keys, map, stamina) {
+    if (stamina.isEmpty()) {
+      MOVEMENT_SPEED = 0.5;
+    }
+    else {
+      MOVEMENT_SPEED = 2;
+    }
     if (!this.moving) {
       this.frame += FRAME_RATE;
     } else {
@@ -39,25 +49,25 @@ export default class Player {
     let x = this.x, y = this.y;
 
     this.moving = true;
-    if (keys['ArrowLeft']) {
+    if (keys['a'] || keys['A']) {
       this.facing = LEFT;
       x -= MOVEMENT_SPEED;
 
       if (!passable(map.getTile(x - TILE_SIZE * 0.25, y + TILE_SIZE)) ||
           !passable(map.getTile(x - TILE_SIZE * 0.25, y + 23))) return;
-    } else if (keys['ArrowRight']) {
+    } else if (keys['d'] || keys['D']) {
       this.facing = RIGHT;
       x += MOVEMENT_SPEED;
 
       if (!passable(map.getTile(x + TILE_SIZE * 0.25, y + TILE_SIZE)) ||
           !passable(map.getTile(x + TILE_SIZE * 0.25, y + 23))) return;
-    } else if (keys['ArrowUp']) {
+    } else if (keys['w'] || keys['W']) {
       this.facing = UP;
       y -= MOVEMENT_SPEED;
 
       if (!passable(map.getTile(x - TILE_SIZE * 0.25, y + TILE_SIZE)) ||
           !passable(map.getTile(x + TILE_SIZE * 0.25, y + TILE_SIZE))) return;
-    } else if (keys['ArrowDown']) {
+    } else if (keys['s'] || keys['s']) {
       this.facing = DOWN;
       y += MOVEMENT_SPEED;
 
@@ -82,10 +92,24 @@ export default class Player {
     let entity = tile.layers["middle"];
     let front = tile.layers["front"];
 
+    console.log(`${tile.x}, ${tile.y}`)
+
     if (entity instanceof NPC) {
-      console.log("Interaction");
+      if (ITEMS[item]["reaction"] != null && entity.giftNumber[this.name] < 2 && !entity.gifted[this.name]) {
+        entity.gift(this.name, item);
+        console.log("gift")
+      }
+      else {
+        entity.talk(this.name);
+      }
     }
-    
+
+    else if (map.name == "seedshop" && tile.x == 4 && tile.y == 18) {
+      console.log("HERE");
+      this.game.clearMenus();
+      this.game.menu = "shop";
+    }
+
     else if (front instanceof BigEntity) {
       if (ENTITIES[front.type]["tools"].includes(item)) {
         map.removeBigEntity(tile.x, tile.y);
@@ -96,7 +120,7 @@ export default class Player {
       }
     }
 
-    if (item == null) {
+    else if (item == null) {
       if (entity instanceof Crop && entity.matured) {
         entity.harvest(this.inventory);
       }
@@ -107,24 +131,24 @@ export default class Player {
         entity.remove();
         stamina.useEnergy(5);
       }
-      
+
       else if (item == "hoe" && entity == null && tile.tillable) {
         map.crops.push(new Crop(tile.x, tile.y, map));
         stamina.useEnergy(5);
-      } 
+      }
 
       else if (item == "watering_can" && entity instanceof Crop) {
         entity.water();
         stamina.useEnergy(2);
       }
-      
+
       else if (entity instanceof Crop && item.includes("seeds")) {
         if (entity.type == null) {
           entity.plant(item.split("_")[0]);
           this.inventory.removeItem(item, 1);
         }
       }
-      
+
       else if (entity != null) {
         if (ENTITIES[entity]["tools"].includes(item)) {
           tile.remove("middle");
