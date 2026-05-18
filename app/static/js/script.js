@@ -61,6 +61,8 @@ class StardewValley {
     this.overlayCtx = this.overlayCanvas.getContext('2d');
     this.overlayCtx.imageSmoothingEnabled = false;
 
+    this.mouse = new MouseHandler(this);
+
     this.maps = {
       farm: new Map('farm'),
       town: new Map('town'),
@@ -197,6 +199,7 @@ class StardewValley {
         break;
       case "inventory":
         this.player.inventory.renderInventory(this.overlayCtx, this.overlayCanvas);
+        this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouse.mouseX, this.mouse.mouseY);
         break;
       case "shop":
         this.pierreShop.render(this.overlayCtx);

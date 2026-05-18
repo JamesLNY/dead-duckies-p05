@@ -204,7 +204,7 @@ export class Inventory {
   }
 
   renderInventory(overlayCtx, canvas) {
-    overlayCtx.clearRect(0, 0, canvas.width, canvas.height);
+    //overlayCtx.clearRect(0, 0, canvas.width, canvas.height);
     if (!this.open) {
       return;
     }
