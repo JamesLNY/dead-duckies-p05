@@ -9,6 +9,8 @@ export class Inventory {
     this.open = false;
     this.draggingSlot = null;
     this.draggingItem = null;
+    this.inventorySlotX = 0;
+    this.inventorySlotY = 0;
     this.hotbar = new Image();
     this.hotbar.src = '/static/images/ui/hotbar.png';
     this.inventoryMenu = new Image();
@@ -219,6 +221,8 @@ export class Inventory {
     let slotStartX = startX + (width - slotAreaWidth) / 4 ;
     let slotStartY = startY + (height - slotAreaHeight) / 2;
 
+    this.inventorySlotX = slotStartX - 110;
+    this.inventorySlotY = slotStartY - 5;
     this.render(overlayCtx, slotStartX - 110, slotStartY - 5 , 8, 3, false);
   }
 

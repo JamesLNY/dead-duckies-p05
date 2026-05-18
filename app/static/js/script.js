@@ -193,6 +193,7 @@ class StardewValley {
 
         //redraw since it won't show up otherwise
         this.player.inventory.renderHotbar(this.hotbarCtx);
+       // this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouseHandler.mouseX, this.mouseHandler.mouse);
         break;
       case "inventory":
         this.player.inventory.renderInventory(this.overlayCtx, this.overlayCanvas);
