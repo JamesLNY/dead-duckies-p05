@@ -276,8 +276,13 @@ jamesL -- 2026-05-18 11:00
 - created general functions for displaying various menus
 
 kiranS -- 2026-05-18 11:00
-- working on npcs
+- working on npc interaction
 
 emaanA -- 2026-05-18 14:00 
 - quick bug fixes in player and scripts
 - fixed click/drag
+
+kiranS -- 2026-05-18 17:30
+- finished npc interaction w/ keyboard input on npc tile
+- expanded npc gift/talk checks and ensured item is removed when giving a gift
+- converted dialogue popup to canvas from html elements

@@ -1,6 +1,8 @@
 import { NPC_INFO, ITEMS, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_SIZE, SCALE_FACTOR } from "./constants.js"
-const giftPoints = {"hate": -40, "dislike": -20, "neutral": 20, "like": 45, "love": 80}
 import Shop from "./shop.js"
+import { renderWrappedText, getItemTitle } from "./text.js";
+
+const giftPoints = {"hate": -40, "dislike": -20, "neutral": 20, "like": 45, "love": 80}
 
 export default class NPC {
   constructor(name, x, y, map) {
@@ -9,6 +11,10 @@ export default class NPC {
     this.y = y;
     this.sprite = new Image();
     this.sprite.src = `/static/images/npcs/${name}.png`;
+    this.box = new Image();
+    this.box.src = `/static/images/ui/dialoguebox.png`
+    this.portrait = new Image();
+    this.portrait.src = `/static/images/portraits/${this.name}.png`;
 
     let tile = map.tiles[x][y];
     tile.add(this, "middle");
@@ -19,6 +25,8 @@ export default class NPC {
     this.talked = {"Kiran": false};
     this.gifted = {"Kiran": false};
     this.status = {"Kiran": 0};
+
+    this.dialogue = "";
 
     this.reactions = {};
     Object.keys(NPC_INFO[this.name]["reactions"]).forEach(reaction => {
@@ -47,7 +55,7 @@ export default class NPC {
     }
     if (this.giftNumber[player] == 2) {
       // possibly display msg
-      return;
+      return false;
     }
     let reaction = 0;
     if (item in this.reactions) { // checks npc-specific reactions
@@ -58,30 +66,61 @@ export default class NPC {
     }
     this.points[player] += giftPoints[reaction];
     this.giftNumber[player] += 1;
-    this.gifted = true;
-    this.renderDialogue(player, this.giftDialogue[reaction]);
+    this.gifted[player] = true;
+    this.dialogue = this.giftDialogue[reaction];
+    this.dialogue = this.dialogue.replace("@", player)
+    return true;
   }
 
-  talk(ctx, player) {
+  talk(player) {
     if (!(player in this.points)) {
-      this.addPlayer(player)
-      this.points[player] += 20
+      // this.addPlayer(player)
+      this.points[player] += 20;
       console.log("a")
-      this.renderDialogue(ctx, player, this.normalDialogue[0]) //default introduction dialogue
+      this.dialogue = this.normalDialogue[0] //default introduction dialogue
     }
     else if (this.talked[player] == false) {
-      console.log("b")
-      this.points[player] += 20
-      this.renderDialogue(ctx, player, this.normalDialogue[Math.ceil(Math.random() * (this.normalDialogue.length - 1))]) //random dialogue option (excluding intro dialogue stored at index 0 of array)
+      // console.log("b")
+      this.points[player] += 20;
+      this.dialogue = this.normalDialogue[Math.ceil(Math.random() * (this.normalDialogue.length - 1))] //random dialogue option (excluding intro dialogue stored at index 0 of array)
     }
-    this.talked = true
+    this.talked = true;
+    this.dialogue = this.dialogue.replace("@", player)
   }
 
-  renderDialogue(ctx, player, dialogue) {
-    console.log(dialogue)
-    document.getElementById("npc").innerHTML = this.name
-    document.getElementById("dialogue").innerHTML = dialogue.replaceAll("@", player)
-    document.getElementById("portrait").src = `/static/images/portraits/${this.name}.png`
+  renderDialogue(ctx, player) {
+    console.log(this.dialogue)
+    let overlayScale = 2;
+    let xStart = (CANVAS_WIDTH - 321 * overlayScale) / 2;
+    let yStart = CANVAS_HEIGHT - (113 + 15) * overlayScale;
+    let fontSize = 10 * overlayScale;
+
+    ctx.drawImage(this.box,
+      xStart, yStart,
+      321 * overlayScale, 113 * overlayScale
+    );
+    ctx.drawImage(this.portrait,
+      xStart + 223 * overlayScale, yStart + 15 * overlayScale,
+      64 * overlayScale, 64 * overlayScale
+    );
+
+    ctx.textAlign = "left";
+    ctx.font = `${fontSize}px bold`
+    ctx.fillStyle = "#56160c";
+    ctx.letterSpacing = "2px";
+    renderWrappedText(ctx, this.dialogue, 
+      xStart + 14 * overlayScale, yStart + (11 + 3) * overlayScale + fontSize / 2, 
+      174 * overlayScale, fontSize + 2 * overlayScale
+    );
+
+    ctx.textAlign = "center";
+    ctx.letterSpacing = "1px";
+    ctx.fillText(getItemTitle(this.name),
+      xStart + 255 * overlayScale, yStart + 97 * overlayScale
+    );
+    // document.getElementById("npc").innerHTML = this.name
+    // document.getElementById("dialogue").innerHTML = dialogue.replaceAll("@", player)
+    // document.getElementById("portrait").src = `/static/images/portraits/${this.name}.png`
   }
 
   addPlayer(player){

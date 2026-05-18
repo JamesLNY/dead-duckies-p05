@@ -96,12 +96,16 @@ export default class Player {
 
     if (entity instanceof NPC) {
       if (ITEMS[item]["reaction"] != null && entity.giftNumber[this.name] < 2 && !entity.gifted[this.name]) {
-        entity.gift(this.name, item);
-        console.log("gift")
+        if (entity.gift(this.name, item)) {
+          this.inventory.removeItem(item, 1);
+        }
       }
       else {
+        console.log("A")
         entity.talk(this.name);
       }
+      this.game.menu = "dialogue";
+      this.game.currentNpc = entity;
     }
 
     else if (map.name == "seedshop" && tile.x == 4 && tile.y == 18) {

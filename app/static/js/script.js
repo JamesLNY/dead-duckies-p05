@@ -13,32 +13,36 @@ class InputHandler {
   constructor(game) {
     this.keys = {};
     window.addEventListener('keydown', e => {
-      if (['W', 'w', 'A', 'a', 'S', 's', 'D', 'd'].includes(e.key)) {
-        this.keys[e.key] = true;
-        e.preventDefault();
-      } else if (Number.isInteger(parseInt(e.key))) {
-        if (parseInt(e.key) == 0) {
-          game.player.inventory.selectSlot(9);
-        } else {
-          game.player.inventory.selectSlot(e.key - 1);
-        }
-        game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
-      } else if (e.key == "-") {
-        game.player.inventory.selectSlot(10);
-        game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
-      } else if (e.key == "=") {
-        game.player.inventory.selectSlot(11);
-        game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
-      } else if (e.key == "c") {
-        game.player.interact(game.map, game.stamina);
-      } else if (e.key == "e") {
-        game.clearMenus();
-        game.player.inventory.open = true;
-        game.menu = "inventory";
-      } else if (e.key == "Escape") {
+      if (game.menu == "map") {
+        if (['W', 'w', 'A', 'a', 'S', 's', 'D', 'd'].includes(e.key)) {
+          this.keys[e.key] = true;
+          e.preventDefault();
+        } else if (Number.isInteger(parseInt(e.key))) {
+          if (parseInt(e.key) == 0) {
+            game.player.inventory.selectSlot(9);
+          } else {
+            game.player.inventory.selectSlot(e.key - 1);
+          }
+          game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
+        } else if (e.key == "-") {
+          game.player.inventory.selectSlot(10);
+          game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
+        } else if (e.key == "=") {
+          game.player.inventory.selectSlot(11);
+          game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
+        } else if (e.key == "c") {
+          game.player.interact(game.map, game.stamina);
+        } else if (e.key == "e") {
+          game.clearMenus();
+          game.player.inventory.open = true;
+          game.menu = "inventory";
+        } 
+      }
+      else if (e.key == "Escape") {
         game.clearMenus();
       }
     });
+    
     window.addEventListener('keyup', e => {
       this.keys[e.key] = false;
     });
@@ -79,6 +83,7 @@ class StardewValley {
     this.stamina = new Stamina(100); //in game it is 270, but doubt we need that much
 
     this.menu = "map";
+    this.currentNpc;
 
     //npcs and shops
     // let pierre = this.map.addNPC(5, 5, "Pierre")
@@ -194,7 +199,7 @@ class StardewValley {
         this.stamina.render(this.ctx);
 
         //redraw since it won't show up otherwise
-        this.player.inventory.renderHotbar(this.hotbarCtx);
+        
        // this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouseHandler.mouseX, this.mouseHandler.mouse);
         break;
       case "inventory":
@@ -204,7 +209,11 @@ class StardewValley {
       case "shop":
         this.pierreShop.render(this.overlayCtx);
         break;
+      case "dialogue":
+        this.currentNpc.renderDialogue(this.overlayCtx, this.player.name)
+
     }
+    this.player.inventory.renderHotbar(this.hotbarCtx); 
     // this.updateHotbarInput();
     this.player.move(this.input.keys, this.map, this.stamina);
     this.checkTeleport();
