@@ -25,6 +25,7 @@ export default class Time {
     game.maps["farm"].crops.forEach(crop => {
       crop.update();
     })
+    game.stamina.restoreFull();
   }
   // Overlay on top of upper right of canvas (Only update when time changes)
   render(ctx) {

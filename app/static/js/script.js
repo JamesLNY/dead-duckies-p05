@@ -1,4 +1,4 @@
-import { MOVEMENT_SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE,
+import { CANVAS_WIDTH, CANVAS_HEIGHT, TILE_IMAGES, TILE_SIZE,
          UI_FACTOR, HOTBAR_HEIGHT, HOTBAR_WIDTH } from './constants.js'
 
 import Map from './map.js'
@@ -13,7 +13,7 @@ class InputHandler {
   constructor(game) {
     this.keys = {};
     window.addEventListener('keydown', e => {
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+      if (['W', 'w', 'A', 'a', 'S', 's', 'D', 'd'].includes(e.key)) {
         this.keys[e.key] = true;
         e.preventDefault();
       } else if (Number.isInteger(parseInt(e.key))) {
@@ -45,7 +45,7 @@ class InputHandler {
   }
 }
 
-//doesn't need to be a class, but doing it for organization
+//doesn't need to be a class, but doing it for organizasation
 class StardewValley {
   constructor(canvas, hotbarCanvas, overlayCanvas) {
     this.canvas = canvas;
@@ -202,6 +202,8 @@ class StardewValley {
         break;
     }
     // this.updateHotbarInput();
+    this.player.move(this.input.keys, this.map, this.stamina);
+    this.checkTeleport();
 
     //
 

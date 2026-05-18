@@ -1,5 +1,5 @@
 import BigEntity from "./big-entity.js";
-import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, MOVEMENT_SPEED, ITEMS } from "./constants.js";
+import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, ITEMS } from "./constants.js";
 import { Inventory } from './inventory.js';
 import NPC from "./npc.js"
 import Crop from "./crop.js"
@@ -9,6 +9,7 @@ const DOWN = 0;
 const RIGHT = 1;
 const UP = 2;
 const LEFT = 3;
+var MOVEMENT_SPEED = 2;
 
 function passable(tile) {
   return tile != null && tile.passable;
@@ -32,7 +33,13 @@ export default class Player {
     this.sprite.src = '/static/images/player.png';
   }
 
-  move(keys, map) {
+  move(keys, map, stamina) {
+    if (stamina.isEmpty()) {
+      MOVEMENT_SPEED = 0.5;
+    }
+    else {
+      MOVEMENT_SPEED = 2;
+    }
     if (!this.moving) {
       this.frame += FRAME_RATE;
     } else {
@@ -42,25 +49,25 @@ export default class Player {
     let x = this.x, y = this.y;
 
     this.moving = true;
-    if (keys['ArrowLeft']) {
+    if (keys['a'] || keys['A']) {
       this.facing = LEFT;
       x -= MOVEMENT_SPEED;
 
       if (!passable(map.getTile(x - TILE_SIZE * 0.25, y + TILE_SIZE)) ||
           !passable(map.getTile(x - TILE_SIZE * 0.25, y + 23))) return;
-    } else if (keys['ArrowRight']) {
+    } else if (keys['d'] || keys['D']) {
       this.facing = RIGHT;
       x += MOVEMENT_SPEED;
 
       if (!passable(map.getTile(x + TILE_SIZE * 0.25, y + TILE_SIZE)) ||
           !passable(map.getTile(x + TILE_SIZE * 0.25, y + 23))) return;
-    } else if (keys['ArrowUp']) {
+    } else if (keys['w'] || keys['W']) {
       this.facing = UP;
       y -= MOVEMENT_SPEED;
 
       if (!passable(map.getTile(x - TILE_SIZE * 0.25, y + TILE_SIZE)) ||
           !passable(map.getTile(x + TILE_SIZE * 0.25, y + TILE_SIZE))) return;
-    } else if (keys['ArrowDown']) {
+    } else if (keys['s'] || keys['s']) {
       this.facing = DOWN;
       y += MOVEMENT_SPEED;
 
