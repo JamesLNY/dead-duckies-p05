@@ -1,5 +1,5 @@
 import BigEntity from "./big-entity.js";
-import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE } from "./constants.js";
+import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, ITEMS } from "./constants.js";
 import { Inventory } from './inventory.js';
 import NPC from "./npc.js"
 import Crop from "./crop.js"
@@ -16,10 +16,11 @@ function passable(tile) {
 }
 
 export default class Player {
-  constructor() {
+  constructor(name) {
     this.x = TILE_SIZE * 9;
     this.y = TILE_SIZE * 10;
 
+    this.name = name;
     this.facing = DOWN;
     this.moving = false;
     this.frame = 0;
@@ -90,7 +91,13 @@ export default class Player {
     let front = tile.layers["front"];
 
     if (entity instanceof NPC) {
-      console.log("Interaction");
+      if (ITEMS[item]["reaction"] != null && entity.giftNumber[this.name] < 2 && !entity.gifted[this.name]) {
+        entity.gift(this.name, item);
+        console.log("gift")
+      }
+      else {
+        entity.talk(this.name);
+      }
     }
 
     else if (front instanceof BigEntity) {
@@ -103,7 +110,7 @@ export default class Player {
       }
     }
 
-    if (item == null) {
+    else if (item == null) {
       if (entity instanceof Crop && entity.matured) {
         entity.harvest(this.inventory);
       }
