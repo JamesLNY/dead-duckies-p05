@@ -62,22 +62,22 @@ export default class NPC {
     this.renderDialogue(player, this.giftDialogue[reaction]);
   }
 
-  talk(player) {
+  talk(ctx, player) {
     if (!(player in this.points)) {
       this.addPlayer(player)
       this.points[player] += 20
       console.log("a")
-      this.renderDialogue(player, this.normalDialogue[0]) //default introduction dialogue
+      this.renderDialogue(ctx, player, this.normalDialogue[0]) //default introduction dialogue
     }
     else if (this.talked[player] == false) {
       console.log("b")
       this.points[player] += 20
-      this.renderDialogue(player, this.normalDialogue[Math.ceil(Math.random() * (this.normalDialogue.length - 1))]) //random dialogue option (excluding intro dialogue stored at index 0 of array)
+      this.renderDialogue(ctx, player, this.normalDialogue[Math.ceil(Math.random() * (this.normalDialogue.length - 1))]) //random dialogue option (excluding intro dialogue stored at index 0 of array)
     }
     this.talked = true
   }
 
-  renderDialogue(player, dialogue) {
+  renderDialogue(ctx, player, dialogue) {
     console.log(dialogue)
     document.getElementById("npc").innerHTML = this.name
     document.getElementById("dialogue").innerHTML = dialogue.replaceAll("@", player)
