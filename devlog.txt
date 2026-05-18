@@ -286,3 +286,6 @@ kiranS -- 2026-05-18 17:30
 - finished npc interaction w/ keyboard input on npc tile
 - expanded npc gift/talk checks and ensured item is removed when giving a gift
 - converted dialogue popup to canvas from html elements
+
+kiranS -- 2026-05-18 17:50
+- added ability to scroll through available items with arrow keys on shop screen

@@ -38,7 +38,15 @@ class InputHandler {
           game.menu = "inventory";
         } 
       }
-      else if (e.key == "Escape") {
+      if (game.menu == "shop") {
+        if (e.key == "ArrowUp") {
+          game.player.currentShop.moveUp();
+        }
+        else if (e.key == "ArrowDown") {
+          game.player.currentShop.moveDown();
+        }
+      }
+      if (e.key == "Escape") {
         game.clearMenus();
       }
     });
@@ -207,7 +215,7 @@ class StardewValley {
         this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouse.mouseX, this.mouse.mouseY);
         break;
       case "shop":
-        this.pierreShop.render(this.overlayCtx);
+        this.player.currentShop.render(this.overlayCtx);
         break;
       case "dialogue":
         this.currentNpc.renderDialogue(this.overlayCtx, this.player.name)

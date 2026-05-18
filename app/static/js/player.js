@@ -31,6 +31,8 @@ export default class Player {
 
     this.sprite = new Image();
     this.sprite.src = '/static/images/player.png';
+
+    this.currentShop;
   }
 
   move(keys, map, stamina) {
@@ -112,6 +114,14 @@ export default class Player {
       console.log("HERE");
       this.game.clearMenus();
       this.game.menu = "shop";
+      this.currentShop = this.game.pierreShop;
+    }
+
+    else if (map.name == "farm" && tile.x == 9 && tile.y == 10) {
+      console.log("HERE");
+      this.game.clearMenus();
+      this.game.menu = "shop";
+      this.currentShop = this.game.pierreShop;
     }
 
     else if (front instanceof BigEntity) {
