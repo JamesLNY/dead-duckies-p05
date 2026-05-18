@@ -31,9 +31,12 @@ class InputHandler {
         game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
       } else if (e.key == "c") {
         game.player.interact(game.map, game.stamina);
+      } else if (e.key == "e") {
+        game.clearMenus();
+        game.player.inventory.open = true;
+        game.menu = "inventory";
       } else if (e.key == "Escape") {
-        game.player.inventory.toggle();
-        game.player.inventory.renderInventory(game.overlayCtx, game.overlayCanvas);
+        game.clearMenus();
       }
     });
     window.addEventListener('keyup', e => {
@@ -72,6 +75,8 @@ class StardewValley {
     this.player = new Player();
     this.time = new Time();
     this.stamina = new Stamina(100); //in game it is 270, but doubt we need that much
+
+    this.menu = "map";
 
     //npcs and shops
     // let pierre = this.map.addNPC(5, 5, "Pierre")
@@ -159,31 +164,46 @@ class StardewValley {
 
   }
 
+  clearMenus() {
+    this.hotbarCtx.clearRect(0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
+    this.overlayCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+    this.player.inventory.open = false;
+    this.menu = "map";
+  }
+
   loop() {
+    switch (this.menu) {
+      case "map":
+        this.player.move(this.input.keys, this.map);
+        this.checkTeleport();
+
+        this.map.follow(this.player);
+
+        this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+        let npcsToDraw = this.map.render(this.ctx, this.player);
+        this.player.render(this.ctx, this.map);
+
+        // console.log(npcsToDraw);
+
+        npcsToDraw.forEach((npc) => {
+          npc.render(this.ctx, this.map)
+        });
+
+        this.time.update(this);
+        this.time.render(this.ctx);
+
+        this.stamina.render(this.ctx);
+
+        //redraw since it won't show up otherwise
+        this.player.inventory.renderHotbar(this.hotbarCtx);
+        break;
+      case "inventory":
+        this.player.inventory.renderInventory(this.overlayCtx, this.overlayCanvas);
+        break;
+    }
     // this.updateHotbarInput();
-    this.player.move(this.input.keys, this.map);
-    this.checkTeleport();
 
-    this.map.follow(this.player);
-
-    this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-    let npcsToDraw = this.map.render(this.ctx, this.player);
-    this.player.render(this.ctx, this.map);
-
-    // console.log(npcsToDraw);
-
-    npcsToDraw.forEach((npc) => {
-      npc.render(this.ctx, this.map)
-    });
-
-    this.time.update(this);
-    this.time.render(this.ctx);
-    
-    this.stamina.render(this.ctx);
-
-    //redraw since it won't show up otherwise
-    this.player.inventory.renderHotbar(this.hotbarCtx);
     // this.pierreShop.render(this.overlayCtx);
 
     requestAnimationFrame(() => this.loop());
