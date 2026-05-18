@@ -170,7 +170,7 @@ class StardewValley {
   loop() {
     switch (this.menu) {
       case "map":
-        this.player.move(this.input.keys, this.map);
+        //this.player.move(this.input.keys, this.map, this.stamina);
         this.checkTeleport();
 
         this.map.follow(this.player);

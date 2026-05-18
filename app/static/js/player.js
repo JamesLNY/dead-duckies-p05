@@ -67,7 +67,7 @@ export default class Player {
 
       if (!passable(map.getTile(x - TILE_SIZE * 0.25, y + TILE_SIZE)) ||
           !passable(map.getTile(x + TILE_SIZE * 0.25, y + TILE_SIZE))) return;
-    } else if (keys['s'] || keys['s']) {
+    } else if (keys['s'] || keys['S']) {
       this.facing = DOWN;
       y += MOVEMENT_SPEED;
 
@@ -142,25 +142,23 @@ export default class Player {
         stamina.useEnergy(2);
       }
 
-      else if (entity instanceof Crop && item.includes("seeds")) {
+      else if (entity instanceof Crop && item && item.includes("seeds")) {
         if (entity.type == null) {
           entity.plant(item.split("_")[0]);
           this.inventory.removeItem(item, 1);
         }
       }
 
-      else if (entity != null) {
-        if (ENTITIES[entity]["tools"].includes(item)) {
+      if (ENTITIES[entity.type]["tools"].includes(item)) {
           tile.remove("middle");
-          for (const [key, value] of Object.entries(ENTITIES[entity]["drops"])) {
+          for (const [key, value] of Object.entries(ENTITIES[entity.type]["drops"])) {
             this.inventory.addItem(key, value);
           }
           stamina.useEnergy(5);
         }
       }
     }
-  }
-
+  
   getTile(map) {
     let tile;
     switch (this.facing) {

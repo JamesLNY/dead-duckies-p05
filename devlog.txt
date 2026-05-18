@@ -278,3 +278,5 @@ jamesL -- 2026-05-18 11:00
 kiranS -- 2026-05-18 11:00
 - working on npcs
 
+emaanA -- 2026-05-18 13:00 
+- quick bug fixes in player and scripts
