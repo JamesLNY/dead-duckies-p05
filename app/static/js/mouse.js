@@ -17,18 +17,18 @@ export default class MouseHandler {
       this.mouseX = (e.clientX - rect.left) * (canvas.width / rect.width);
 
       this.mouseY = (e.clientY - rect.top) * (canvas.height / rect.height);
-
-      //this.mouseX = e.clientX - rect.left;
-      //this.mouseY = e.clientY - rect.top;
     });
 
     canvas.addEventListener("mousedown", () => {
       this.isDown = true;
       const inv = this.game.player.inventory;
-      if (!inv.open) return;
+
+      if (!inv.open) {
+        return;
+      }
+
       let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, inv.inventorySlotX, inv.inventorySlotY, 8, 3);
       if (index !== null) {
-        console.log(index);
         inv.startDrag(index);
       }
     });
@@ -36,8 +36,13 @@ export default class MouseHandler {
     canvas.addEventListener("mouseup", () => {
       this.isDown = false;
       const inv = this.game.player.inventory;
-      if (!inv.open) return;
-      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, inv.inventorySlotX, inv.inventorySlotY, 8, 3);
+
+      if (!inv.open) {
+        return;
+      }
+      
+      let index = inv.getSlotAtPosition( this.mouseX, this.mouseY, inv.inventorySlotX, inv.inventorySlotY, 8, 3);
+
       if (index !== null) {
         inv.endDrag(index);
       }

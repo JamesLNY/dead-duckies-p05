@@ -212,7 +212,7 @@ class StardewValley {
        // this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouseHandler.mouseX, this.mouseHandler.mouse);
         break;
       case "inventory":
-        this.player.inventory.renderInventory(this.overlayCtx, this.overlayCanvas);
+        this.player.inventory.renderInventory(this.overlayCtx, 150, 150);
         this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouse.mouseX, this.mouse.mouseY);
         break;
       case "shop":

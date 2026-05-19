@@ -292,3 +292,6 @@ kiranS -- 2026-05-18 17:50
 
 jamesL -- 2026-05-18 20:00
 - created assets for the farmhouse
+
+emaanA -- 2026-05-18 23:00
+- renderInventory using x & y coordinates 
