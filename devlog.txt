@@ -264,3 +264,5 @@ kiranS -- 2026-05-17 16:40
 - finished rendering shop overlay
 - converted items.json item names from spaces to underscores to match convention
 
+sarahZ -- 2026-05-19 1:00
+- added assets for beach and willy's shop
