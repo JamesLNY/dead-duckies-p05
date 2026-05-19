@@ -108,11 +108,16 @@ export class Inventory {
   }
 
   getSlotAtPosition(mouseX, mouseY, columns, rows) {
+    if (mouseX < this.inventorySlotX ||
+        mouseY < this.inventorySlotY ||
+        mouseX > this.inventorySlotX + columns * TILE_SIZE * UI_FACTOR ||
+        mouseY > this.inventorySlotY + rows * TILE_SIZE * UI_FACTOR
+    ) return null;
+
+
     let x = Math.floor((mouseX - this.inventorySlotX) / (TILE_SIZE * UI_FACTOR));
     let y = Math.floor((mouseY - this.inventorySlotY) / ((TILE_SIZE + 1) * UI_FACTOR));
-    let i = y * columns + x;
-    if (i >= columns * rows) return null;
-    return i;
+    return y * columns + x;
   }
 
   startDrag(index) {
@@ -151,7 +156,6 @@ export class Inventory {
         };
       }
     }
-
     else {
       let temp = {itemID: target.itemID, count: target.count};
       target.itemID = this.draggingItem.itemID;
