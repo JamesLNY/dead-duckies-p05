@@ -12,6 +12,7 @@ export default class Crop {
     this.x = x;
     this.y = y;
     this.watered = false;
+    this.matured = false;
   }
 
   water() {
@@ -39,8 +40,18 @@ export default class Crop {
   }
 
   update() {
-    if (this.progress < this.growthTime) {
+    if (this.type == null && !this.watered) {
+      // this.remove();
+    } if (!this.matured && !this.watered) {
+      this.wilt();
+    } else if (this.progress < this.growthTime) {
       this.progress++;
+    }
+
+    this.dry();
+    
+    if (this.progress == this.growthTime) {
+      this.matured = true;
     }
   }
 
@@ -49,8 +60,19 @@ export default class Crop {
     this.tile.remove("middle");
   }
 
-  harvest() {
-    
+  wilt() {
+    delete this.type;
+    delete this.growthTime;
+    delete this.progress;
+    delete this.image;
+    this.dry();
+  }
+
+  harvest(inventory) {
+    for (const [key, value] of Object.entries(CROPS[this.type]["yield"])) {
+      inventory.addItem(key, value);
+    }
+    this.wilt();
   }
 
   render(ctx, map) {

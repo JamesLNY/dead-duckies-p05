@@ -266,3 +266,34 @@ kiranS -- 2026-05-17 16:40
 
 sarahZ -- 2026-05-19 1:00
 - added assets for beach and willy's shop
+emaanA -- 2026-05-18 11:00
+- centered inventory; click and drag broken? need 2 fix
+
+sarahZ -- 2026-05-18 11:00
+- got exhaustion working
+- changed key bindings for player 
+- fixed stamina bar scaling
+
+jamesL -- 2026-05-18 11:00
+- created general functions for displaying various menus
+
+kiranS -- 2026-05-18 11:00
+- working on npc interaction
+
+emaanA -- 2026-05-18 14:00 
+- quick bug fixes in player and scripts
+- fixed click/drag
+
+kiranS -- 2026-05-18 17:30
+- finished npc interaction w/ keyboard input on npc tile
+- expanded npc gift/talk checks and ensured item is removed when giving a gift
+- converted dialogue popup to canvas from html elements
+
+kiranS -- 2026-05-18 17:50
+- added ability to scroll through available items with arrow keys on shop screen
+
+jamesL -- 2026-05-18 20:00
+- created assets for the farmhouse
+
+emaanA -- 2026-05-18 23:00
+- renderInventory using x & y coordinates 

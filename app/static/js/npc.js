@@ -1,84 +1,126 @@
 import { NPC_INFO, ITEMS, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_SIZE, SCALE_FACTOR } from "./constants.js"
-const giftPoints = {"hate": -40, "dislike": -20, "neutral": 20, "like": 45, "love": 80}
 import Shop from "./shop.js"
+import { renderWrappedText, getItemTitle } from "./text.js";
+
+const giftPoints = {"hate": -40, "dislike": -20, "neutral": 20, "like": 45, "love": 80}
 
 export default class NPC {
   constructor(name, x, y, map) {
-    this.name = name
-    this.x = x
-    this.y = y
+    this.name = name;
+    this.x = x;
+    this.y = y;
     this.sprite = new Image();
-    this.sprite.src = `/static/images/npcs/${name}.png`
+    this.sprite.src = `/static/images/npcs/${name}.png`;
+    this.box = new Image();
+    this.box.src = `/static/images/ui/dialoguebox.png`
+    this.portrait = new Image();
+    this.portrait.src = `/static/images/portraits/${this.name}.png`;
 
     let tile = map.tiles[x][y];
-    tile.add(this, "middle")
+    tile.add(this, "middle");
 
-    this.points = {"Kiran": 0}
-    this.giftNumber = {"Kiran": 0}
-    this.talked = {"Kiran": false}
-    this.status = {"Kiran": 0}
+    // placeholders
+    this.points = {"Kiran": 0};
+    this.giftNumber = {"Kiran": 0};
+    this.talked = {"Kiran": false};
+    this.gifted = {"Kiran": false};
+    this.status = {"Kiran": 0};
 
-    this.reactions = {}
+    this.dialogue = "";
+
+    this.reactions = {};
     Object.keys(NPC_INFO[this.name]["reactions"]).forEach(reaction => {
       NPC_INFO[this.name]["reactions"][reaction].forEach(item => {
-        this.reactions[item] = reaction
+        this.reactions[item] = reaction;
       })
     })
-    this.normalDialogue = NPC_INFO[this.name]["normal_dialogue"]
-    this.giftDialogue = NPC_INFO[this.name]["gift_dialogue"]
+    this.normalDialogue = NPC_INFO[this.name]["normal_dialogue"];
+    this.giftDialogue = NPC_INFO[this.name]["gift_dialogue"];
     // console.log(this.reactions)
     // console.log(this.normalDialogue)
   }
 
   getGiftNumber() {
-    return this.giftNumber
+    return this.giftNumber;
   }
 
   getTalked() {
-    return this.talked
+    return this.talked;
   }
 
   // possibly implement birthdays
   gift(player, item) {
     if (!(player in this.points)) {
-      this.addPlayer(player)
+      this.addPlayer(player);
     }
     if (this.giftNumber[player] == 2) {
       // possibly display msg
-      return
+      return false;
     }
-    let reaction
+    let reaction = 0;
     if (item in this.reactions) { // checks npc-specific reactions
-      reaction = this.reactions[item]
+      reaction = this.reactions[item];
     }
     else { // defaults to universal reaction
-      reaction = ITEMS[item]["reaction"]
+      reaction = ITEMS[item]["reaction"];
     }
-    this.points[player] += giftPoints[reaction]
-    this.giftNumber[player] += 1
-    this.renderDialogue(player, this.giftDialogue[reaction])
+    this.points[player] += giftPoints[reaction];
+    this.giftNumber[player] += 1;
+    this.gifted[player] = true;
+    this.dialogue = this.giftDialogue[reaction];
+    this.dialogue = this.dialogue.replace("@", player)
+    return true;
   }
 
   talk(player) {
     if (!(player in this.points)) {
-      this.addPlayer(player)
-      this.points[player] += 20
-      console.log("a")
-      this.renderDialogue(player, this.normalDialogue[0]) //default introduction dialogue
+      // this.addPlayer(player)
+      this.points[player] += 20;
+      // console.log("a")
+      this.dialogue = this.normalDialogue[0] //default introduction dialogue
     }
     else if (this.talked[player] == false) {
-      console.log("b")
-      this.points[player] += 20
-      this.renderDialogue(player, this.normalDialogue[Math.ceil(Math.random() * (this.normalDialogue.length - 1))]) //random dialogue option (excluding intro dialogue stored at index 0 of array)
+      // console.log("b")
+      this.points[player] += 20;
+      this.dialogue = this.normalDialogue[Math.ceil(Math.random() * (this.normalDialogue.length - 1))] //random dialogue option (excluding intro dialogue stored at index 0 of array)
     }
-    this.talked = true
+    this.talked = true;
+    this.dialogue = this.dialogue.replace("@", player)
   }
 
-  renderDialogue(player, dialogue) {
-    console.log(dialogue)
-    document.getElementById("npc").innerHTML = this.name
-    document.getElementById("dialogue").innerHTML = dialogue.replaceAll("@", player)
-    document.getElementById("portrait").src = `/static/images/portraits/${this.name}.png`
+  renderDialogue(ctx, player) {
+    // console.log(this.dialogue)
+    let overlayScale = 2;
+    let xStart = (CANVAS_WIDTH - 321 * overlayScale) / 2;
+    let yStart = CANVAS_HEIGHT - (113 + 15) * overlayScale;
+    let fontSize = 10 * overlayScale;
+
+    ctx.drawImage(this.box,
+      xStart, yStart,
+      321 * overlayScale, 113 * overlayScale
+    );
+    ctx.drawImage(this.portrait,
+      xStart + 223 * overlayScale, yStart + 15 * overlayScale,
+      64 * overlayScale, 64 * overlayScale
+    );
+
+    ctx.textAlign = "left";
+    ctx.font = `${fontSize}px bold`
+    ctx.fillStyle = "#56160c";
+    ctx.letterSpacing = "2px";
+    renderWrappedText(ctx, this.dialogue, 
+      xStart + 14 * overlayScale, yStart + (11 + 3) * overlayScale + fontSize / 2, 
+      174 * overlayScale, fontSize + 2 * overlayScale
+    );
+
+    ctx.textAlign = "center";
+    ctx.letterSpacing = "1px";
+    ctx.fillText(getItemTitle(this.name),
+      xStart + 255 * overlayScale, yStart + 97 * overlayScale
+    );
+    // document.getElementById("npc").innerHTML = this.name
+    // document.getElementById("dialogue").innerHTML = dialogue.replaceAll("@", player)
+    // document.getElementById("portrait").src = `/static/images/portraits/${this.name}.png`
   }
 
   addPlayer(player){

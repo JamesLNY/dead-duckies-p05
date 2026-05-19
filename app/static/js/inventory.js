@@ -9,6 +9,10 @@ export class Inventory {
     this.open = false;
     this.draggingSlot = null;
     this.draggingItem = null;
+    this.inventoryX = 0;
+    this.inventoryY = 0;
+    this.inventorySlotX = 0;
+    this.inventorySlotY = 0;
     this.hotbar = new Image();
     this.hotbar.src = '/static/images/ui/hotbar.png';
     this.inventoryMenu = new Image();
@@ -25,13 +29,8 @@ export class Inventory {
       loadedItems[name] = asset;
     }
     for (let i = 0; i < size; i += 1) {
-      //this.slots.count = this.slots.itemID ? this.slots.count : 0;
       this.slots[i] = {itemID: null, count: 0};
     }
-  }
-
-  toggle() {
-    this.open = !this.open;
   }
 
   selectSlot(index) {
@@ -53,6 +52,12 @@ export class Inventory {
   }
 
   addItem(itemID, amount) {
+    if (!(itemID in loadedItems)) {
+      let asset = new Image();
+      asset.src = `/static/images/items/${itemID}.png`;
+      loadedItems[itemID] = asset;
+    }
+
     let remaining = amount;
     for (let i = 0; i < this.slots.length; i += 1) {
       let slot = this.slots[i];
@@ -109,12 +114,14 @@ export class Inventory {
       let x = startX + col * TILE_SIZE * UI_FACTOR;
       let y = startY + row * TILE_SIZE * UI_FACTOR;
       let size = TILE_SIZE * UI_FACTOR;
-      if (mouseX >= x &&  mouseX <= x + size && mouseY >= y && mouseY <= y + size) {
+
+      if (mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size) {
         return i;
       }
     }
     return null;
   }
+
   startDrag(index) {
     let slot = this.slots[index];
     if (slot.itemID === null) {
@@ -153,10 +160,7 @@ export class Inventory {
     }
 
     else {
-      let temp = {
-        itemID: target.itemID,
-        count: target.count
-      };
+      let temp = {itemID: target.itemID, count: target.count};
       target.itemID = this.draggingItem.itemID;
       target.count = this.draggingItem.count;
       this.slots[this.draggingSlot] = temp;
@@ -194,31 +198,36 @@ export class Inventory {
   }
 
   renderHotbar(hotbarCtx) {
-    hotbarCtx.clearRect( 0,  0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
-    hotbarCtx.drawImage(this.hotbar, 0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR );
+    hotbarCtx.clearRect(0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
+    hotbarCtx.drawImage(this.hotbar, 0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
+
     this.render(hotbarCtx, 9, 9, HOTBAR_SIZE, 1);
   }
 
-  renderInventory(overlayCtx, canvas) {
-  overlayCtx.clearRect(0, 0, canvas.width, canvas.height);
-  if (!this.open) {
-    return;
+  renderInventory(overlayCtx, startX, startY) {
+    if (!this.open) {
+      return;
+    }
+    
+    this.inventoryX = startX;
+    this.inventoryY = startY;
+
+    let width = INVENTORY_WIDTH * UI_FACTOR;
+    let height = INVENTORY_HEIGHT * UI_FACTOR;
+
+    overlayCtx.drawImage(this.inventoryMenu, startX, startY, width, height);
+
+    let slotAreaWidth = 8 * TILE_SIZE * UI_FACTOR;
+    let slotAreaHeight = 3 * TILE_SIZE * UI_FACTOR;
+
+    let slotStartX = (startX + (width - slotAreaWidth) / 2) - 95;
+    let slotStartY = (startY + (height - slotAreaHeight) / 2) - 3;
+
+    this.inventorySlotX = slotStartX;
+    this.inventorySlotY = slotStartY;
+
+    this.render(overlayCtx, slotStartX , slotStartY, 8, 3, false);
   }
-
-  let width = INVENTORY_WIDTH * UI_FACTOR;
-  let height = INVENTORY_HEIGHT * UI_FACTOR;
-  let startX = (canvas.width - width) / 1.3;
-  let startY = (canvas.height - height) / 2;
-
-  overlayCtx.drawImage( this.inventoryMenu, startX + 20 , startY, width, height);
-
-  let slotAreaWidth = 8 * TILE_SIZE * UI_FACTOR;
-  let slotAreaHeight = 3 * TILE_SIZE * UI_FACTOR;
-  let slotStartX = startX + (width - slotAreaWidth) / 4 ;
-  let slotStartY = startY + (height - slotAreaHeight) / 2;
-
-  this.render(overlayCtx, slotStartX - 20, slotStartY - 5 , 8, 3, false);
-}
 
   renderDraggedItem(ctx, mouseX, mouseY) {
     if (this.draggingItem === null) {

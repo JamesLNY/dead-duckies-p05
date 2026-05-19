@@ -17,18 +17,17 @@ export default class MouseHandler {
       this.mouseX = (e.clientX - rect.left) * (canvas.width / rect.width);
 
       this.mouseY = (e.clientY - rect.top) * (canvas.height / rect.height);
-
-      //this.mouseX = e.clientX - rect.left;
-      //this.mouseY = e.clientY - rect.top;
     });
 
     canvas.addEventListener("mousedown", () => {
       this.isDown = true;
       const inv = this.game.player.inventory;
-      if (!inv.open) return;
 
-      let index = inv.getSlotAtPosition( this.mouseX, this.mouseY, this.getInventoryStartX(), this.getInventoryStartY(), 8, 3);
+      if (!inv.open) {
+        return;
+      }
 
+      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, inv.inventorySlotX, inv.inventorySlotY, 8, 3);
       if (index !== null) {
         inv.startDrag(index);
       }
@@ -37,26 +36,24 @@ export default class MouseHandler {
     canvas.addEventListener("mouseup", () => {
       this.isDown = false;
       const inv = this.game.player.inventory;
-      if (!inv.open) return;
 
-      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, this.getInventoryStartX(), this.getInventoryStartY(), 8, 3 );
+      if (!inv.open) {
+        return;
+      }
+      
+      let index = inv.getSlotAtPosition( this.mouseX, this.mouseY, inv.inventorySlotX, inv.inventorySlotY, 8, 3);
 
       if (index !== null) {
         inv.endDrag(index);
-      } else {
+      }
+      else if (inv.draggingItem !== null) {
+        inv.slots[inv.draggingSlot] = {
+          itemID: inv.draggingItem.itemID,
+          count: inv.draggingItem.count
+        };
         inv.draggingItem = null;
         inv.draggingSlot = null;
       }
     });
-  }
-
-  getInventoryStartX() {
-    let width = INVENTORY_WIDTH * UI_FACTOR;
-    return ((this.game.overlayCanvas.width - width) / 1.3) + 20 ;
-  }
-
-  getInventoryStartY() {
-    let height = INVENTORY_HEIGHT * UI_FACTOR;
-    return (this.game.overlayCanvas.height - height) / 2;
   }
 }
