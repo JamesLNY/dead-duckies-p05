@@ -27,7 +27,7 @@ export default class MouseHandler {
         return;
       }
 
-      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, inv.inventorySlotX, inv.inventorySlotY, 8, 3);
+      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, inv.inventorySlotX, inv.inventorySlotY, 12, 3);
       if (index !== null) {
         inv.startDrag(index);
       }
@@ -41,7 +41,7 @@ export default class MouseHandler {
         return;
       }
       
-      let index = inv.getSlotAtPosition( this.mouseX, this.mouseY, inv.inventorySlotX, inv.inventorySlotY, 8, 3);
+      let index = inv.getSlotAtPosition( this.mouseX, this.mouseY, inv.inventorySlotX, inv.inventorySlotY, 12, 3);
 
       if (index !== null) {
         inv.endDrag(index);

@@ -298,5 +298,14 @@ jamesL -- 2026-05-18 20:00
 emaanA -- 2026-05-18 23:00
 - renderInventory using x & y coordinates
 
-sarahZ
-- CHANGE IMAGE SIZE
+emaanA -- 2026-05-19 11:00
+- fixing inventory slots
+
+sarahZ -- 2026-05-19 11:00
+- map for beach and willy
+
+kiranS -- 2026-05-19 11:00
+- working on shop menu
+
+jamesL -- 2026-05-19 11:00
+- cleaning up assets

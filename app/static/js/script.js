@@ -214,11 +214,11 @@ class StardewValley {
        // this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouseHandler.mouseX, this.mouseHandler.mouse);
         break;
       case "inventory":
-        this.player.inventory.renderInventory(this.overlayCtx, 150, 150);
+        this.player.inventory.renderInventory(this.overlayCtx, 150, 150, UI_FACTOR);
         this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouse.mouseX, this.mouse.mouseY);
         break;
       case "shop":
-        this.player.currentShop.render(this.overlayCtx);
+        this.player.currentShop.render(this.overlayCtx, this.player.inventory);
         break;
       case "dialogue":
         this.currentNpc.renderDialogue(this.overlayCtx, this.player.name)

@@ -1,6 +1,6 @@
 import { ITEMS, UI_FACTOR, CANVAS_HEIGHT, CANVAS_WIDTH, SHOPS } from './constants.js';
-import { renderWrappedText, getItemTitle } from './text.js'
-
+import { renderWrappedText, getItemTitle } from './text.js';
+import { Inventory } from './inventory.js';
 export default class Shop {
     constructor (npc) {
       this.shopInventory = SHOPS[npc]["inventory"]; // {String item: INT cost}
@@ -67,7 +67,7 @@ export default class Shop {
       }
     }
 
-    render(ctx) {
+    render(ctx, playerInventory) {
       // top left corner for shop menu render
       let xStart = (CANVAS_WIDTH / 2) - 375;
       let yStart = (CANVAS_HEIGHT / 2) - 136;
@@ -82,6 +82,8 @@ export default class Shop {
         xStart + 10 * overlayScale, yStart + 7 * overlayScale,
         64 * overlayScale, 64 * overlayScale
       );
+
+      playerInventory.renderInventory(ctx, xStart + 148 * overlayScale, yStart + 121 * overlayScale, overlayScale);
 
       ctx.textAlign = "left";
       ctx.letterSpacing = "1px";
