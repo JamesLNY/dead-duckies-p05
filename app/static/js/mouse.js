@@ -14,9 +14,10 @@ export default class MouseHandler {
 
     canvas.addEventListener("mousemove", (e) => {
       const rect = canvas.getBoundingClientRect();
-      this.mouseX = (e.clientX - rect.left) * (canvas.width / rect.width);
-
-      this.mouseY = (e.clientY - rect.top) * (canvas.height / rect.height);
+      // this.mouseX = (e.clientX - rect.left) * (canvas.width / rect.width);
+      // this.mouseY = (e.clientY - rect.top) * (canvas.height / rect.height);
+      this.mouseX = (e.clientX - rect.left);
+      this.mouseY = (e.clientY - rect.top);
     });
 
     canvas.addEventListener("mousedown", () => {
@@ -27,7 +28,7 @@ export default class MouseHandler {
         return;
       }
 
-      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, inv.inventorySlotX, inv.inventorySlotY, 12, 3);
+      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, 12, 3);
       if (index !== null) {
         inv.startDrag(index);
       }
@@ -41,7 +42,7 @@ export default class MouseHandler {
         return;
       }
       
-      let index = inv.getSlotAtPosition( this.mouseX, this.mouseY, inv.inventorySlotX, inv.inventorySlotY, 12, 3);
+      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, 12, 3);
 
       if (index !== null) {
         inv.endDrag(index);
