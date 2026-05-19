@@ -8,6 +8,7 @@ import NPC from './npc.js';
 import Shop from './shop.js';
 import MouseHandler from './mouse.js';
 import Stamina from './stamina.js';
+import Gold from "./gold.js";
 
 class InputHandler {
   constructor(game) {
@@ -205,7 +206,14 @@ class StardewValley {
         });
 
         this.time.update(this);
-        this.time.render(this.ctx);
+        // let scaleFactor = .19 * CANVAS_WIDTH / 72;
+        let scaleFactor = 2.5;
+        this.time.render(this.ctx, scaleFactor);
+
+        this.player.gold.render(this.ctx,
+          .8 * CANVAS_WIDTH + 8 * scaleFactor, .01 * CANVAS_HEIGHT + 40 * scaleFactor,
+          scaleFactor
+        );
 
         this.stamina.render(this.ctx);
 

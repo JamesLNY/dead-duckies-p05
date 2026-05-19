@@ -3,6 +3,7 @@ import { TILE_SIZE, ENTITIES, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_R
 import { Inventory } from './inventory.js';
 import NPC from "./npc.js"
 import Crop from "./crop.js"
+import Gold from "./gold.js"
 
 // Correspond with rows in player.png
 const DOWN = 0;
@@ -28,6 +29,7 @@ export default class Player {
     this.frame = 0;
 
     this.inventory = new Inventory();
+    this.gold = new Gold(game, this);
 
     this.sprite = new Image();
     this.sprite.src = '/static/images/player.png';

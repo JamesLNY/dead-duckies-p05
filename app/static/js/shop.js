@@ -1,6 +1,8 @@
 import { ITEMS, UI_FACTOR, CANVAS_HEIGHT, CANVAS_WIDTH, SHOPS } from './constants.js';
 import { renderWrappedText, getItemTitle } from './text.js';
 import { Inventory } from './inventory.js';
+import Gold from './gold.js';
+
 export default class Shop {
     constructor (npc) {
       this.shopInventory = SHOPS[npc]["inventory"]; // {String item: INT cost}
@@ -34,11 +36,11 @@ export default class Shop {
         return false;
       }
       let cost = shopInventory[itemID]
-      if (this.player.gold < cost) {
+      if (this.player.gold.amount < cost) {
         return false;
       }
       if (this.playerInventory.addItem(itemID, 1)) {
-          this.player.gold -= cost;
+          this.player.gold.amount -= cost;
           return true;
         }
       return false;
@@ -49,7 +51,7 @@ export default class Shop {
         return false;
       }
       if (this.inventory.removeItem(itemID, 1)) {
-        this.player.gold += item.sellPrice;
+        this.player.gold.amount += item.sellPrice;
         return true;
         }
       return false;

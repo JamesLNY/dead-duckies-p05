@@ -1,25 +1,27 @@
 import { TILE_SIZE, SCALE_FACTOR, CANVAS_WIDTH, CANVAS_HEIGHT, FRAME_RATE, X_RES, Y_RES, TIME_CONVERSION } from "./constants.js";
-const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
 export default class Time {
   // currData, numTicks, currTime
   constructor() {
-    this.currYear = 1
-    this.currDay = 1
-    this.currTime = 0 //600-2600 (mod 2400 for display)
-    this.numTicks = 0
-    this.display = new Image()
-    this.display.src = "/static/images/ui/clock.png"
+    this.currYear = 1;
+    this.currDay = 1;
+    this.currTime = 0; //600-2600 (mod 2400 for display)
+    this.numTicks = 0;
+    this.display = new Image();
+    this.display.src = "/static/images/ui/clock.png";
   }
 
   getTime() {
-    return currTime
+    return currTime;
   }
 
   nextDay(game) {
-    this.currDay++
+    this.currDay++;
     if (this.currDay == 29) {
-      this.currYear++
-      this.currDay = 1
+      this.currYear++;
+      this.currDay = 1;
     }
 
     game.maps["farm"].crops.forEach(crop => {
@@ -28,27 +30,27 @@ export default class Time {
     game.stamina.restoreFull();
   }
   // Overlay on top of upper right of canvas (Only update when time changes)
-  render(ctx) {
-    let hour = Math.floor(this.currTime / 60 + 6) % 12
+  render(ctx, scaleFactor) {
+    let hour = Math.floor(this.currTime / 60 + 6) % 12;
     if (hour == 0) {
-      hour = 12
+      hour = 12;
     }
-    let min = this.currTime % 60 / 10
-    let time = String(hour) + ":" + String(min) + "0"
+    let min = this.currTime % 60 / 10;
+    let time = String(hour) + ":" + String(min) + "0";
     if (this.currTime < 360 || this.currTime >= 1080) {
-      time += " am"
+      time += " am";
     }
     else {
-      time += " pm"
+      time += " pm";
     }
-    let date = days.at(this.currDay % 7 - 1) + ". " + String(this.currDay)
+    let date = days.at(this.currDay % 7 - 1) + ". " + String(this.currDay);
     ctx.drawImage(this.display,
       .8 * CANVAS_WIDTH, .01 * CANVAS_HEIGHT,
-      .19 * CANVAS_WIDTH, .19 * CANVAS_WIDTH / 1.8
-    )
+      72 * scaleFactor, 40 * scaleFactor
+    );
     ctx.font = "25px thin";
-    ctx.fillText(time, (.8 + .19 * .42) * CANVAS_WIDTH, (.01 + .19 * .89) * CANVAS_HEIGHT)
-    ctx.fillText(date, (.8 + .19 * .42) * CANVAS_WIDTH, (.01 + .19 * .31) * CANVAS_HEIGHT)
+    ctx.fillText(time, (.8 + .19 * .42) * CANVAS_WIDTH, (.01 + .19 * .89) * CANVAS_HEIGHT);
+    ctx.fillText(date, (.8 + .19 * .42) * CANVAS_WIDTH, (.01 + .19 * .31) * CANVAS_HEIGHT);
   }
 
   // called upon each frame load
@@ -56,12 +58,12 @@ export default class Time {
   update(game) {
     this.numTicks++
     if (this.numTicks % TIME_CONVERSION == 0) {
-      this.currTime += 10
+      this.currTime += 10;
     }
     // this block is just for testing -- remove when fainting mechanic added
     if (this.currTime >= 1080) {
-      this.currTime = 0
-      this.nextDay(game)
+      this.currTime = 0;
+      this.nextDay(game);
     }
   }
 }
