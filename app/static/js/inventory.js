@@ -208,7 +208,7 @@ export class Inventory {
     if (!this.open) {
       return;
     }
-    
+
     this.inventoryX = startX;
     this.inventoryY = startY;
 

@@ -36,7 +36,7 @@ class InputHandler {
           game.clearMenus();
           game.player.inventory.open = true;
           game.menu = "inventory";
-        } 
+        }
       }
       if (game.menu == "shop") {
         if (e.key == "ArrowUp") {
@@ -50,7 +50,7 @@ class InputHandler {
         game.clearMenus();
       }
     });
-    
+
     window.addEventListener('keyup', e => {
       this.keys[e.key] = false;
     });
@@ -208,21 +208,21 @@ class StardewValley {
         this.stamina.render(this.ctx);
 
         //redraw since it won't show up otherwise
-        
+
        // this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouseHandler.mouseX, this.mouseHandler.mouse);
         break;
       case "inventory":
-        this.player.inventory.renderInventory(this.overlayCtx, 150, 150);
+        this.player.inventory.renderInventory(this.overlayCtx, 150, 150, UI_FACTOR);
         this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouse.mouseX, this.mouse.mouseY);
         break;
       case "shop":
-        this.player.currentShop.render(this.overlayCtx);
+        this.player.currentShop.render(this.overlayCtx, this.player.inventory);
         break;
       case "dialogue":
         this.currentNpc.renderDialogue(this.overlayCtx, this.player.name)
 
     }
-    this.player.inventory.renderHotbar(this.hotbarCtx); 
+    this.player.inventory.renderHotbar(this.hotbarCtx);
     // this.updateHotbarInput();
     this.player.move(this.input.keys, this.map, this.stamina);
     this.checkTeleport();
