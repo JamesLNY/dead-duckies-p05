@@ -127,13 +127,6 @@ class StardewValley {
     // });
   }
 
-  // static async create(canvas) {
-  //   let game = new StardewValley(canvas);
-  //   await game.map.loadTiles();
-  //   game.initializeFarm();
-  //   game.loop();
-  // }
-
   initializeFarm() {
     for (let x = 0; x < this.map.tiles.length; x++) {
       for (let y = 0; y < this.map.tiles[x].length; y++) {
@@ -222,6 +215,7 @@ class StardewValley {
        // this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouseHandler.mouseX, this.mouseHandler.mouse);
         break;
       case "inventory":
+        this.overlayCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         this.player.inventory.renderInventory(this.overlayCtx, 150, 150, UI_FACTOR);
         this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouse.mouseX, this.mouse.mouseY);
         break;

@@ -107,19 +107,17 @@ export class Inventory {
     return remaining === 0;
   }
 
-  getSlotAtPosition(mouseX, mouseY, startX, startY, columns, rows) {
-    for (let i = 0; i < columns * rows; i += 1) {
-      let col = i % columns;
-      let row = Math.floor(i / columns);
-      let x = startX + col * TILE_SIZE * UI_FACTOR;
-      let y = startY + row * TILE_SIZE * UI_FACTOR;
-      let size = TILE_SIZE * UI_FACTOR;
+  getSlotAtPosition(mouseX, mouseY, columns, rows) {
+    if (mouseX < this.inventorySlotX ||
+        mouseY < this.inventorySlotY ||
+        mouseX > this.inventorySlotX + columns * TILE_SIZE * UI_FACTOR ||
+        mouseY > this.inventorySlotY + rows * TILE_SIZE * UI_FACTOR
+    ) return null;
 
-      if (mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size) {
-        return i;
-      }
-    }
-    return null;
+
+    let x = Math.floor((mouseX - this.inventorySlotX) / (TILE_SIZE * UI_FACTOR));
+    let y = Math.floor((mouseY - this.inventorySlotY) / ((TILE_SIZE + 1) * UI_FACTOR));
+    return y * columns + x;
   }
 
   startDrag(index) {
@@ -158,7 +156,6 @@ export class Inventory {
         };
       }
     }
-
     else {
       let temp = {itemID: target.itemID, count: target.count};
       target.itemID = this.draggingItem.itemID;
@@ -176,7 +173,7 @@ export class Inventory {
       let row = Math.floor(i / columns);
 
       let x = startX + col * TILE_SIZE * UI_FACTOR;
-      let y = startY + row * TILE_SIZE * UI_FACTOR;
+      let y = startY + (row * TILE_SIZE + row) * UI_FACTOR;
 
       if (selected && i === this.selectedSlot) {
         ctx.drawImage(this.select, x, y, 48, 48);
@@ -218,15 +215,15 @@ export class Inventory {
     overlayCtx.drawImage(this.inventoryMenu, startX, startY, width, height);
 
     let slotAreaWidth = 12 * TILE_SIZE * UI_FACTOR;
-    let slotAreaHeight = 3 * TILE_SIZE * UI_FACTOR;
+    let slotAreaHeight = (3 * TILE_SIZE + 2) * UI_FACTOR;
 
-    let slotStartX = (startX + (width - slotAreaWidth) / 2) - 2.5;
-    let slotStartY = (startY + (height - slotAreaHeight) / 2) - 2.5;
+    let slotStartX = startX + (width - slotAreaWidth) / 2;
+    let slotStartY = startY + (height - slotAreaHeight) / 2;
 
     this.inventorySlotX = slotStartX;
     this.inventorySlotY = slotStartY;
 
-    this.render(overlayCtx, slotStartX , slotStartY, 12, 3, false);
+    this.render(overlayCtx, slotStartX, slotStartY, 12, 3, false);
   }
 
   renderDraggedItem(ctx, mouseX, mouseY) {
@@ -234,11 +231,13 @@ export class Inventory {
       return;
     }
     let imageName = this.draggingItem.itemID.replaceAll(" ", "_");
-    if (loadedItems[imageName]) {
-      ctx.drawImage(loadedItems[imageName], mouseX, mouseY, 32, 32);
-    }
+
+    // if (loadedItems[imageName]) {
+      ctx.drawImage(loadedItems[imageName], mouseX - TILE_SIZE, mouseY - TILE_SIZE, 32, 32);
+    // }
+    
     ctx.fillStyle = 'white';
     ctx.font = '14px Arial';
-    ctx.fillText(this.draggingItem.count, mouseX + 18, mouseY + 32);
+    ctx.fillText(this.draggingItem.count, mouseX - TILE_SIZE + 22, mouseY - TILE_SIZE + 34);
   }
 }
