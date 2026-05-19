@@ -309,3 +309,6 @@ kiranS -- 2026-05-19 11:00
 
 jamesL -- 2026-05-19 11:00
 - cleaning up assets
+
+kiranS -- 2026-05-19 19:30
+- added gold counter render method
