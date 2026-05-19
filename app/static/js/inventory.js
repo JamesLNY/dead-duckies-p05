@@ -3,7 +3,7 @@ import {TILE_SIZE, ITEMS, HOTBAR_HEIGHT, HOTBAR_WIDTH, UI_FACTOR, HOTBAR_SIZE, I
 let loadedItems = {};
 
 export class Inventory {
-  constructor(size = 24) {
+  constructor(size = 36) {
     this.slots = [];
     this.selectedSlot = 0;
     this.open = false;
@@ -217,16 +217,16 @@ export class Inventory {
 
     overlayCtx.drawImage(this.inventoryMenu, startX, startY, width, height);
 
-    let slotAreaWidth = 8 * TILE_SIZE * UI_FACTOR;
+    let slotAreaWidth = 12 * TILE_SIZE * UI_FACTOR;
     let slotAreaHeight = 3 * TILE_SIZE * UI_FACTOR;
 
-    let slotStartX = (startX + (width - slotAreaWidth) / 2) - 95;
-    let slotStartY = (startY + (height - slotAreaHeight) / 2) - 3;
+    let slotStartX = (startX + (width - slotAreaWidth) / 2) - 2.5;
+    let slotStartY = (startY + (height - slotAreaHeight) / 2) - 2.5;
 
     this.inventorySlotX = slotStartX;
     this.inventorySlotY = slotStartY;
 
-    this.render(overlayCtx, slotStartX , slotStartY, 8, 3, false);
+    this.render(overlayCtx, slotStartX , slotStartY, 12, 3, false);
   }
 
   renderDraggedItem(ctx, mouseX, mouseY) {
