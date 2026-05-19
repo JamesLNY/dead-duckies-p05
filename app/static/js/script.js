@@ -30,13 +30,13 @@ class InputHandler {
         } else if (e.key == "=") {
           game.player.inventory.selectSlot(11);
           game.player.inventory.renderHotbar(game.hotbarCtx, game.hotbarCanvas);
-        } else if (e.key == "c") {
+        } else if (e.key == "c" || e.key == "C") {
           game.player.interact(game.map, game.stamina);
-        } else if (e.key == "e") {
+        } else if (e.key == "e" || e.key == "E") {
           game.clearMenus();
           game.player.inventory.open = true;
           game.menu = "inventory";
-        } 
+        }
       }
       if (game.menu == "shop") {
         if (e.key == "ArrowUp") {
@@ -50,7 +50,7 @@ class InputHandler {
         game.clearMenus();
       }
     });
-    
+
     window.addEventListener('keyup', e => {
       this.keys[e.key] = false;
     });
@@ -79,7 +79,9 @@ class StardewValley {
       farm: new Map('farm'),
       town: new Map('town'),
       seedshop: new Map('seedshop'),
-      farmhouse: new Map('farmhouse')
+      farmhouse: new Map('farmhouse'),
+      beach: new Map('beach'),
+      fishshop: new Map('fishshop')
     };
     this.currentMap = 'farm';
     this.map = this.maps['farm'];
@@ -208,7 +210,7 @@ class StardewValley {
         this.stamina.render(this.ctx);
 
         //redraw since it won't show up otherwise
-        
+
        // this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouseHandler.mouseX, this.mouseHandler.mouse);
         break;
       case "inventory":
@@ -222,7 +224,7 @@ class StardewValley {
         this.currentNpc.renderDialogue(this.overlayCtx, this.player.name)
 
     }
-    this.player.inventory.renderHotbar(this.hotbarCtx); 
+    this.player.inventory.renderHotbar(this.hotbarCtx);
     // this.updateHotbarInput();
     this.player.move(this.input.keys, this.map, this.stamina);
     this.checkTeleport();

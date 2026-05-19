@@ -35767,8 +35767,12 @@
     {
       "passable": true,
       "tillable": false,
-      "teleporter": false,
-      "destination": null
+      "teleporter": true,
+      "destination": {
+        "map": "beach",
+        "x": 38,
+        "y": 0
+      }
     }
   ],
   [
@@ -36429,8 +36433,12 @@
     {
       "passable": true,
       "tillable": false,
-      "teleporter": false,
-      "destination": null
+      "teleporter": true,
+      "destination": {
+        "map": "beach",
+        "x": 38,
+        "y": 0
+      }
     }
   ],
   [
@@ -37091,8 +37099,12 @@
     {
       "passable": true,
       "tillable": false,
-      "teleporter": false,
-      "destination": null
+      "teleporter": true,
+      "destination": {
+        "map": "beach",
+        "x": 38,
+        "y": 0
+      }
     }
   ],
   [
