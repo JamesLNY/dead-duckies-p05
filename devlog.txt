@@ -321,3 +321,6 @@ kiranS -- 2026-05-19 21:00
 - now can scroll w/ mouse buttons
 - batch buy options -- shift-click for 5, ctrl-click for 25
 - prices fade when unable to afford
+
+emaanA -- 2026-05-19 23:30 
+- renderInventory using scalar

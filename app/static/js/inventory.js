@@ -1,6 +1,7 @@
 import {TILE_SIZE, ITEMS, HOTBAR_HEIGHT, HOTBAR_WIDTH, UI_FACTOR, HOTBAR_SIZE, INVENTORY_HEIGHT, INVENTORY_WIDTH} from "./constants.js";
 
 let loadedItems = {};
+const INVENTORY_SCALE = 3;
 
 export class Inventory {
   constructor(size = 36) {
@@ -108,15 +109,15 @@ export class Inventory {
   }
 
   getSlotAtPosition(mouseX, mouseY, columns, rows) {
-    if (mouseX < this.inventorySlotX ||
-        mouseY < this.inventorySlotY ||
-        mouseX > this.inventorySlotX + columns * TILE_SIZE * UI_FACTOR ||
-        mouseY > this.inventorySlotY + rows * TILE_SIZE * UI_FACTOR
-    ) return null;
+    let scaledTile = TILE_SIZE * INVENTORY_SCALE;
 
+    if (mouseX < this.inventorySlotX || mouseY < this.inventorySlotY || mouseX > this.inventorySlotX + columns * scaledTile || mouseY > this.inventorySlotY + rows * scaledTile) {
+      return null;
+    }
 
-    let x = Math.floor((mouseX - this.inventorySlotX) / (TILE_SIZE * UI_FACTOR));
-    let y = Math.floor((mouseY - this.inventorySlotY) / ((TILE_SIZE + 1) * UI_FACTOR));
+    let x = Math.floor((mouseX - this.inventorySlotX) / scaledTile);
+    let y = Math.floor((mouseY - this.inventorySlotY) / scaledTile);
+
     return y * columns + x;
   }
 
@@ -166,17 +167,17 @@ export class Inventory {
     this.draggingSlot = null;
   }
 
-  render(ctx, startX, startY, columns, rows, selected = true) {
+  render(ctx, startX, startY, columns, rows, scale, selected = true) {
     for (let i = 0; i < columns * rows; i += 1) {
       let slot = this.getSlot(i);
       let col = i % columns;
       let row = Math.floor(i / columns);
 
-      let x = startX + col * TILE_SIZE * UI_FACTOR;
-      let y = startY + (row * TILE_SIZE + row) * UI_FACTOR;
+      let x = startX + col * TILE_SIZE * scale;
+      let y = startY + row * TILE_SIZE * scale;
 
       if (selected && i === this.selectedSlot) {
-        ctx.drawImage(this.select, x, y, 48, 48);
+        ctx.drawImage(this.select, x, y, 48 * scale / UI_FACTOR, 48 * scale / UI_FACTOR);
       }
       if (slot.itemID === null) {
         continue;
@@ -185,20 +186,19 @@ export class Inventory {
       let imageName = slot.itemID.replaceAll(" ", "_");
 
       if (loadedItems[imageName]) {
-        ctx.drawImage(loadedItems[imageName], x + 8, y + 8, 32, 32);
+        ctx.drawImage(loadedItems[imageName], x + 8 * scale / UI_FACTOR, y + 8 * scale / UI_FACTOR, 32 * scale / UI_FACTOR, 32 * scale / UI_FACTOR);
       }
 
       ctx.fillStyle = 'white';
-      ctx.font = '14px Arial';
-      ctx.fillText(slot.count, x + 30, y + 42);
+      ctx.font = `${14 * scale / UI_FACTOR}px Arial`;
+      ctx.fillText(slot.count, x + 30 * scale / UI_FACTOR, y + 42 * scale / UI_FACTOR );
     }
   }
 
   renderHotbar(hotbarCtx) {
     hotbarCtx.clearRect(0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
     hotbarCtx.drawImage(this.hotbar, 0, 0, HOTBAR_WIDTH * UI_FACTOR, HOTBAR_HEIGHT * UI_FACTOR);
-
-    this.render(hotbarCtx, 9, 9, HOTBAR_SIZE, 1);
+    this.render(hotbarCtx, 9, 9, HOTBAR_SIZE, 1, UI_FACTOR);
   }
 
   renderInventory(overlayCtx, startX, startY) {
@@ -209,13 +209,13 @@ export class Inventory {
     this.inventoryX = startX;
     this.inventoryY = startY;
 
-    let width = INVENTORY_WIDTH * UI_FACTOR;
-    let height = INVENTORY_HEIGHT * UI_FACTOR;
+    let width = INVENTORY_WIDTH * INVENTORY_SCALE;
+    let height = INVENTORY_HEIGHT * INVENTORY_SCALE;
 
     overlayCtx.drawImage(this.inventoryMenu, startX, startY, width, height);
 
-    let slotAreaWidth = 12 * TILE_SIZE * UI_FACTOR;
-    let slotAreaHeight = (3 * TILE_SIZE + 2) * UI_FACTOR;
+    let slotAreaWidth = 12 * TILE_SIZE * INVENTORY_SCALE;
+    let slotAreaHeight = 3 * TILE_SIZE * INVENTORY_SCALE;
 
     let slotStartX = startX + (width - slotAreaWidth) / 2;
     let slotStartY = startY + (height - slotAreaHeight) / 2;
@@ -223,21 +223,26 @@ export class Inventory {
     this.inventorySlotX = slotStartX;
     this.inventorySlotY = slotStartY;
 
-    this.render(overlayCtx, slotStartX, slotStartY, 12, 3, false);
+    this.render(overlayCtx, slotStartX, slotStartY, 12, 3, INVENTORY_SCALE, false);
   }
 
   renderDraggedItem(ctx, mouseX, mouseY) {
     if (this.draggingItem === null) {
       return;
     }
+
+    let width = INVENTORY_WIDTH * INVENTORY_SCALE;
+    let height = INVENTORY_HEIGHT * INVENTORY_SCALE;
+
+    if (mouseX < this.inventoryX || mouseY < this.inventoryY || mouseX > this.inventoryX + width ||  mouseY > this.inventoryY + height) {
+      return;
+    }
+
     let imageName = this.draggingItem.itemID.replaceAll(" ", "_");
 
-    // if (loadedItems[imageName]) {
-      ctx.drawImage(loadedItems[imageName], mouseX - TILE_SIZE, mouseY - TILE_SIZE, 32, 32);
-    // }
-    
+    ctx.drawImage(loadedItems[imageName], mouseX - TILE_SIZE, mouseY - TILE_SIZE, 32 * INVENTORY_SCALE / UI_FACTOR, 32 * INVENTORY_SCALE / UI_FACTOR);
     ctx.fillStyle = 'white';
-    ctx.font = '14px Arial';
+    ctx.font = `${14 * INVENTORY_SCALE / UI_FACTOR}px Arial`;
     ctx.fillText(this.draggingItem.count, mouseX - TILE_SIZE + 22, mouseY - TILE_SIZE + 34);
   }
 }
