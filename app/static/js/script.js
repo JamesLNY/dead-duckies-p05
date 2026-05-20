@@ -46,6 +46,16 @@ class InputHandler {
         else if (e.key == "ArrowDown") {
           game.player.currentShop.moveDown();
         }
+        else if (e.key == "Shift") {
+          // console.log("shift")
+          game.player.buyQuantity = 5;
+        }
+        else if (e.key == "Control") {
+          game.player.buyQuantity = 25;
+        }
+        else {
+          game.player.buyQuantity = 1;
+        }
       }
       if (e.key == "Escape") {
         game.clearMenus();
@@ -55,6 +65,7 @@ class InputHandler {
 
     window.addEventListener('keyup', e => {
       this.keys[e.key] = false;
+      game.player.buyQuantity = 1;
     });
   }
 }
@@ -221,7 +232,7 @@ class StardewValley {
         this.player.inventory.renderDraggedItem(this.overlayCtx, this.mouse.mouseX, this.mouse.mouseY);
         break;
       case "shop":
-        this.player.currentShop.render(this.overlayCtx, this.player.inventory);
+        this.player.currentShop.render(this.overlayCtx, this.player);
         if (this.mouse.isDown && !this.mouseToggled) {
           // console.log("down")
           this.player.currentShop.mouseInput(this, this.mouse.mouseX, this.mouse.mouseY);

@@ -33,6 +33,7 @@ export default class Shop {
     }
 
     buy(itemID, player) {
+      let quantity = player.buyQuantity;
       if (!(itemID in ITEMS)) {
         return false;
       }
@@ -40,11 +41,11 @@ export default class Shop {
         return false;
       }
       let cost = this.shopInventory[itemID]
-      if (player.gold.amount < cost) {
+      if (player.gold.amount < cost * quantity) {
         return false;
       }
-      if (player.inventory.addItem(itemID, 1)) {
-          player.gold.amount -= cost;
+      if (player.inventory.addItem(itemID, quantity)) {
+          player.gold.amount -= cost * quantity;
           return true;
         }
       return false;
@@ -74,7 +75,7 @@ export default class Shop {
     }
 
     mouseInput(game, x, y) {
-      if (x > xStart + 351 * overlayScale && x <= xStart + 362 * overlayScale && y <= yStart + 11 * overlayScale) {
+      if (x > xStart + 351 * overlayScale && x <= xStart + 362 * overlayScale && y >= yStart && y <= yStart + 11 * overlayScale) {
         game.clearMenus();
         console.log("close");
       }
@@ -85,12 +86,19 @@ export default class Shop {
         this.buy(Object.keys(this.shopInventory)[selectionNumber + this.itemsStart], game.player);
         console.log("click");
       }
+      else if (x > xStart + 364 * overlayScale && x <= xStart + 375 * overlayScale && y > yStart + 3 * overlayScale && y <= yStart + 15 * overlayScale) {
+        this.moveUp();
+      }
+      else if (x > xStart + 364 * overlayScale && x <= xStart + 375 * overlayScale && y > yStart + 25 * overlayScale && y <= yStart + 38 * overlayScale) {
+        this.moveDown();
+      }
     }
 
-    render(ctx, playerInventory) {
+    render(ctx, player) {
       // top left corner for shop menu render
       const fontSize = 12 * overlayScale;
-
+      
+      ctx.globalAlpha = 1;
       ctx.drawImage(this.display,
         xStart, yStart,
         375 * overlayScale, 136 * overlayScale
@@ -100,7 +108,7 @@ export default class Shop {
         64 * overlayScale, 64 * overlayScale
       );
 
-      playerInventory.renderInventory(ctx, xStart + 148 * overlayScale, yStart + 121 * overlayScale, overlayScale);
+      // player.inventory.renderInventory(ctx, xStart + 148 * overlayScale, yStart + 121 * overlayScale, overlayScale);
 
       ctx.textAlign = "left";
       ctx.letterSpacing = "1px";
@@ -126,9 +134,14 @@ export default class Shop {
 
         ctx.textAlign = "right";
 
-        ctx.fillText(Object.values(this.shopInventory)[this.itemsStart + i],
+        let price = Object.values(this.shopInventory)[this.itemsStart + i]
+        if (player.gold.amount < price) {
+          ctx.globalAlpha = .5;
+        }
+        ctx.fillText(price,
           xStart + 340 * overlayScale, yStart + 23 * overlayScale + i * 27 * overlayScale
         )
+        ctx.globalAlpha = 1;
       }
 
     }
