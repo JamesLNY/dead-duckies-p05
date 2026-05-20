@@ -3,6 +3,10 @@ import { renderWrappedText, getItemTitle } from './text.js';
 import { Inventory } from './inventory.js';
 import Gold from './gold.js';
 
+const overlayScale = 2;
+const xStart = (CANVAS_WIDTH / 2) - 375;
+const yStart = (CANVAS_HEIGHT / 2) - 136;
+
 export default class Shop {
     constructor (npc) {
       this.shopInventory = SHOPS[npc]["inventory"]; // {String item: INT cost}
@@ -28,30 +32,30 @@ export default class Shop {
       // console.log(this.sprites);
     }
 
-    buy(itemID, player, playerInventory) {
+    buy(itemID, player) {
       if (!(itemID in ITEMS)) {
         return false;
       }
-      if (!(itemID in shopInventory)){
+      if (!(itemID in this.shopInventory)){
         return false;
       }
-      let cost = shopInventory[itemID]
-      if (this.player.gold.amount < cost) {
+      let cost = this.shopInventory[itemID]
+      if (player.gold.amount < cost) {
         return false;
       }
-      if (this.playerInventory.addItem(itemID, 1)) {
-          this.player.gold.amount -= cost;
+      if (player.inventory.addItem(itemID, 1)) {
+          player.gold.amount -= cost;
           return true;
         }
       return false;
     }
 
-    sell(itemID, player, playerInventory) {
+    sell(itemID, player) {
       if (!(itemID in ITEMS)) {
         return false;
       }
-      if (this.inventory.removeItem(itemID, 1)) {
-        this.player.gold.amount += item.sellPrice;
+      if (player.inventory.removeItem(itemID, 1)) {
+        player.gold.amount += item.sellPrice;
         return true;
         }
       return false;
@@ -69,12 +73,23 @@ export default class Shop {
       }
     }
 
+    mouseInput(game, x, y) {
+      if (x > xStart + 351 * overlayScale && x <= xStart + 362 * overlayScale && y <= yStart + 11 * overlayScale) {
+        game.clearMenus();
+        console.log("close");
+      }
+      else if (x >= xStart + 89 * overlayScale && x <= xStart + 354 * overlayScale && y > yStart + 7 * overlayScale && y <= yStart + 114 * overlayScale) {
+        let selectionNumber = Math.floor((y - yStart - 7 * overlayScale) / (27 * overlayScale));
+        console.log(selectionNumber);
+        console.log(Object.keys(this.shopInventory)[selectionNumber + this.itemsStart]);
+        this.buy(Object.keys(this.shopInventory)[selectionNumber + this.itemsStart], game.player);
+        console.log("click");
+      }
+    }
+
     render(ctx, playerInventory) {
       // top left corner for shop menu render
-      let xStart = (CANVAS_WIDTH / 2) - 375;
-      let yStart = (CANVAS_HEIGHT / 2) - 136;
-      let overlayScale = 2;
-      let fontSize = 12 * overlayScale;
+      const fontSize = 12 * overlayScale;
 
       ctx.drawImage(this.display,
         xStart, yStart,

@@ -49,6 +49,7 @@ class InputHandler {
       }
       if (e.key == "Escape") {
         game.clearMenus();
+        game.mouseToggled = false;
       }
     });
 
@@ -75,7 +76,7 @@ class StardewValley {
     this.overlayCtx.imageSmoothingEnabled = false;
 
     this.mouse = new MouseHandler(this);
-
+    this.mouseToggled = false; // for one-time mouse inputs to prevent them from firing every frame
     this.maps = {
       farm: new Map('farm'),
       town: new Map('town'),
@@ -221,6 +222,15 @@ class StardewValley {
         break;
       case "shop":
         this.player.currentShop.render(this.overlayCtx, this.player.inventory);
+        if (this.mouse.isDown && !this.mouseToggled) {
+          // console.log("down")
+          this.player.currentShop.mouseInput(this, this.mouse.mouseX, this.mouse.mouseY);
+          this.mouseToggled = true;
+        }
+
+        if (!this.mouse.isDown && this.mouseToggled) {
+          this.mouseToggled = false;
+        }
         break;
       case "dialogue":
         this.currentNpc.renderDialogue(this.overlayCtx, this.player.name)

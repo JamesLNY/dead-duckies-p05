@@ -312,3 +312,7 @@ jamesL -- 2026-05-19 11:00
 
 kiranS -- 2026-05-19 19:30
 - added gold counter render method
+
+kiranS -- 2026-05-19 20:30
+- added mouse click detection in shop overlay
+- added ability to buy/sell on click, updating inventory and gold count
