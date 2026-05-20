@@ -108,7 +108,7 @@ export default class Shop {
         64 * overlayScale, 64 * overlayScale
       );
 
-      // player.inventory.renderInventory(ctx, xStart + 148 * overlayScale, yStart + 121 * overlayScale, overlayScale);
+      player.inventory.renderInventory(ctx, xStart + 148 * overlayScale, yStart + 121 * overlayScale, overlayScale);
 
       ctx.textAlign = "left";
       ctx.letterSpacing = "1px";
