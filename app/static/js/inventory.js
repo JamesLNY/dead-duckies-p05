@@ -177,7 +177,10 @@ export class Inventory {
       let row = Math.floor(i / columns);
 
       let x = startX + col * TILE_SIZE * scale;
-      let y = startY + row * TILE_SIZE * scale;
+      let y = startY + row * (TILE_SIZE + 1) * scale;
+      if (rows > 1) {
+        y -= scale;
+      }
 
       if (selected && i === this.selectedSlot) {
         ctx.drawImage(this.select, x, y, 48 * scale / UI_FACTOR, 48 * scale / UI_FACTOR);
@@ -194,7 +197,7 @@ export class Inventory {
 
       ctx.fillStyle = 'white';
       ctx.font = `${14 * scale / UI_FACTOR}px Arial`;
-      ctx.fillText(slot.count, x + 30 * scale / UI_FACTOR, y + 42 * scale / UI_FACTOR );
+      ctx.fillText(slot.count, x + 10 * scale, y + 14 * scale);
     }
   }
 
