@@ -1,6 +1,7 @@
 import {TILE_SIZE, ITEMS, HOTBAR_HEIGHT, HOTBAR_WIDTH, UI_FACTOR, HOTBAR_SIZE, INVENTORY_HEIGHT, INVENTORY_WIDTH} from "./constants.js";
 
 let loadedItems = {};
+const INVENTORY_SCALE = 3;
 
 export class Inventory {
   constructor(size = 36) {
