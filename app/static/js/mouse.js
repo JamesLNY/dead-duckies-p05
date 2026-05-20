@@ -1,6 +1,6 @@
 import { INVENTORY_WIDTH, INVENTORY_HEIGHT, UI_FACTOR } from "./constants.js";
 
-//mouse.js exists for inventory click and drag 
+//mouse.js exists for inventory click and drag
 export default class MouseHandler {
   constructor(game) {
     this.game = game;
@@ -26,7 +26,7 @@ export default class MouseHandler {
         return;
       }
 
-      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, 12, 3);
+      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, 12, 3, 3);
       if (index !== null) {
         inv.startDrag(index);
       }
@@ -39,8 +39,8 @@ export default class MouseHandler {
       if (!inv.open) {
         return;
       }
-      
-      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, 12, 3);
+
+      let index = inv.getSlotAtPosition(this.mouseX, this.mouseY, 12, 3, 3);
 
       if (index !== null) {
         inv.endDrag(index);
