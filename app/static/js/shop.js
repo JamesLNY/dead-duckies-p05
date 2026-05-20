@@ -97,7 +97,7 @@ export default class Shop {
     render(ctx, player) {
       // top left corner for shop menu render
       const fontSize = 12 * overlayScale;
-      
+
       ctx.globalAlpha = 1;
       ctx.drawImage(this.display,
         xStart, yStart,
@@ -120,6 +120,7 @@ export default class Shop {
       ctx.fillStyle = "#56160c";
       ctx.letterSpacing = "2px";
 
+      player.gold.render(ctx, xStart + 81 * overlayScale, yStart + 119 * overlayScale, overlayScale);
       for (let i = 0; i < 4; i++) {
 
         ctx.textAlign = "left";

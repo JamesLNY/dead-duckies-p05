@@ -108,8 +108,8 @@ export class Inventory {
     return remaining === 0;
   }
 
-  getSlotAtPosition(mouseX, mouseY, columns, rows) {
-    let scaledTile = TILE_SIZE * INVENTORY_SCALE;
+  getSlotAtPosition(mouseX, mouseY, columns, rows, overlayScale) {
+    let scaledTile = TILE_SIZE * overlayScale;
 
     if (mouseX < this.inventorySlotX || mouseY < this.inventorySlotY || mouseX > this.inventorySlotX + columns * scaledTile || mouseY > this.inventorySlotY + rows * scaledTile) {
       return null;
@@ -201,7 +201,7 @@ export class Inventory {
     this.render(hotbarCtx, 9, 9, HOTBAR_SIZE, 1, UI_FACTOR);
   }
 
-  renderInventory(overlayCtx, startX, startY) {
+  renderInventory(overlayCtx, startX, startY, overlayScale) {
     if (!this.open) {
       return;
     }
@@ -209,13 +209,13 @@ export class Inventory {
     this.inventoryX = startX;
     this.inventoryY = startY;
 
-    let width = INVENTORY_WIDTH * INVENTORY_SCALE;
-    let height = INVENTORY_HEIGHT * INVENTORY_SCALE;
+    let width = INVENTORY_WIDTH * overlayScale;
+    let height = INVENTORY_HEIGHT * overlayScale;
 
     overlayCtx.drawImage(this.inventoryMenu, startX, startY, width, height);
 
-    let slotAreaWidth = 12 * TILE_SIZE * INVENTORY_SCALE;
-    let slotAreaHeight = 3 * TILE_SIZE * INVENTORY_SCALE;
+    let slotAreaWidth = 12 * TILE_SIZE * overlayScale;
+    let slotAreaHeight = 3 * TILE_SIZE * overlayScale;
 
     let slotStartX = startX + (width - slotAreaWidth) / 2;
     let slotStartY = startY + (height - slotAreaHeight) / 2;
@@ -223,7 +223,7 @@ export class Inventory {
     this.inventorySlotX = slotStartX;
     this.inventorySlotY = slotStartY;
 
-    this.render(overlayCtx, slotStartX, slotStartY, 12, 3, INVENTORY_SCALE, false);
+    this.render(overlayCtx, slotStartX, slotStartY, 12, 3, overlayScale, false);
   }
 
   renderDraggedItem(ctx, mouseX, mouseY) {
