@@ -113,7 +113,7 @@ export default class Player {
       this.game.currentNpc = entity;
     }
 
-    else if (map.name == "seedshop" && tile.x == 4 && tile.y == 18) {
+    else if (map.name == "seedshop" && tile.x >= 3 && tile.x <= 8 && tile.y == 18) {
       console.log("HERE");
       this.game.clearMenus();
       this.game.menu = "shop";
@@ -175,7 +175,7 @@ export default class Player {
         }
       }
     }
-  
+
   getTile(map) {
     let tile;
     switch (this.facing) {

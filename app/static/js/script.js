@@ -245,6 +245,9 @@ class StardewValley {
         break;
       case "dialogue":
         this.currentNpc.renderDialogue(this.overlayCtx, this.player.name)
+        if (this.mouse.isDown) {
+          this.clearMenus();
+        }
 
     }
     this.player.inventory.renderHotbar(this.hotbarCtx);
